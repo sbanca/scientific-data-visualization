@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.scientificdatavisualization.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Riccardo\\Documents\\GitHub\\scientific-data-visualization\\Scientific Data Visualization\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "Scientific Data Visualization [Testing]"
+        }
+      }
+    }
+  ]
+}
