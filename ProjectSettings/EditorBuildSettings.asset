@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/SampleFramework/Usage/CustomHands.unity
     guid: a4f984fcee593d2418cc61f4a993d46d
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/DebugUI.unity
+    guid: 34004346bd7dcbf4fbfd78d2f12e4451
   m_configObjects: {}
