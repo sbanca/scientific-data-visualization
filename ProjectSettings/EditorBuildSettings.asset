@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VR_player_controller.unity
     guid: 82dee9b89b11db645b3bfba86ac53bcb
+  - enabled: 0
+    path: Assets/Scenes/vr_test.unity
+    guid: 5072e28e66bcd4745909ec7ddd4825a1
   m_configObjects: {}
