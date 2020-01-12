@@ -158,12 +158,13 @@ PlayerSettings:
   applicationIdentifier:
     '': com.oculus.UnitySample
     Android: com.riccardo.oculusQuest
+    Facebook: com.oculus.UnitySample
     Standalone: com.oculus.UnitySample
     iOS: com.Company.ProductName
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
-  AndroidTargetSdkVersion: 26
+  AndroidTargetSdkVersion: 27
   AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 0
@@ -401,6 +402,9 @@ PlayerSettings:
     m_Enabled: 0
     m_Devices: []
   - m_BuildTarget: 
+    m_Enabled: 1
+    m_Devices: []
+  - m_BuildTarget: Facebook
     m_Enabled: 1
     m_Devices: []
   m_BuildTargetEnableVuforiaSettings: []

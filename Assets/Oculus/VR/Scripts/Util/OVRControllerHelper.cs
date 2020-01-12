@@ -70,6 +70,7 @@ public class OVRControllerHelper : MonoBehaviour
 	void Start()
 	{
 		OVRPlugin.SystemHeadset headset = OVRPlugin.GetSystemHeadsetType();
+		Debug.Log(headset);
 		switch (headset)
 		{
 			case OVRPlugin.SystemHeadset.Oculus_Go:
