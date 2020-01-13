@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/vr_test.unity
     guid: 5072e28e66bcd4745909ec7ddd4825a1
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/CustomHands.unity
+    guid: a4f984fcee593d2418cc61f4a993d46d
   m_configObjects: {}
