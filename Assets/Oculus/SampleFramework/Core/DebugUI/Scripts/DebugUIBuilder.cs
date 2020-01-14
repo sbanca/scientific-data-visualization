@@ -206,7 +206,7 @@ public class DebugUIBuilder : MonoBehaviour
     }
   }
 
-  private void AddRect(RectTransform r, int targetCanvas)
+  public void AddRect(RectTransform r, int targetCanvas)
   {
     if (targetCanvas > targetContentPanels.Length)
     {

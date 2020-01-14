@@ -63,7 +63,7 @@ public class storage_test : MonoBehaviour
     //load 
 
     
-    GameObject gltfObject = Siccity.GLTFUtility.Importer.LoadFromFile(fileDownload2.result.ToString()); 
+    GameObject gltfObject = Importer.LoadFromFile(fileDownload2.result.ToString()); 
      
    
     }
