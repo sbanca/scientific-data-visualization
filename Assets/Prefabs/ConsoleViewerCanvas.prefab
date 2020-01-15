@@ -368,8 +368,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357294361914218350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.791}
-  m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 0.00265, y: 0.00265, z: 0.00265}
   m_Children:
   - {fileID: 1357294361902988896}
   - {fileID: 1357294361902931682}
@@ -378,7 +378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.023, y: -0.013}
+  m_AnchoredPosition: {x: 2.600006, y: 0}
   m_SizeDelta: {x: 640, y: 480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1357294361903046548
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2f41de319919049a852a1b94f8b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontSize: 14
+  fontSize: 16
   infoMessage: {r: 0, g: 0, b: 0, a: 1}
   assertMessage: {r: 0, g: 0, b: 0, a: 1}
   warningMessage: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -680,8 +680,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1357294361907675882}
   m_HandleRect: {fileID: 1357294361902905188}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.92872566
+  m_Value: 0.000106349136
+  m_Size: 0.9287257
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

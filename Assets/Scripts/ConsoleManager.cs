@@ -4,7 +4,7 @@
  using System.Text.RegularExpressions;
  using System.Linq;
 
-public class ConsoleViewer : MonoBehaviour
+public class ConsoleManager : MonoBehaviour
 {
     [Tooltip("The size of the font the log text is displayed in.")]
     public int fontSize = 14;
@@ -31,7 +31,7 @@ public class ConsoleViewer : MonoBehaviour
     OVRCameraRig rig;
     private Vector3 menuOffset;
 
-    public static ConsoleViewer Instance;
+    public static ConsoleManager instance;
 
     /// <summary>
     /// The SetCollapse method determines whether the console will collapse same message output into the same line. A state of `true` will collapse messages and `false` will print the same message for each line.
@@ -57,7 +57,7 @@ public class ConsoleViewer : MonoBehaviour
         rig = FindObjectOfType<OVRCameraRig>();
         menuOffset = transform.position; // TODO: this is unpredictable/busted
 
-        Instance = this;
+        instance = this;
 
         logTypeColors = new Dictionary<LogType, Color>()
         {

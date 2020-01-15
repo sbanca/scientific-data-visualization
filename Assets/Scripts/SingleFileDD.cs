@@ -7,7 +7,7 @@ using Siccity.GLTFUtility;
 using System.IO;
 
 
-public class Venice : MonoBehaviour
+public class SingleFileDD : MonoBehaviour
 {
 
 
@@ -99,3 +99,30 @@ public class Venice : MonoBehaviour
 
 }
 
+
+[Serializable]
+public class listjson
+{
+    public List<string> list;
+}
+
+public class CoroutineWithData
+{
+    public Coroutine coroutine { get; private set; }
+    public object result;
+    private IEnumerator target;
+    public CoroutineWithData(MonoBehaviour owner, IEnumerator target)
+    {
+        this.target = target;
+        this.coroutine = owner.StartCoroutine(Run());
+    }
+
+    private IEnumerator Run()
+    {
+        while (target.MoveNext())
+        {
+            result = target.Current;
+            yield return result;
+        }
+    }
+}

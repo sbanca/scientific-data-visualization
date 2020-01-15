@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/SampleFramework/Usage/DebugUI.unity
     guid: 34004346bd7dcbf4fbfd78d2f12e4451
+  - enabled: 0
+    path: Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+    guid: a9c41884ef0c347628dfd8a4af4a022e
   m_configObjects: {}
