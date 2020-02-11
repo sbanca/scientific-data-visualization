@@ -145,11 +145,11 @@ MonoBehaviour:
   ApiKey: 8D6yOlh3TUOLOJD0l7Ktww
   Area:
     min:
-      longitude: -74.014892578125
+      longitude: -74.024892578125
       latitude: 40.70562793820589
     max:
       longitude: -74.00390625
-      latitude: 40.713955826286046
+      latitude: 40.723955826286
     zoom: 16
   UnitsPerMeter: 0.1
   RegionName: Manhattan
@@ -267,13 +267,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530800346}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 60, y: 1, z: 100}
+  m_LocalRotation: {x: 0.16510725, y: -0, z: -0, w: 0.9862756}
+  m_LocalPosition: {x: 107.4, y: 111.8, z: -151.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.007, y: 0, z: 0}
 --- !u!45 &530800352
 Skybox:
   m_ObjectHideFlags: 0
