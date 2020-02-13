@@ -28,6 +28,10 @@ namespace Mapzen.Unity.Editor
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("Style"), true);
 
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("useTableTopNavigation"), true);
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("initialTableTopSize"), true);
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty("Area"), true);
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("UnitsPerMeter"));

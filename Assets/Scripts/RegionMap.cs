@@ -27,6 +27,10 @@ namespace Mapzen
             new LngLat(-74.00390625, 40.713955826286046),
             16);
 
+        public bool useTableTopNavigation = true;
+
+        public Vector4 initialTableTopSize = new Vector4(0f,0f,100f,100f);
+
         public float UnitsPerMeter = 1.0f;
 
         public string RegionName = "";
@@ -51,7 +55,7 @@ namespace Mapzen
 
         private GameObject regionMap;
 
-        private TileCache tileCache = new TileCache(50);
+        private TileCache tileCache = new TileCache(100);
 
         public void DownloadTilesAsync()
         {
@@ -178,8 +182,8 @@ namespace Mapzen
             if (regionMap != null)
             {
                 DestroyImmediate(regionMap);
-            }
-
+            }           
+            
             // Merge all feature meshes
             List<FeatureMesh> features = new List<FeatureMesh>();
             foreach (var task in tasks)
@@ -197,6 +201,18 @@ namespace Mapzen
             var sceneGraph = new SceneGraph(regionMap, GroupOptions, GameObjectOptions, features);
 
             sceneGraph.Generate();
+
+            // If Table top option is enabled 
+            if (useTableTopNavigation)
+            {
+                var tableTopNavigation = regionMap.AddComponent<TableTopMapNavigation>();
+                tableTopNavigation.Style = Style;
+                tableTopNavigation.Size = initialTableTopSize;
+                tableTopNavigation.Initialize();
+
+            }
+
+
         }
 
         public bool IsValid()
