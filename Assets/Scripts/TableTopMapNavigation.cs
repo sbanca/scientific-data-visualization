@@ -5,29 +5,89 @@ using Mapzen.Unity;
 
 public class TableTopMapNavigation : MonoBehaviour
 {
-    private Vector4 size; // field
+    //public variables
 
     public MapStyle Style;
 
-    public Vector4 Size   // property
-    {
-        get { return size; }   // get method
-        set {
+    [SerializeField]
 
-            if (size != value) initializeMaterialClipping(value);
-            size = value; 
-        
-        }  // set method
+    private Vector4 size;
+    public Vector4 Size   
+    {
+        get { return size; }   
+        set { if (size != value)   size = value; }  
     }
 
-    public Bounds mapbounds;
+    //private variables 
+
+    private Bounds mapbounds;
+
+    private GameObject[] rulers = new GameObject[4];
 
     public void Initialize()
     {
-        calculateMapsBounds();
+        CalculateMapsBounds();
+
+        InitializeMaterialClipping();
+
+        CreateRulers();
     }
 
-    private void calculateMapsBounds() {
+    private void CreateRulers() {
+
+        float rulerdistance = 2.5f;
+
+        // X top ruler 
+        //var RulerCenter = new Vector3(mapbounds.center.x , 0f, mapbounds.center.z + (mapbounds.size.z / 2)); //aligned to the map
+        var RulerCenter = new Vector3(size.x, 0f, size.z + rulerdistance);
+        Rect VisibilityRectagle = new Rect(size.x, size.z,size.z,size.w); 
+        CreateRuler("top",0, new Vector2(0, 20), 20 ,mapbounds.size.x, Vector3.right, RulerCenter, VisibilityRectagle);
+
+        // X Bottom ruler 
+        //RulerCenter = new Vector3(mapbounds.center.x, 0f , mapbounds.center.z - (mapbounds.size.z / 2)); //aligned to the map
+        RulerCenter = new Vector3(size.x, 0f, size.y - rulerdistance);
+        VisibilityRectagle = new Rect(size.x, -size.z,  size.z, size.w);
+        CreateRuler("bottom", 0, new Vector2(0, 20), 20, mapbounds.size.x, Vector3.left, RulerCenter, VisibilityRectagle);
+
+        // Z left ruler 
+        //RulerCenter = new Vector3(mapbounds.center.x+ (mapbounds.size.x / 2), 0f, mapbounds.center.z ); //aligned to the map
+        RulerCenter = new Vector3(size.w + rulerdistance, 0f, size.y );
+        VisibilityRectagle = new Rect(size.w, size.y, size.z, size.w);
+        CreateRuler("right", 0, new Vector2(0, 20), 30, mapbounds.size.z, Vector3.back, RulerCenter, VisibilityRectagle);
+
+        // Z Right ruler 
+        //RulerCenter = new Vector3(mapbounds.center.x - (mapbounds.size.x / 2), 0f, mapbounds.center.z); //aligned to the map 
+        RulerCenter = new Vector3(size.x - rulerdistance, 0f, size.y);
+        VisibilityRectagle = new Rect(-size.w, size.y, size.z, size.w);
+        CreateRuler("left", 0, new Vector2(0, 20), 30, mapbounds.size.z, Vector3.forward, RulerCenter, VisibilityRectagle);
+
+    }
+
+    private void CreateRuler(string name, int number, Vector2 Rangeticks, int Ticksnumber, float Length, Vector3 Direction, Vector3 Center, Rect VisibilityRect) {
+
+        rulers[number] = new GameObject();
+
+        rulers[number].name = name;
+
+        var coordinateruler = rulers[number].AddComponent<CoordinateRuler>();
+
+        coordinateruler.Rangeticks = Rangeticks;
+
+        coordinateruler.Ticksnumber = Ticksnumber;
+
+        coordinateruler.Length = Length;
+
+        coordinateruler.Direction = Direction;
+
+        coordinateruler.Center = Center;
+
+        coordinateruler.VisibilityRectagle = VisibilityRect;
+
+        coordinateruler.Generate();
+
+    }
+
+    private void CalculateMapsBounds() {
 
         mapbounds = new Bounds(transform.position, Vector3.one);
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
@@ -37,14 +97,14 @@ public class TableTopMapNavigation : MonoBehaviour
         }
     }
     
-    private void initializeMaterialClipping(Vector4 size) {
+    private void InitializeMaterialClipping() {
 
 #if UNITY_EDITOR
 
         foreach (FeatureLayer layer in Style.Layers) {
 
 
-            Debug.Log(layer.Name);
+   
             
             if (layer.Style.PolygonBuilder.Material != null || layer.Style.PolylineBuilder.Material != null)
             {
@@ -55,7 +115,7 @@ public class TableTopMapNavigation : MonoBehaviour
 
                 string path = "Materials/" + name;
 
-                Debug.Log(path);
+        
 
                 Material m = Resources.Load(path, typeof(Material)) as Material;
 
@@ -66,7 +126,6 @@ public class TableTopMapNavigation : MonoBehaviour
             
 
         }
-
 
 #else
 
@@ -87,6 +146,6 @@ public class TableTopMapNavigation : MonoBehaviour
 
 #endif
 
-}
+    }
 
 }
