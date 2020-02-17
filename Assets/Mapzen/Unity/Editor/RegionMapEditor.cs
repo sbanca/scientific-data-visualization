@@ -28,9 +28,9 @@ namespace Mapzen.Unity.Editor
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("Style"), true);
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("useTableTopNavigation"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("useSlippyMap"), true);
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("initialTableTopSize"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("SlippyMapSize"), true);
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("Area"), true);
 

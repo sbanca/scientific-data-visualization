@@ -27,9 +27,9 @@ namespace Mapzen
             new LngLat(-74.00390625, 40.713955826286046),
             16);
 
-        public bool useTableTopNavigation = true;
+        public bool useSlippyMap = true;
 
-        public Vector4 initialTableTopSize = new Vector4(0f,0f,100f,100f);
+        public Vector4 SlippyMapSize = new Vector4(0f,0f,100f,100f);
 
         public float UnitsPerMeter = 1.0f;
 
@@ -202,16 +202,19 @@ namespace Mapzen
 
             sceneGraph.Generate();
 
-            // If Table top option is enabled 
-            if (useTableTopNavigation)
-            {
-                var tableTopNavigation = regionMap.AddComponent<TableTopMapNavigation>();
-                tableTopNavigation.Style = Style;
-                tableTopNavigation.Size = initialTableTopSize;
-                tableTopNavigation.Initialize();
 
-            }
+            // If slippy map is enabled
 
+            var tableTopNavigation = regionMap.AddComponent<TableTopMapNavigation>();
+
+            if (useSlippyMap) tableTopNavigation.useSlippyMap = true;
+            else tableTopNavigation.useSlippyMap = false;
+
+            tableTopNavigation.Style = Style;
+            tableTopNavigation.Size = SlippyMapSize;
+            tableTopNavigation.Initialize();
+
+            
 
         }
 
