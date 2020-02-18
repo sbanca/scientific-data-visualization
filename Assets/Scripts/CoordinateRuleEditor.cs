@@ -9,6 +9,9 @@ public enum OPTIONS
     Y = 1
 }
 
+#if UNITY_EDITOR
+
+
 [CustomEditor(typeof(CoordinateRuler))]
 public class CoordinateRuleEditor : UnityEditor.Editor
 {
@@ -73,3 +76,5 @@ public class CoordinateRuleEditor : UnityEditor.Editor
 
     }
 }
+
+#endif

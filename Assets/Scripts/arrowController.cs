@@ -8,11 +8,11 @@ public class ArrowController : MonoBehaviour
 {
     //pbulic var
     [SerializeField]
-    public float thickness = 1f;
+    public float thickness = 0.01f;
     [SerializeField]
-    public float thickenssZ = 0.1f;
+    public float thickenssZ = 0.001f;
     [SerializeField]
-    public float thickLength = 2.5f;
+    public float thickLength = 0.025f;
 
     [SerializeField]
     private Vector3 direction = Vector3.right;
@@ -69,8 +69,6 @@ public class ArrowController : MonoBehaviour
     [SerializeField]
     public Bounds mapbounds;
    
-
-
     //private var 
     private Bounds arrowbounds;
     private GameObject arrowLeft;
@@ -85,6 +83,7 @@ public class ArrowController : MonoBehaviour
         m_Renderer = GetComponentsInChildren<MeshRenderer>();
         //Fetch the original color of the GameObject
         m_OriginalColor= m_Renderer[0].material.color;
+
     }
 
     public void Generate() {
@@ -142,24 +141,16 @@ public class ArrowController : MonoBehaviour
 
     }
 
-    private void CalculateArrowBounds()
-    {
 
-        arrowbounds = new Bounds(transform.position, Vector3.one);
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        foreach (Renderer renderer in renderers)
-        {          
-                arrowbounds.Encapsulate(renderer.bounds);
-        }
-    }
 
     private BoxCollider createBox() {
 
-        CalculateArrowBounds();
+       
 
         BoxCollider boxcol = gameObject.AddComponent<BoxCollider>();
 
-        boxcol.size = arrowbounds.size;
+        boxcol.size = new Vector3((thickLength + thickness)*2, thickenssZ, (thickLength + thickness)*2);
+
 
         return boxcol;
     }
@@ -167,17 +158,18 @@ public class ArrowController : MonoBehaviour
     private void OnMouseOver()
     {
 
+
         Axe = new Vector3(Math.Abs(direction.normalized.x), Math.Abs(direction.normalized.y), Math.Abs(direction.normalized.z));
         maxPosition = 0f;
         minPosition = Math.Abs(Vector3.Dot(extent, direction.normalized)) - Math.Abs(Vector3.Dot(mapbounds.size, direction.normalized));
 
-        float futureposition = Vector3.Dot(target.transform.position+direction.normalized, Axe);
+        float futureposition = Vector3.Dot(target.transform.position+direction.normalized*0.001f, Axe);
         
         if (futureposition < minPosition || futureposition > maxPosition) return; 
 
-        target.transform.position += direction.normalized;
-        rulers[0].transform.position += direction.normalized;
-        rulers[1].transform.position += direction.normalized;
+        target.transform.position += direction.normalized * 0.001f;
+        rulers[0].transform.position += direction.normalized * 0.001f;
+        rulers[1].transform.position += direction.normalized * 0.001f;
 
     }
 

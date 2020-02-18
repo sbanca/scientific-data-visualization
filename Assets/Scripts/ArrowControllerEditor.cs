@@ -11,6 +11,8 @@ public enum OPTIONSSIGN
     negative = -1
 }
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(ArrowController))]
 public class ArrowControllerEditor : UnityEditor.Editor
 {
@@ -78,3 +80,4 @@ public class ArrowControllerEditor : UnityEditor.Editor
     }
 }
 
+#endif

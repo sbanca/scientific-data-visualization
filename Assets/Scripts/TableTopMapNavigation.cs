@@ -11,9 +11,9 @@ public class TableTopMapNavigation : MonoBehaviour
 
     public bool useSlippyMap = true;
 
-    public float rulerdistance = 2.5f;
+    public float rulerdistance = 0.025f;
 
-    public float arrowdistance = 8f;
+    public float arrowdistance = 0.08f;
 
     [SerializeField]
 
@@ -120,11 +120,11 @@ public class TableTopMapNavigation : MonoBehaviour
 
         // X top arrow 
         var ArrowCenter = new Vector3(size.w/2, 0f, size.z + rulerdistance + arrowdistance);
-        CreateArrow("arrow-top", 0, 10,  Vector3.back, ArrowCenter, Xrulers);
+        CreateArrow("arrow-top", 0, 0.1f,  Vector3.back, ArrowCenter, Xrulers);
 
         // X bottom arrow 
         ArrowCenter = new Vector3(size.w / 2, 0f,  0f - rulerdistance - arrowdistance);
-        CreateArrow("arrow-bottom", 1, 10, Vector3.forward, ArrowCenter, Xrulers);
+        CreateArrow("arrow-bottom", 1, 0.1f, Vector3.forward, ArrowCenter, Xrulers);
 
 
         // Y rulers
@@ -134,11 +134,11 @@ public class TableTopMapNavigation : MonoBehaviour
 
         // Y Right arrow 
         ArrowCenter = new Vector3(size.w + rulerdistance + arrowdistance, 0f, size.z / 2);
-        CreateArrow("arrow-right", 2, 10, Vector3.left, ArrowCenter, Yrulers);
+        CreateArrow("arrow-right", 2, 0.1f, Vector3.left, ArrowCenter, Yrulers);
 
         // Y Left arrow 
         ArrowCenter = new Vector3(0f - rulerdistance - arrowdistance, 0f, size.z / 2);
-        CreateArrow("arrow-left", 3, 10, Vector3.right, ArrowCenter, Yrulers);
+        CreateArrow("arrow-left", 3, 0.1f, Vector3.right, ArrowCenter, Yrulers);
 
     }
 
@@ -170,13 +170,20 @@ public class TableTopMapNavigation : MonoBehaviour
 
     private void CalculateMapsBounds() {
 
-        mapbounds = new Bounds(transform.position, Vector3.one);
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        foreach (Renderer renderer in renderers)
+        mapbounds = new Bounds();
+        MeshFilter[] meshfilter = GetComponentsInChildren<MeshFilter>();
+        foreach (MeshFilter m in meshfilter)
         {
-            if (renderer.gameObject.name == "Water" || renderer.gameObject.name == "Earth")
-                mapbounds.Encapsulate(renderer.bounds);
+            if (m.gameObject.name == "Water" || m.gameObject.name == "Earth")
+                mapbounds.Encapsulate( m.sharedMesh.bounds);
         }
+
+        BoxCollider b = gameObject.AddComponent<BoxCollider>();
+
+        b.size = mapbounds.size;
+        b.center = mapbounds.center;
+
+
     }
     
     private void InitializeMaterialClipping() {

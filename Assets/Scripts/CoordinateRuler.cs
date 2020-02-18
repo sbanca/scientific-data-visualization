@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System;
 
 public class CoordinateRuler : MonoBehaviour
 {
@@ -100,12 +99,12 @@ public class CoordinateRuler : MonoBehaviour
     }
 
     [SerializeField]
-    public float thickness = 1f;
+    public float thickness = 0.01f;
     [SerializeField]
-    public float thickenssZ = 0.1f;
+    public float thickenssZ = 0.001f;
     [SerializeField]
-    public float thickLength = 2.5f;
-  
+    public float thickLength = 0.025f;
+
     public Rect VisibilityRectagle;
 
     
@@ -276,7 +275,7 @@ public class CoordinateRuler : MonoBehaviour
 
         Rect vr = VisibilityRectagle;
 
-        Vector4 size = new Vector4(vr.x, vr.y, Math.Abs(vr.x)+ Math.Abs(vr.width), Math.Abs(vr.y) + Math.Abs(vr.height) ); 
+        Vector4 size = new Vector4(vr.x, vr.y, System.Math.Abs(vr.x)+ System.Math.Abs(vr.width), System.Math.Abs(vr.y) + System.Math.Abs(vr.height) ); 
 
 #if UNITY_EDITOR
 
