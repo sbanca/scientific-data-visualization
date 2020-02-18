@@ -164,7 +164,7 @@ public class CoordinateRuler : MonoBehaviour
 
         //bar material
         var r = bar.GetComponent<Renderer>();
-        Material m = Resources.Load("Materials/ruler-"+ name , typeof(Material)) as Material;
+        Material m = Resources.Load("Materials/"+ name , typeof(Material)) as Material;
         r.material = m;
        
     }
@@ -224,7 +224,7 @@ public class CoordinateRuler : MonoBehaviour
 
             //bar material
             var r = tickObject.GetComponent<Renderer>();
-            Material m = Resources.Load("Materials/ruler-" + name, typeof(Material)) as Material;
+            Material m = Resources.Load("Materials/" + name, typeof(Material)) as Material;
             r.material = m;
 
             //add to the list 
@@ -280,7 +280,7 @@ public class CoordinateRuler : MonoBehaviour
 
 #if UNITY_EDITOR
 
-        string path = "Materials/ruler-" + name;
+        string path = "Materials/" + name;
         Material m = Resources.Load(path, typeof(Material)) as Material;
         if (m != null) m.SetVector("_Corners", size);
 

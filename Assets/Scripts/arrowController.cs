@@ -7,7 +7,6 @@ using System;
 public class ArrowController : MonoBehaviour
 {
     //pbulic var
-
     [SerializeField]
     public float thickness = 1f;
     [SerializeField]
@@ -15,11 +14,12 @@ public class ArrowController : MonoBehaviour
     [SerializeField]
     public float thickLength = 2.5f;
 
-
     [SerializeField]
     private Vector3 direction = Vector3.right;
     private Vector3 oppositeDirection = Vector3.forward;
-
+    private Vector3 Axe;
+    private float maxPosition;
+    private float minPosition;
     public Vector3 Direction
     {
         get { return direction; }
@@ -30,16 +30,13 @@ public class ArrowController : MonoBehaviour
 
                 direction = value;
                 oppositeDirection = Vector3.Cross(direction, Vector3.up);
-
+             
             }
         }
     }
 
- 
     [SerializeField]
-
     private Vector3 center = new Vector3(0f, 0f, 0f);
-
     public Vector3 Center
     {
         get { return center; }
@@ -53,10 +50,29 @@ public class ArrowController : MonoBehaviour
         }
     }
 
-    private Bounds arrowbounds;
+    public GameObject target;
+    public GameObject[] rulers;
+
+    private Vector4 Size;
+    public Vector4 size {
+
+        get { return Size; }
+        set {
+
+            Size = value;
+            extent = new Vector3(size.z - size.x, 0f, size.w - size.y);
+        }
+
+    }
+    public Vector3 extent;
+
+    [SerializeField]
+    public Bounds mapbounds;
+   
+
 
     //private var 
-
+    private Bounds arrowbounds;
     private GameObject arrowLeft;
     private GameObject arrowRight;
     private MeshRenderer[] m_Renderer;
@@ -148,7 +164,24 @@ public class ArrowController : MonoBehaviour
         return boxcol;
     }
 
-    void OnMouseOver()
+    private void OnMouseOver()
+    {
+
+        Axe = new Vector3(Math.Abs(direction.normalized.x), Math.Abs(direction.normalized.y), Math.Abs(direction.normalized.z));
+        maxPosition = 0f;
+        minPosition = Math.Abs(Vector3.Dot(extent, direction.normalized)) - Math.Abs(Vector3.Dot(mapbounds.size, direction.normalized));
+
+        float futureposition = Vector3.Dot(target.transform.position+direction.normalized, Axe);
+        
+        if (futureposition < minPosition || futureposition > maxPosition) return; 
+
+        target.transform.position += direction.normalized;
+        rulers[0].transform.position += direction.normalized;
+        rulers[1].transform.position += direction.normalized;
+
+    }
+
+    void OnMouseEnter()
     {
         
         foreach(MeshRenderer r in m_Renderer) r.material.color = targetColor;
@@ -159,4 +192,5 @@ public class ArrowController : MonoBehaviour
 
         foreach (MeshRenderer r in m_Renderer) r.material.color = m_OriginalColor;
     }
+
 }
