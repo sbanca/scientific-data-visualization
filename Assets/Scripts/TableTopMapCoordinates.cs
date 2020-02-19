@@ -23,7 +23,7 @@ public class TableTopMapCoordinates: MonoBehaviour
     {
 
         float XmetersLocal = localCoordinate.x / target.UnitsPerMeter;
-        float YmetersLocal = localCoordinate.y / target.UnitsPerMeter;
+        float YmetersLocal = localCoordinate.z / target.UnitsPerMeter; // bare in mind z is y
 
         Mapzen.MercatorMeters LocalMercatorMeters = new Mapzen.MercatorMeters(XmetersLocal, YmetersLocal);
         return LocalMercatorMeters;
