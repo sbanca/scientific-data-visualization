@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mapzen.Unity;
 
+
+
 public class TableTopMapNavigation : MonoBehaviour
 {
-    //public variables
+    //public variable
 
     public MapStyle Style;
 
@@ -15,9 +17,16 @@ public class TableTopMapNavigation : MonoBehaviour
 
     public float arrowdistance = 0.08f;
 
+    public Mapzen.TileBounds Bounds;
+
+    public float UnitsPerMeter;
+
+    public Vector2 Origin;
+
     [SerializeField]
 
     private Vector4 size;
+
     public Vector4 Size   
     {
         get { return size; }   
@@ -32,9 +41,13 @@ public class TableTopMapNavigation : MonoBehaviour
 
     private GameObject[] arrows = new GameObject[4];
 
+    private TableTopMapCoordinates MapCoord;
+
+    //methods
 
     public void Initialize()
     {
+
         CalculateMapsBounds();
 
         InitializeMaterialClipping();
@@ -44,9 +57,23 @@ public class TableTopMapNavigation : MonoBehaviour
         if (useSlippyMap) CreateArrows();
     }
 
+    private void Start()
+    {
+        MapCoord = gameObject.AddComponent<TableTopMapCoordinates>();
+
+        MapCoord.target = this;
+
+    }
+
     private void CreateRulers() {
 
-        
+        //calculATE rANGETICKS
+        Vector2 RangeticksX = new Vector2(Bounds.max.x, Bounds.min.x);
+        int TicksnumberX = System.Math.Abs(Bounds.max.x - Bounds.min.x) +2;
+
+        Vector2 RangeticksY = new Vector2(Bounds.max.y, Bounds.min.y);
+        int TicksnumberY = System.Math.Abs(Bounds.max.y- Bounds.min.y) +2;
+
         // X top ruler 
         var RulerCenter = new Vector3(mapbounds.center.x , 0f, mapbounds.center.z + (mapbounds.size.z / 2));
         Rect VisibilityRectagle = new Rect(mapbounds.min.x - 20, mapbounds.min.z - 20 , mapbounds.size.x + 20, mapbounds.size.z + 20 );
@@ -55,7 +82,7 @@ public class TableTopMapNavigation : MonoBehaviour
             RulerCenter = new Vector3(mapbounds.center.x, 0f, size.z + rulerdistance);
             VisibilityRectagle = new Rect(size.x, size.z,size.z,size.w); 
         }        
-        CreateRuler("ruler-top",0, new Vector2(0, 20), 20 ,mapbounds.size.x, Vector3.right, RulerCenter, VisibilityRectagle);
+        CreateRuler("ruler-top",0, RangeticksX, TicksnumberX, mapbounds.size.x, Vector3.right, RulerCenter, VisibilityRectagle);
 
         // X Bottom ruler 
         RulerCenter = new Vector3(mapbounds.center.x, 0f, mapbounds.center.z - (mapbounds.size.z / 2));
@@ -64,7 +91,7 @@ public class TableTopMapNavigation : MonoBehaviour
             RulerCenter = new Vector3(mapbounds.center.x, 0f, size.y - rulerdistance);
             VisibilityRectagle = new Rect(size.x, -size.z, size.z, size.w);
         }
-        CreateRuler("ruler-bottom", 1, new Vector2(0, 20), 20, mapbounds.size.x, Vector3.left, RulerCenter, VisibilityRectagle);
+        CreateRuler("ruler-bottom", 1, RangeticksX, TicksnumberX, mapbounds.size.x, Vector3.left, RulerCenter, VisibilityRectagle);
 
 
         // Z left ruler 
@@ -74,7 +101,7 @@ public class TableTopMapNavigation : MonoBehaviour
             RulerCenter = new Vector3(size.w + rulerdistance, 0f, mapbounds.center.z);
             VisibilityRectagle = new Rect(size.w, size.y, size.z, size.w);
         }
-        CreateRuler("ruler-right", 2, new Vector2(0, 20), 30, mapbounds.size.z, Vector3.back, RulerCenter, VisibilityRectagle);
+        CreateRuler("ruler-right", 2, RangeticksY, TicksnumberY, mapbounds.size.z, Vector3.back, RulerCenter, VisibilityRectagle);
 
         // Z Right ruler 
         RulerCenter = new Vector3(mapbounds.center.x - (mapbounds.size.x / 2), 0f, mapbounds.center.z);
@@ -83,7 +110,7 @@ public class TableTopMapNavigation : MonoBehaviour
             RulerCenter = new Vector3(size.x - rulerdistance, 0f, mapbounds.center.z);
             VisibilityRectagle = new Rect(-size.w, size.y, size.z, size.w);
         }
-        CreateRuler("ruler-left", 3, new Vector2(0, 20), 30, mapbounds.size.z, Vector3.forward, RulerCenter, VisibilityRectagle);
+        CreateRuler("ruler-left", 3, RangeticksY, TicksnumberY, mapbounds.size.z, Vector3.forward, RulerCenter, VisibilityRectagle);
 
     }
 
@@ -232,5 +259,38 @@ public class TableTopMapNavigation : MonoBehaviour
 #endif
 
     }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Clicked();
+        }
+    }
+
+    private void Clicked()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hit))
+        {
+
+            Vector3 localCoordinate = MapCoord.WorldCoordinatesToMapLocalCoordiantes(hit.point);
+            Mapzen.MercatorMeters LocalMercMeters = MapCoord.MapLocalCoordinateToMapLocalMercatorMeters(localCoordinate);
+            Mapzen.MercatorMeters WorldMercMeters = MapCoord.MapLocalCoordinateToMapWorldMercatorMeters(localCoordinate);
+            Mapzen.LngLat pointLngLtd = MapCoord.MapLocalCoordinateToLtdLng(localCoordinate);
+
+            Debug.Log("Object: "+hit.collider.gameObject.name);
+            Debug.Log("World Coordinate: " + hit.point);
+            Debug.Log("Local Coordinate: " + localCoordinate);
+            Debug.Log("Marcators Meter from map origin X:" + LocalMercMeters.x + " Y:"+ LocalMercMeters.y) ;
+            Debug.Log("Marcators Meters" + WorldMercMeters.x + " Y:" + WorldMercMeters.y);
+            Debug.Log("Lng: " + pointLngLtd.longitude + " Ltd:" + pointLngLtd.latitude);
+
+        }
+    }
+
 
 }

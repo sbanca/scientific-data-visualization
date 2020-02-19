@@ -64,5 +64,25 @@ namespace Mapzen
                 }
             }
         }
+
+        public IEnumerable<TileAddress> TileLhgLtdRange
+        {
+            get
+            {
+                int startX = min.x;
+                int startY = max.y;
+
+                int rangeX = Math.Abs(max.x - min.x);
+                int rangeY = Math.Abs(max.y - min.y);
+
+                for (int x = 0; x <= rangeX; ++x)
+                {
+                    for (int y = 0; y <= rangeY; ++y)
+                    {
+                        yield return new TileAddress(startX + x, startY + y, area.zoom);
+                    }
+                }
+            }
+        }
     }
 }

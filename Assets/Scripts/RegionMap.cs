@@ -203,18 +203,21 @@ namespace Mapzen
             sceneGraph.Generate();
 
 
-            // If slippy map is enabled
+            //Tabletop
+
+            TileBounds Bounds = new TileBounds(Area);
 
             var tableTopNavigation = regionMap.AddComponent<TableTopMapNavigation>();
 
             if (useSlippyMap) tableTopNavigation.useSlippyMap = true;
             else tableTopNavigation.useSlippyMap = false;
-
+            
+            tableTopNavigation.Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
+            tableTopNavigation.Bounds = Bounds;
             tableTopNavigation.Style = Style;
             tableTopNavigation.Size = SlippyMapSize;
+            tableTopNavigation.UnitsPerMeter = UnitsPerMeter;
             tableTopNavigation.Initialize();
-
-            
 
         }
 
