@@ -22,6 +22,7 @@ namespace Mapzen
     {
         public readonly TileAddress min;
         public readonly TileAddress max;
+        
 
         private TileArea area;
 

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mapzen.Unity;
+using System.Linq;
 
-
-
-public class TableTopMapNavigation : MonoBehaviour
+public class TableTopMapNavigation : Singleton<TableTopMapNavigation>
 {
     //public variable
 
@@ -41,7 +40,12 @@ public class TableTopMapNavigation : MonoBehaviour
 
     private GameObject[] arrows = new GameObject[4];
 
-    private TableTopMapCoordinates MapCoord;
+    public TableTopMapCoordinates MapCoord;
+
+    public OpenRouteService MapOpenRouteService;
+
+    public MapAnnotations MapAnnot;
+
 
     //methods
 
@@ -59,9 +63,13 @@ public class TableTopMapNavigation : MonoBehaviour
 
     private void Start()
     {
-        MapCoord = gameObject.AddComponent<TableTopMapCoordinates>();
+        
+
+        MapCoord = TableTopMapCoordinates.Instance;
 
         MapCoord.target = this;
+
+        MapOpenRouteService = OpenRouteService.Instance;
 
     }
 
@@ -205,6 +213,13 @@ public class TableTopMapNavigation : MonoBehaviour
                 mapbounds.Encapsulate( m.sharedMesh.bounds);
         }
 
+        createBoxCollider();
+
+
+    }
+
+    private void createBoxCollider() {
+
         BoxCollider b = gameObject.AddComponent<BoxCollider>();
 
         b.size = mapbounds.size;
@@ -212,7 +227,7 @@ public class TableTopMapNavigation : MonoBehaviour
 
 
     }
-    
+
     private void InitializeMaterialClipping() {
 
         var corners = useSlippyMap ? size : new Vector4(mapbounds.min.x, mapbounds.min.z, mapbounds.size.x, mapbounds.size.z);
@@ -268,7 +283,7 @@ public class TableTopMapNavigation : MonoBehaviour
         }
     }
 
-    private void Clicked()
+    private async void Clicked()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -277,10 +292,16 @@ public class TableTopMapNavigation : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
 
+            if (hit.point.x < size.x || hit.point.x > size.z || hit.point.z < size.y || hit.point.z > size.w) {
+                return; 
+            }
+            
             Vector3 localCoordinate = MapCoord.WorldCoordinatesToMapLocalCoordiantes(hit.point);
             Mapzen.MercatorMeters LocalMercMeters = MapCoord.MapLocalCoordinateToMapLocalMercatorMeters(localCoordinate);
             Mapzen.MercatorMeters WorldMercMeters = MapCoord.MapLocalCoordinateToMapWorldMercatorMeters(localCoordinate);
             Mapzen.LngLat pointLngLtd = MapCoord.MapLocalCoordinateToLtdLng(localCoordinate);
+            PoisResponse response = await MapOpenRouteService.Pois(pointLngLtd);
+            GeoFeature closestfeature = ClosestFeature(response, pointLngLtd);
 
             Debug.Log("Object: "+hit.collider.gameObject.name);
             Debug.Log("World Coordinate: " + hit.point);
@@ -288,8 +309,37 @@ public class TableTopMapNavigation : MonoBehaviour
             Debug.Log("Marcators Meter from map origin X:" + LocalMercMeters.x + " Y:"+ LocalMercMeters.y) ;
             Debug.Log("Marcators Meters" + WorldMercMeters.x + " Y:" + WorldMercMeters.y);
             Debug.Log("Lng: " + pointLngLtd.longitude + " Ltd:" + pointLngLtd.latitude);
+            Debug.Log(closestfeature.properties.label);
 
         }
+    }
+
+    public GeoFeature ClosestFeature(PoisResponse Response, Mapzen.LngLat coordinates)
+    {
+
+
+
+        Vector2 pointA = MapCoord.LtdLngToMapLocalCoordinates(coordinates);
+
+
+        //for each feature get mercatorsmeters and compute distance 
+
+        for (int x = 0; x < Response.features.Count; x++)
+        {
+
+            GeoFeature f = Response.features[x];
+
+            Mapzen.LngLat LngLatCoord = new Mapzen.LngLat(f.geometry.coordinates[0], f.geometry.coordinates[1]);
+
+            Vector2 pointB = MapCoord.LtdLngToMapLocalCoordinates(LngLatCoord);
+
+            Response.features[x].Distance = Vector2.Distance(pointA, pointB);
+
+        }
+
+        List<GeoFeature> SortedList = Response.features.OrderBy(o => o.Distance).ToList();
+
+        return SortedList[0];
     }
 
 

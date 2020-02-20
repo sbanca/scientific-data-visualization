@@ -5,6 +5,7 @@ using UnityEngine;
 using Mapzen.VectorData;
 using Mapzen.Unity;
 using Mapzen.VectorData.Formats;
+using TableTop;
 
 namespace Mapzen
 {
@@ -205,20 +206,35 @@ namespace Mapzen
 
             //Tabletop
 
+            //TileBounds Bounds = new TileBounds(Area);
+
+            //var tableTopNavigation = regionMap.AddComponent<TableTopMapNavigation>();
+
+            //if (useSlippyMap) tableTopNavigation.useSlippyMap = true;
+            //else tableTopNavigation.useSlippyMap = false;
+
+            //tableTopNavigation.Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
+            //tableTopNavigation.Bounds = Bounds;
+            //tableTopNavigation.Style = Style;
+            //tableTopNavigation.Size = SlippyMapSize;
+            //tableTopNavigation.UnitsPerMeter = UnitsPerMeter;
+            //tableTopNavigation.Initialize();
+
             TileBounds Bounds = new TileBounds(Area);
 
-            var tableTopNavigation = regionMap.AddComponent<TableTopMapNavigation>();
+            var TableTopMap = regionMap.AddComponent<Map>();
 
-            if (useSlippyMap) tableTopNavigation.useSlippyMap = true;
-            else tableTopNavigation.useSlippyMap = false;
+            TableTopMap.useSlippyMap = useSlippyMap ? true : false;
+
+            TableTopMap.MercatorMetersOrigin = Bounds.min.GetOriginMercatorMeters();
+            TableTopMap.Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
+            TableTopMap.TileBounds = Bounds;
+            TableTopMap.Style = Style;
+            TableTopMap.SlippyMapSize = SlippyMapSize;
+            TableTopMap.UnitsPerMeter = UnitsPerMeter;
+            TableTopMap.Initialize();
+
             
-            tableTopNavigation.Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
-            tableTopNavigation.Bounds = Bounds;
-            tableTopNavigation.Style = Style;
-            tableTopNavigation.Size = SlippyMapSize;
-            tableTopNavigation.UnitsPerMeter = UnitsPerMeter;
-            tableTopNavigation.Initialize();
-
         }
 
         public bool IsValid()
