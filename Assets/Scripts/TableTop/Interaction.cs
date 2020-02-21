@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -13,13 +14,16 @@ namespace TableTop
 
         private Vector4 size;
 
-        private void Start() {
+        private Annotations MapAnnotations;
 
-                MapCoordinates = Coordinates.Instance;
+        private void Start()
+        {
 
-                MapOpenRouteService = OpenRouteService.Instance;
+            MapCoordinates = Coordinates.Instance;
 
-                size = new Vector4(Boundaries.Instance.TableBounds.min.x, Boundaries.Instance.TableBounds.min.z, Boundaries.Instance.TableBounds.max.x, Boundaries.Instance.TableBounds.max.z);
+            MapOpenRouteService = OpenRouteService.Instance;
+
+            size = new Vector4(Boundaries.Instance.TableBounds.min.x, Boundaries.Instance.TableBounds.min.z, Boundaries.Instance.TableBounds.max.x, Boundaries.Instance.TableBounds.max.z);
 
         }
 
@@ -27,11 +31,20 @@ namespace TableTop
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Clicked();
+                
+                var point = GetClickedPoint();
+
+                if (point == null) return;
+
+                Vector3 p = (Vector3)point;
+
+                GetPointInfo(p);
+                SpanAnnotation(p);
+
             }
         }
 
-        private async void Clicked()
+        private Nullable<Vector3> GetClickedPoint()
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -42,60 +55,49 @@ namespace TableTop
 
                 if (hit.point.x < size.x || hit.point.x > size.z || hit.point.z < size.y || hit.point.z > size.w)
                 {
-                    return;
+                    
+                    return null;
                 }
 
-                
-                Vector3 localCoordinate = MapCoordinates.WorldCoordinatesToMapLocalCoordiantes(hit.point);
-                Mapzen.MercatorMeters LocalMercMeters = MapCoordinates.MapLocalCoordinateToMapLocalMercatorMeters(localCoordinate);
-                Mapzen.MercatorMeters WorldMercMeters = MapCoordinates.MapLocalCoordinateToMapWorldMercatorMeters(localCoordinate);
-                Mapzen.LngLat pointLngLtd = MapCoordinates.MapLocalCoordinateToLtdLng(localCoordinate);
-                PoisResponse response = await MapOpenRouteService.Pois(pointLngLtd);
-                GeoFeature closestfeature = ClosestFeature(response, pointLngLtd);
-
-                Debug.Log("Object: " + hit.collider.gameObject.name);
-                Debug.Log("World Coordinate: " + hit.point);
-                Debug.Log("Local Coordinate: " + localCoordinate);
-                Debug.Log("Marcators Meter from map origin X:" + LocalMercMeters.x + " Y:" + LocalMercMeters.y);
-                Debug.Log("Marcators Meters" + WorldMercMeters.x + " Y:" + WorldMercMeters.y);
-                Debug.Log("Lng: " + pointLngLtd.longitude + " Ltd:" + pointLngLtd.latitude);
-                Debug.Log(closestfeature.properties.label);
-
-                Annotation ann = Annotation.Instance;
-
-                ann.SpawnAnnotation(hit.point);
+                return hit.point;
 
             }
+
+            return null;
         }
 
-        public GeoFeature ClosestFeature(PoisResponse Response, Mapzen.LngLat coordinates)
+        private async void GetPointInfo(Vector3 point)
         {
+            Vector3 localCoordinate = MapCoordinates.WorldCoordinatesToMapLocalCoordiantes(point);
+            Mapzen.MercatorMeters LocalMercMeters = MapCoordinates.MapLocalCoordinateToMapLocalMercatorMeters(localCoordinate);
+            Mapzen.MercatorMeters WorldMercMeters = MapCoordinates.MapLocalCoordinateToMapWorldMercatorMeters(localCoordinate);
+            Mapzen.LngLat pointLngLtd = MapCoordinates.MapLocalCoordinateToLtdLng(localCoordinate);
+            GeoFeature closestfeature = await MapOpenRouteService.SinglePois(pointLngLtd);
 
-
-
-            Vector2 pointA = MapCoordinates.LtdLngToMapLocalCoordinates(coordinates);
-
-
-            //for each feature get mercatorsmeters and compute distance 
-
-            for (int x = 0; x < Response.features.Count; x++)
-            {
-
-                GeoFeature f = Response.features[x];
-
-                Mapzen.LngLat LngLatCoord = new Mapzen.LngLat(f.geometry.coordinates[0], f.geometry.coordinates[1]);
-
-                Vector2 pointB = MapCoordinates.LtdLngToMapLocalCoordinates(LngLatCoord);
-
-                Response.features[x].Distance = Vector2.Distance(pointA, pointB);
-
-            }
-
-            List<GeoFeature> SortedList = Response.features.OrderBy(o => o.Distance).ToList();
-
-            return SortedList[0];
+            Debug.Log("GET POINT INFO \n" + 
+                      closestfeature.properties.label + " Lng: " + pointLngLtd.longitude + " Ltd: " + pointLngLtd.latitude+
+                      "\n Unity World Coordinate: " + point +
+                      "\n Local Coordinate: " + localCoordinate +
+                      "\n Marcators Meter from map origin X:" + LocalMercMeters.x + " Y:" + LocalMercMeters.y +
+                      "\n Marcators Meters" + WorldMercMeters.x + " Y:" + WorldMercMeters.y );
+     
         }
 
-    }
+        private void SpanAnnotation(Vector3 point) {
 
+            if (MapAnnotations==null) GetAnnotationInstance();
+
+            MapAnnotations.SpawnAnnotation(point);
+        }
+
+        private void GetAnnotationInstance() {
+            
+            MapAnnotations = Annotations.Instance;
+
+        }
+    }
 }
+
+
+
+
