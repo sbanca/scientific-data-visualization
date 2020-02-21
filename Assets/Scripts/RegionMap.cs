@@ -203,35 +203,14 @@ namespace Mapzen
 
             sceneGraph.Generate();
 
-
-            //Tabletop
-
-            //TileBounds Bounds = new TileBounds(Area);
-
-            //var tableTopNavigation = regionMap.AddComponent<TableTopMapNavigation>();
-
-            //if (useSlippyMap) tableTopNavigation.useSlippyMap = true;
-            //else tableTopNavigation.useSlippyMap = false;
-
-            //tableTopNavigation.Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
-            //tableTopNavigation.Bounds = Bounds;
-            //tableTopNavigation.Style = Style;
-            //tableTopNavigation.Size = SlippyMapSize;
-            //tableTopNavigation.UnitsPerMeter = UnitsPerMeter;
-            //tableTopNavigation.Initialize();
+            //tabletop setup
 
             TileBounds Bounds = new TileBounds(Area);
-
             var TableTopMap = regionMap.AddComponent<Map>();
-            TableTopMap = Map.Instance;
-            TableTopMap.useSlippyMap = useSlippyMap ? true : false;
-            TableTopMap.MercatorMetersOrigin = Bounds.min.GetOriginMercatorMeters();
-            TableTopMap.Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
-            TableTopMap.TileBounds = Bounds;
-            TableTopMap.Style = Style;
-            TableTopMap.SlippyMapSize = SlippyMapSize;
-            TableTopMap.UnitsPerMeter = UnitsPerMeter;
-            TableTopMap.Initialize();
+            var Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
+            
+
+            TableTopMap.Initialize(useSlippyMap, Origin, Bounds, Style, SlippyMapSize, UnitsPerMeter);
 
             
         }

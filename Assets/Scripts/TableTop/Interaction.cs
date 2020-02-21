@@ -61,6 +61,10 @@ namespace TableTop
                 Debug.Log("Lng: " + pointLngLtd.longitude + " Ltd:" + pointLngLtd.latitude);
                 Debug.Log(closestfeature.properties.label);
 
+                Annotation ann = Annotation.Instance;
+
+                ann.SpawnAnnotation(hit.point);
+
             }
         }
 

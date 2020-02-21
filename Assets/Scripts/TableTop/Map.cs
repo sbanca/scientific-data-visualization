@@ -20,8 +20,6 @@ namespace TableTop
 
         public MapStyle Style;
 
-        public Mapzen.MercatorMeters MercatorMetersOrigin;
-
         public Vector2 Origin;
 
 
@@ -38,8 +36,15 @@ namespace TableTop
         public Interaction MapInteraction;
 
 
-        public void Initialize()
+        public void Initialize(bool useSlippyMap, Vector2 origin, Mapzen.TileBounds bounds, MapStyle style, Vector4 slippyMapSize, float unitsPerMeter)
         {
+            this.useSlippyMap = useSlippyMap;
+            this.Origin = origin;
+            this.TileBounds = bounds;
+            this.Style = style;
+            this.SlippyMapSize = slippyMapSize;
+            this.UnitsPerMeter = unitsPerMeter;
+
             //boundaries
 
             MapBoundaries = gameObject.AddComponent<Boundaries>();

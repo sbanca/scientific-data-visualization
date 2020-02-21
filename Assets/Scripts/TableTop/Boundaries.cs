@@ -79,7 +79,7 @@ namespace TableTop {
 
         }
 
-        private async void  InitializeMaterialClipping()
+        private void  InitializeMaterialClipping()
         {
 
             //while (Map.Instance == null)
