@@ -35,6 +35,8 @@ namespace TableTop
 
         public Interaction MapInteraction;
 
+        public Augmentations MapAugmentations;
+
 
         public void Initialize(bool useSlippyMap, Vector2 origin, Mapzen.TileBounds bounds, MapStyle style, Vector4 slippyMapSize, float unitsPerMeter)
         {
@@ -69,6 +71,9 @@ namespace TableTop
             //Interaction 
             MapInteraction = gameObject.AddComponent<Interaction>();
 
+            //Interaction 
+            MapAugmentations = gameObject.AddComponent<Augmentations>();
+
 
         }
 
@@ -81,6 +86,11 @@ namespace TableTop
             MapArrows = Arrows.Instance;
 
             MapCoordinates = Coordinates.Instance;
+
+            MapInteraction = Interaction.Instance;
+
+            MapAugmentations = Augmentations.Instance;
+
 
         }
 

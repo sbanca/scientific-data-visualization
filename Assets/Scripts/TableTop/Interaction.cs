@@ -12,10 +12,13 @@ namespace TableTop
 
         private OpenRouteService MapOpenRouteService;
 
-        private Vector4 size;
+        private Vector4 TableTopSize;
 
         private Annotations MapAnnotations;
 
+        private Camera MainCam;
+
+        private BoxCollider MapCollider;
         private void Start()
         {
 
@@ -23,7 +26,11 @@ namespace TableTop
 
             MapOpenRouteService = OpenRouteService.Instance;
 
-            size = new Vector4(Boundaries.Instance.TableBounds.min.x, Boundaries.Instance.TableBounds.min.z, Boundaries.Instance.TableBounds.max.x, Boundaries.Instance.TableBounds.max.z);
+            MapCollider = Map.Instance.gameObject.GetComponent<BoxCollider>();
+            
+            TableTopSize = Boundaries.Instance.slippyMapSize;
+
+            MainCam = Camera.main;
 
         }
 
@@ -44,16 +51,18 @@ namespace TableTop
             }
         }
 
+        private RaycastHit hit;
+
+        private Ray ray;
+
         private Nullable<Vector3> GetClickedPoint()
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            ray = MainCam.ScreenPointToRay(Input.mousePosition);          
 
-            RaycastHit hit = new RaycastHit();
-
-            if (Physics.Raycast(ray, out hit))
+            if (MapCollider.Raycast(ray, out hit, 200f))
             {
 
-                if (hit.point.x < size.x || hit.point.x > size.z || hit.point.z < size.y || hit.point.z > size.w)
+                if (hit.point.x < TableTopSize.x || hit.point.x > TableTopSize.z || hit.point.z < TableTopSize.y || hit.point.z > TableTopSize.w)
                 {
                     
                     return null;

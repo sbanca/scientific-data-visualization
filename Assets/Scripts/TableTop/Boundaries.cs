@@ -19,7 +19,7 @@ namespace TableTop {
 
         public Bounds TableBounds;
 
-        private Vector4 slippyMapSize;
+        public Vector4 slippyMapSize;
 
         public Vector4 SlippyMapSize {
 
@@ -79,15 +79,15 @@ namespace TableTop {
 
         }
 
-        private void  InitializeMaterialClipping()
+        private async void  InitializeMaterialClipping()
         {
 
-            //while (Map.Instance == null)
-            //{
-            //    Console.WriteLine("Map is null");
-            //    await Task.Delay(25);
+            while (Map.Instance == null)
+            {
+                Console.WriteLine("Map is null");
+                await Task.Delay(25);
 
-            //}
+            }
 
             var cornersBounds =  Map.Instance.useSlippyMap ? TableBounds : MapBounds;
             var corners = new Vector4(cornersBounds.min.x, cornersBounds.min.z, cornersBounds.size.x, cornersBounds.size.z);
@@ -135,7 +135,6 @@ namespace TableTop {
 #endif
 
         }
-
 
         private (float, float) getCenterAndSizeFromMinAndMax(double min, double max)
         {

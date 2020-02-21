@@ -208,8 +208,6 @@ namespace Mapzen
             TileBounds Bounds = new TileBounds(Area);
             var TableTopMap = regionMap.AddComponent<Map>();
             var Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
-            
-
             TableTopMap.Initialize(useSlippyMap, Origin, Bounds, Style, SlippyMapSize, UnitsPerMeter);
 
             
