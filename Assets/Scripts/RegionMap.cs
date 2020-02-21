@@ -223,9 +223,8 @@ namespace Mapzen
             TileBounds Bounds = new TileBounds(Area);
 
             var TableTopMap = regionMap.AddComponent<Map>();
-
+            TableTopMap = Map.Instance;
             TableTopMap.useSlippyMap = useSlippyMap ? true : false;
-
             TableTopMap.MercatorMetersOrigin = Bounds.min.GetOriginMercatorMeters();
             TableTopMap.Origin = new Vector2((float)Bounds.min.GetOriginMercatorMeters().x, (float)Bounds.min.GetOriginMercatorMeters().y);
             TableTopMap.TileBounds = Bounds;

@@ -6,15 +6,30 @@ namespace TableTop
 {
     public class Annotation : Singleton<Annotation>
     {
-        // Start is called before the first frame update
-        void Start()
+      
+
+        public GameObject AnnotationPrefab;
+
+        List<GameObject> Alist = new List<GameObject>();
+
+
+        public void SpawnAnnotation(Vector3 LocalPosition)
         {
+
+            GameObject Annotation = Instantiate(AnnotationPrefab);
+
+            Annotation.transform.position = LocalPosition;
+
+            Annotation.transform.parent = Map.Instance.gameObject.transform;
+
+            Alist.Add(Annotation);
 
         }
 
-        // Update is called once per frame
-        void Update()
+        public void DeleteAllAnnotations()
         {
+
+            foreach (GameObject A in Alist) Destroy(A);
 
         }
     }
