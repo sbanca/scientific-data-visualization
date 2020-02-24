@@ -37,6 +37,7 @@ namespace TableTop
 
         public Augmentations MapAugmentations;
 
+        public Pannels MapPannels;
 
         public void Initialize(bool useSlippyMap, Vector2 origin, Mapzen.TileBounds bounds, MapStyle style, Vector4 slippyMapSize, float unitsPerMeter)
         {
@@ -74,6 +75,8 @@ namespace TableTop
             //Interaction 
             MapAugmentations = gameObject.AddComponent<Augmentations>();
 
+            //Pannels
+            MapPannels = gameObject.AddComponent<Pannels>();
 
         }
 
@@ -91,6 +94,7 @@ namespace TableTop
 
             MapAugmentations = Augmentations.Instance;
 
+            MapPannels = Pannels.Instance;
 
         }
 

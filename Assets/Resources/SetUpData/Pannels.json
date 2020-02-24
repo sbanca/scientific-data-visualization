@@ -1,0 +1,64 @@
+{
+
+	"List":[
+		{
+		"User":0,
+		"List":[
+				{
+				"Name":"firstTask",
+				"Description":"first Task Description",
+				"Options":[{},{},{}],
+				"TimeLocked":"false",
+				"Time":"",
+				"Duration":""
+				},
+				{
+				"Name":"secondTask",
+				"Description":"second Task Description",
+				"Options":[{},{}],
+				"TimeLocked":"false",
+				"Time":"",
+				"Duration":""
+				},
+				{
+				"Name":"thirdTask",
+				"Description":"third Task Description",
+				"Options":[{}],
+				"TimeLocked":"false",
+				"Time":"",
+				"Duration":""
+				}
+			]	
+		},
+		{
+		"User":1,
+		"List":[
+				{
+				"Name":"firstTask",
+				"Description":"first Task Description",
+				"Options":[{},{},{}],
+				"TimeLocked":"false",
+				"Time":"",
+				"Duration":""
+				},
+				{
+				"Name":"secondTask",
+				"Description":"second Task Description",
+				"Options":[{},{}],
+				"TimeLocked":"false",
+				"Time":"",
+				"Duration":""
+				},
+				{
+				"Name":"thirdTask",
+				"Description":"third Task Description",
+				"Options":[{}],
+				"TimeLocked":"false",
+				"Time":"",
+				"Duration":""
+				}
+			]	
+		}
+	]
+
+}

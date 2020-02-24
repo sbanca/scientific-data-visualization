@@ -47,6 +47,12 @@ namespace TableTop {
 
                         break;
 
+                    case AUGMENTOPTIONS.circle:
+
+                        CircleAugmentation(MouseLocationOnMap);
+
+                        break;
+
                 }
             }
         }
@@ -87,6 +93,41 @@ namespace TableTop {
             ASphere = AugmentationSphere.Instance;
         }
 
+        //Agumentation Sphere
+        private AugmentationCircle ACircle;
+
+        private void CircleAugmentation(Vector3? pointOnMap)
+        {
+
+            if (ACircle == null) GetAugmentationCircle();
+
+            if (pointOnMap == null)
+            {
+
+
+                ACircle.HideCircle();
+
+                return;
+
+            }
+            else
+            {
+
+                Vector3 pointOnMapsafe = (Vector3)pointOnMap;
+
+                ACircle.UpdateCircleLocation(pointOnMapsafe);
+
+                return;
+
+            }
+
+        }
+
+        private void GetAugmentationCircle()
+        {
+
+            ACircle = AugmentationCircle.Instance;
+        }
 
     }
 }

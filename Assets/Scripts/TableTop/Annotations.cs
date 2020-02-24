@@ -16,7 +16,7 @@ namespace TableTop
         public void SpawnAnnotation(Vector3 LocalPosition)
         {
 
-            AnnotationPrefab = Resources.Load("Prefabs/annotation_prefab", typeof(GameObject)) as GameObject;
+            if (AnnotationPrefab == null) GetAnnotationPrefab();
 
             GameObject Annotation = Instantiate(AnnotationPrefab);
 
@@ -78,6 +78,12 @@ namespace TableTop
         {
 
             foreach (GameObject A in Alist) Destroy(A);
+
+        }
+
+        public void GetAnnotationPrefab() {
+
+            AnnotationPrefab = Resources.Load("Prefabs/annotation_prefab", typeof(GameObject)) as GameObject;
 
         }
     }
