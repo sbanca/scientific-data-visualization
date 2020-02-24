@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 namespace TableTop
@@ -49,7 +46,7 @@ namespace TableTop
 
             title.text = _pannelTask.Name;
 
-            gameObject.name = _pannelTask.Name;
+            this.gameObject.name = _pannelTask.Name;
 
         }
 
@@ -57,9 +54,11 @@ namespace TableTop
         {
             float newValue = startingValue - (_panelItemNumber * height );
 
-            gameObject.transform.position = new Vector3(0f, 0f, newValue);
+            this.gameObject.transform.localPosition = new Vector3(0f, 0f, newValue);
 
         }
+
+
 
     }
 }

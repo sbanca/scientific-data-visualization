@@ -25,6 +25,11 @@ namespace TableTop
                 Pannels.Instance.GeneratePanels();
             }
 
+            if (GUILayout.Button("delete data "))
+            {
+                Pannels.Instance.DeleteData();
+            }
+
             serializedObject.ApplyModifiedProperties();
 
         }

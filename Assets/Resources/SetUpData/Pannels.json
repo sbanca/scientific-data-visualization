@@ -1,64 +1,77 @@
 {
-
 	"List":[
 		{
+		"Title":"User A",
 		"User":0,
-		"List":[
-				{
-				"Name":"firstTask",
-				"Description":"first Task Description",
+		"SetPosition":"true",
+		"Position":[0.866,-0.008,-0.564],
+		"Rotation":[-74.746,54.565,0],
+        "Scale":[0.8,0.8,0.8],	
+		"Type":"USERPANEL",
+		"List":[{
+				"Name":"First Task",
+				"Description":"First Task Description",
 				"Options":[{},{},{}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
 				},
 				{
-				"Name":"secondTask",
-				"Description":"second Task Description",
+				"Name":"Second Task",
+				"Description":"Second Task Description",
 				"Options":[{},{}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
 				},
 				{
-				"Name":"thirdTask",
-				"Description":"third Task Description",
+				"Name":"Third Task",
+				"Description":"Third Task Description",
 				"Options":[{}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
-				}
-			]	
-		},
-		{
+				}]
+		},{
+		"Title":"User B",
 		"User":1,
+		"SetPosition":"true",
+		"Position":[-0.58,0.021,0.879],
+		"Rotation":[-74.746,54.565,-34.417],
+        "Scale":[0.8,0.8,0.8],	
+		"Type":0,
 		"List":[
 				{
-				"Name":"firstTask",
-				"Description":"first Task Description",
+				"Name":"First Task",
+				"Description":"First Task Description",
 				"Options":[{},{},{}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
 				},
 				{
-				"Name":"secondTask",
-				"Description":"second Task Description",
+				"Name":"Second Task",
+				"Description":"Second Task Description",
 				"Options":[{},{}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
 				},
 				{
-				"Name":"thirdTask",
-				"Description":"third Task Description",
+				"Name":"Third Task",
+				"Description":"Third Task Description",
 				"Options":[{}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
-				}
-			]	
-		}
-	]
+				}]	
+		},{
+		"Title":"Task Construction",
+		"SetPosition":"true",
+		"Position":[0.003,0.201,0.065],
+		"Rotation":[-49.245,45.329,-0.459],
+        "Scale":[0.8,0.8,0.8],	
+		"Type":1
+		}]
 
 }

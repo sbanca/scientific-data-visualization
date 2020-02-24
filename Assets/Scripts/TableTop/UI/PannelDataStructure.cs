@@ -17,6 +17,11 @@ namespace TableTop
     {
         public List<PannelTask> List;
         public UserID User;
+        public string Title;
+        public float[] Position;      
+        public float[] Scale;
+        public float[] Rotation;
+        public PanelType Type;
 
     }
 
@@ -61,6 +66,15 @@ namespace TableTop
 
         FIRST = 0,
         SECOND = 1
+    }
+
+    [Serializable]
+    public enum PanelType
+    {
+
+        USERPANEL = 0,
+        TASKASSEMBLYPANNEL = 1,
+        INFO = 3
     }
 
 }

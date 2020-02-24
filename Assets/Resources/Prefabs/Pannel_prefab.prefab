@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 1034975096335239124}
   - component: {fileID: 1034975096335239127}
   - component: {fileID: 1034975096335239126}
-  - component: {fileID: 1034975096335239125}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -260,19 +259,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1034975096335239125
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034975096335239131}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1034975096854899405
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +270,7 @@ GameObject:
   - component: {fileID: 1034975096854899406}
   - component: {fileID: 5806232548116340824}
   m_Layer: 0
-  m_Name: Pannel
+  m_Name: Pannel_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,6 +319,11 @@ MonoBehaviour:
       Options: []
       TimeLocked: 0
     User: 0
+    Title: 
+    Position: []
+    Scale: []
+    Rotation: []
+    Type: 0
   PannelItemPrefab: {fileID: 980222896304549124, guid: 450cb964e18a68b4495f001b38c15ce9,
     type: 3}
   PannelItems:
