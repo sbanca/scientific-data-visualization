@@ -55,12 +55,16 @@ namespace TableTop
 
         }
 
-        public Vector3 LtdLngToMapLocalCoordinates(Mapzen.LngLat LngLatCoordinate)
+        public Vector3 LatLngToMapLocalCoordinates(Mapzen.LngLat LngLatCoordinate)
         {
+            var Origin = Map.Instance.Origin;
 
             Mapzen.MercatorMeters mercmeters = Mapzen.Geo.Project(LngLatCoordinate);
-            double XmetersLocal = mercmeters.x * Map.Instance.UnitsPerMeter;
-            double YmetersLocal = mercmeters.y * Map.Instance.UnitsPerMeter;
+
+            double XmetersLocal = ( mercmeters.x - Origin.x ) * Map.Instance.UnitsPerMeter ;
+
+            double YmetersLocal = ( mercmeters.y - Origin.y ) * Map.Instance.UnitsPerMeter ; 
+
             return new Vector3((float)XmetersLocal, 0f, (float)YmetersLocal);
 
         }

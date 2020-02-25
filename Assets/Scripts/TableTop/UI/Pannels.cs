@@ -97,8 +97,7 @@ namespace TableTop{
         }
 
         public void DeleteData() {
-            if(pannelsData 
-             != null) pannelsData = null;
+            if(pannelsData != null) pannelsData = null;
         }
 
         public static string LoadResourceTextfile(string name)
@@ -114,13 +113,17 @@ namespace TableTop{
         public void DeletePannels()
         {
 
-
             foreach (GameObject go in pannelsGameObjects)
             {
-
+             
+#if UNITY_EDITOR
+                DestroyImmediate(go);
+#else
                 Destroy(go);
+#endif
 
             }
+
         }
 
         private void CreatePannelsParent() {

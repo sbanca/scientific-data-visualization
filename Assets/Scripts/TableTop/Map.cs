@@ -39,6 +39,8 @@ namespace TableTop
 
         public Pannels MapPannels;
 
+        public SpatialAnchors MapSpatialAnchors;
+
         public void Initialize(bool useSlippyMap, Vector2 origin, Mapzen.TileBounds bounds, MapStyle style, Vector4 slippyMapSize, float unitsPerMeter)
         {
             this.useSlippyMap = useSlippyMap;
@@ -68,6 +70,8 @@ namespace TableTop
 
             MapArrows.Initialize();
 
+            //Coordinates 
+            MapCoordinates = gameObject.AddComponent<Coordinates>();
 
             //Interaction 
             MapInteraction = gameObject.AddComponent<Interaction>();
@@ -77,6 +81,9 @@ namespace TableTop
 
             //Pannels
             MapPannels = gameObject.AddComponent<Pannels>();
+
+            //SpatialAnchors
+            MapSpatialAnchors = gameObject.AddComponent<SpatialAnchors>();
 
         }
 
@@ -95,6 +102,8 @@ namespace TableTop
             MapAugmentations = Augmentations.Instance;
 
             MapPannels = Pannels.Instance;
+
+            MapSpatialAnchors = SpatialAnchors.Instance;
 
         }
 

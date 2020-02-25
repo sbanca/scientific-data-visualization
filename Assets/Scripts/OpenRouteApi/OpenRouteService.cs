@@ -46,7 +46,7 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
         PoisResponse Response = await Pois(coordinates);
 
-        Vector2 pointA = MapCoordinates.LtdLngToMapLocalCoordinates(coordinates);
+        Vector2 pointA = MapCoordinates.LatLngToMapLocalCoordinates(coordinates);
 
 
         for (int x = 0; x < Response.features.Count; x++)
@@ -56,7 +56,7 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
             Mapzen.LngLat LngLatCoord = new Mapzen.LngLat(f.geometry.coordinates[0], f.geometry.coordinates[1]);
 
-            Vector2 pointB = MapCoordinates.LtdLngToMapLocalCoordinates(LngLatCoord);
+            Vector2 pointB = MapCoordinates.LatLngToMapLocalCoordinates(LngLatCoord);
 
             Response.features[x].Distance = Vector2.Distance(pointA, pointB);
 

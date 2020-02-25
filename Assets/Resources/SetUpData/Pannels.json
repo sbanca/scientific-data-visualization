@@ -9,9 +9,33 @@
         "Scale":[0.8,0.8,0.8],	
 		"Type":"USERPANEL",
 		"List":[{
-				"Name":"First Task",
-				"Description":"First Task Description",
-				"Options":[{},{},{}],
+				"Name":"Print Materials",
+				"Description":"Before your first meeting you need to print some documents ",
+				"Options":[{
+					"Name":"Menu Printing",
+					"Description":"printing shop",
+					"Lng":-73.9967794,
+					"Lat":40.7210974,
+					"Type":0
+					},{
+					"Name":"iDesign Digital Printing",
+					"Description":"printing shop",
+					"Lng":-73.9995236,
+					"Lat":40.7205979,
+					"Type":0
+					},{
+					"Name":"Staples Print & Marketing Services",
+					"Description":"printing shop",
+					"Lng":-74.010884,
+					"Lat":40.7115781,
+					"Type":0
+					},{
+					"Name":"Big Apple Copy Center",
+					"Description":"printing shop",
+					"Lng":-74.0129046,
+					"Lat":40.7092186,
+					"Type":0
+				}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
@@ -19,7 +43,7 @@
 				{
 				"Name":"Second Task",
 				"Description":"Second Task Description",
-				"Options":[{},{}],
+				"Options":[],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
@@ -27,7 +51,7 @@
 				{
 				"Name":"Third Task",
 				"Description":"Third Task Description",
-				"Options":[{}],
+				"Options":[],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
@@ -42,17 +66,47 @@
 		"Type":0,
 		"List":[
 				{
-				"Name":"First Task",
-				"Description":"First Task Description",
-				"Options":[{},{},{}],
+				"Name":"Buy power plug adaptor ",
+				"Description":"Before your first meeting you need to buy a power plug adaptor as you forgot yours at home",
+				"Options":[{
+					"Name":"Advanced Computer Systems",
+					"Description":"Electronic store",
+					"Lng":-74.012969,
+					"Lat":40.7065021,
+					"Type":3
+					},{
+					"Name":"xCubicle",
+					"Description":"Electronic store",
+					"Lng":-74.0098899,
+					"Lat":40.7063679,
+					"Type":3
+					},{
+					"Name":"Microtech Computer Systems Inc",
+					"Description":"Electronic store",
+					"Lng":-74.0105765,
+					"Lat":40.706193,
+					"Type":3
+					},{
+					"Name":"Ciamara",
+					"Description":"Electronic store",
+					"Lng":-74.0083626,
+					"Lat":40.705802,
+					"Type":3
+					}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
 				},
 				{
-				"Name":"Second Task",
-				"Description":"Second Task Description",
-				"Options":[{},{}],
+				"Name":"First Meeting with Vserve Ebusiness Solutions",
+				"Description":"you agree to present your secure payment framework to this agency make sure you will be on time",
+				"Options":[{
+					"Name":"Vserve Ebusiness Solutions",
+					"Description":"Electronic store",
+					"Lng":-74.0074186,
+					"Lat":40.704794,
+					"Type":"ELECTRONICSHOP"
+				}],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""
@@ -60,7 +114,7 @@
 				{
 				"Name":"Third Task",
 				"Description":"Third Task Description",
-				"Options":[{}],
+				"Options":[],
 				"TimeLocked":"false",
 				"Time":"",
 				"Duration":""

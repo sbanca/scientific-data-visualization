@@ -30,7 +30,7 @@ namespace TableTop
     {
         public string Name;
         public string Description;
-        public List<SpatialAnchors> Options;
+        public List<SpatialAnchor> Options;
         public bool TimeLocked; 
         public DateTime Time;
         public DateTimeOffset Duration;
@@ -38,25 +38,26 @@ namespace TableTop
     }
 
     [Serializable]
-    public class SpatialAnchors
+    public class SpatialAnchor
     {
         public string Name;
         public string Description;
-        public Mapzen.LngLat LngLat;
+        public double Lng;
+        public double Lat;
         public Vector3 LocalPos;
-        public SpatialAnchorsTypes Type;
+        public SpatialAnchorType Type;
 
     }
 
     [Serializable]
-    public enum SpatialAnchorsTypes
+    public enum SpatialAnchorType
     {
 
         PRINTSHOP = 0,
         HOTEL = 1,
         RESTAURANT = 2,
-        ELECTRONICSHOP = 3
-
+        ELECTRONICSHOP = 3,
+        WORKMEETING=4
 
     }
 

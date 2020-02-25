@@ -71,24 +71,33 @@ namespace TableTop {
             if (hit != null)
             {
 
-               Debug.Log("Task dropped on: "+ hit.Value.collider.gameObject.name);
-
                targetPannel = hit.Value.collider.gameObject.transform.parent.GetComponent<Pannel>();
 
-               exchangeTask.Exchange(originPannel, targetPannel, this.gameObject.name);
+                if (targetPannel == originPannel) {
 
+                    reinstateOriginalPosRot();
+
+                }
+                else { 
+
+                    exchangeTask.Exchange(originPannel, targetPannel, this.gameObject.name);
+
+                }
             }
-            else { 
+            else {
 
-                transform.position = originalPos;
+                reinstateOriginalPosRot();
 
-                transform.eulerAngles = originalRot;
-            
             }
 
         }
 
+        private void reinstateOriginalPosRot() {
 
+            transform.position = originalPos;
+
+            transform.eulerAngles = originalRot;
+        }
 
     }
 }
