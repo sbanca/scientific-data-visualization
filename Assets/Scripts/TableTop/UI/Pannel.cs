@@ -21,6 +21,7 @@ namespace TableTop
         public List<GameObject> PannelItems ;
 
         private TextMesh Title;
+
         public void Generate()
         {   
             SetTitle();
@@ -30,6 +31,9 @@ namespace TableTop
 
         public void Relayout()
         {
+
+            DeletePannelsItems();
+
             for (int i =0; i< pannelTasks.List.Count; i++) {
 
                 var NewPannelItem = Instantiate(PannelItemPrefab);
@@ -63,13 +67,54 @@ namespace TableTop
             Title.text = pannelTasks.Title;
         }
 
-        public void AddLabel()
-        {
+        public void DeletePannelsItems() {
+
+            foreach (GameObject g in PannelItems) {
+
+                Destroy(g);
+
+            }
 
         }
 
+        public void RemoveTask(string name) {
 
+            for (int i =0; i< pannelTasks.List.Count; i++) {
 
+                if (pannelTasks.List[i].Name == name) {
 
+                    pannelTasks.List.Remove(pannelTasks.List[i]);
+
+                    break;
+                }
+
+            }
+        }
+
+        public void AddTask(PannelTask task) {
+
+            pannelTasks.List.Add(task);
+        }
+
+        public PannelTask GetTask(string name) {
+            
+            for (int i = 0; i < pannelTasks.List.Count; i++)
+            {
+                if (pannelTasks.List[i].Name == name) return pannelTasks.List[i];
+
+            }
+
+            return null;
+
+        }
+
+        public PannelTask ExtractTask(string name) {
+
+            PannelTask extractedTask = GetTask(name);
+
+            if (extractedTask != null) RemoveTask(name);
+
+            return extractedTask;
+        }
     }
 }

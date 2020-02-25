@@ -10,7 +10,15 @@ namespace TableTop
     [CustomEditor(typeof(Pannels))]
     public class PannelsEditor : UnityEditor.Editor
     {
-  
+
+        
+        private Pannels pannels;
+
+        void OnEnable()
+        {
+            this.pannels = (Pannels)target;
+        }
+
         [MenuItem("Examples/Editor GUILayout Popup usage")]
 
         public override void OnInspectorGUI()
@@ -22,12 +30,12 @@ namespace TableTop
 
             if (GUILayout.Button("generate "))
             {
-                Pannels.Instance.GeneratePanels();
+                pannels.GeneratePanels();
             }
 
             if (GUILayout.Button("delete data "))
             {
-                Pannels.Instance.DeleteData();
+                pannels.DeleteData();
             }
 
             serializedObject.ApplyModifiedProperties();

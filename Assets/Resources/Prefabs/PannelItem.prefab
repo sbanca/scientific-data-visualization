@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 818468936768351056}
   - component: {fileID: 7269447399361655670}
   - component: {fileID: 6145554807625512769}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PannelItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

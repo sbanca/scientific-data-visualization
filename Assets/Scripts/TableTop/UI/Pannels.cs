@@ -13,7 +13,7 @@ namespace TableTop{
 
         private GameObject PannelsParent;
 
-        private List<GameObject> pannelsGameObjects = new List<GameObject>();
+        public List<GameObject> pannelsGameObjects = new List<GameObject>();
 
         public void Start()
         {
@@ -31,6 +31,7 @@ namespace TableTop{
 #endif
 
         }
+        
         private void GetPannelList()
         {
  
@@ -65,6 +66,7 @@ namespace TableTop{
 
                 newPannelGameObject.name = t.Title;
 
+                //set parent 
                 newPannelGameObject.transform.parent = PannelsParent.transform;
 
                 //rotation
@@ -72,8 +74,6 @@ namespace TableTop{
 
                 //position
                 newPannelGameObject.transform.position = new Vector3(t.Position[0], t.Position[1], t.Position[2]);
-
-               
 
                 //scale
                 Vector3 scale = newPannelGameObject.transform.localScale;
@@ -84,15 +84,12 @@ namespace TableTop{
 
 
                 //pannel manager
+                
                 Pannel newPanelManager = newPannelGameObject.GetComponentInChildren<Pannel>();
 
                 newPanelManager.pannelTasks = t;
 
                 newPanelManager.Generate();
-
-
-
-
 
                 pannelsGameObjects.Add(newPannelGameObject);
 

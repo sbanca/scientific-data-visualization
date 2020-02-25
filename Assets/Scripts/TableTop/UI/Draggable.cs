@@ -16,12 +16,28 @@ namespace TableTop {
         private Vector3 originalRot;
 
         private Camera maincam;
+
+        private RayOnPannels rayOnPannels;
+
+        private ExchangeTask exchangeTask;
+
+        private Pannel originPannel;
+
+        private Pannel targetPannel;
+
         private void Start()
         {
             maincam = Camera.main;
+
+            rayOnPannels = RayOnPannels.Instance;
+
+            exchangeTask = ExchangeTask.Instance;
+
+            originPannel = transform.parent.gameObject.GetComponent<Pannel>();
         }
 
         void OnMouseDown()
+
         {
             originalPos = transform.position;
 
@@ -50,11 +66,29 @@ namespace TableTop {
 
         void OnMouseUp()
         {
+            RaycastHit? hit = rayOnPannels.PannelHit();
 
-            transform.position = originalPos;
+            if (hit != null)
+            {
 
-            transform.eulerAngles = originalRot;
+               Debug.Log("Task dropped on: "+ hit.Value.collider.gameObject.name);
+
+               targetPannel = hit.Value.collider.gameObject.transform.parent.GetComponent<Pannel>();
+
+               exchangeTask.Exchange(originPannel, targetPannel, this.gameObject.name);
+
+            }
+            else { 
+
+                transform.position = originalPos;
+
+                transform.eulerAngles = originalRot;
+            
+            }
+
         }
+
+
 
     }
 }
