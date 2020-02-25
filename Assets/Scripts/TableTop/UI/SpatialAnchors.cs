@@ -24,7 +24,7 @@ namespace TableTop
         {
             MapCoordinates = Coordinates.Instance;
 
-            parent = Map.Instance.gameObject;
+            if (parent == null)  createParent();
 
             if (spatialAnchorsList == null) GetSpatialAnchorsList();
 
@@ -73,7 +73,8 @@ namespace TableTop
 
             if (spatialAnchorsList == null) GetSpatialAnchorsList();
 
-            if(parent == null) parent = Map.Instance.gameObject;
+            if (parent == null) createParent();
+
 
 #endif
 
@@ -90,18 +91,77 @@ namespace TableTop
 
         }
 
+        public float getBuildingsElevation(Vector3 LocalPosition)
+        {
+
+            float elevation = 0f;
+
+            var buildings = GameObject.Find("Buildings");
+
+            var childnumber = buildings.transform.childCount;
+
+            for (int x = 0; x < childnumber; x++)
+            {
+
+                Transform child = buildings.transform.GetChild(x);
+
+                MeshRenderer r = child.GetComponent<MeshRenderer>();
+
+                if (r.bounds.Contains(LocalPosition))
+                {
+
+                    MeshCollider collider = child.gameObject.AddComponent<MeshCollider>();
+
+                    RaycastHit hit = new RaycastHit();
+
+                    Vector3 startingPoint = LocalPosition + (Vector3.up * 2); //move up the point 
+
+
+                    //this is to cast rays around to make sure surrunding buidlings or small sapce do not obscure the object 
+
+                    var ray = new Ray(startingPoint, Vector3.down);
+
+                    if (collider.Raycast(ray, out hit, 200f))
+                    {
+
+                        elevation = hit.point.y;
+
+#if UNITY_EDITOR
+                        Object.DestroyImmediate(collider);
+#else
+                    Object.Destroy(go);
+#endif
+
+                        break;
+                    }
+
+#if UNITY_EDITOR
+                    Object.DestroyImmediate(collider);
+#else
+                    Object.Destroy(go);
+#endif
+
+                }
+            }
+
+            return elevation;
+
+        }
+        
         private GameObject SpawnPrefab(double Lat, double Lng, GameObject Prefab) {
 
 
 #if UNITY_EDITOR
 
-            if (MapCoordinates == null) MapCoordinates = Coordinates.Instance;
+            if (MapCoordinates == null) getCoordinates();
 
 #endif
 
             Mapzen.LngLat coordinates = new Mapzen.LngLat(Lng, Lat);
 
             Vector3 MapLocalCoordinates = MapCoordinates.LatLngToMapLocalCoordinates(coordinates);
+
+            MapLocalCoordinates.y = getBuildingsElevation(MapLocalCoordinates);
 
             GameObject SpawnedPrefab = Instantiate(Prefab, MapLocalCoordinates, Quaternion.identity, parent.transform);
 
@@ -170,6 +230,30 @@ namespace TableTop
             }
         }
 
+        private void createParent() {
+
+            parent = new GameObject();
+
+            parent.name = "SpatialAnchors";
+
+            parent.transform.parent = gameObject.transform;
+        }
+
+        private void getCoordinates() {
+            
+
+                if (Coordinates.Instance == null)
+                {
+                    MapCoordinates = gameObject.GetComponent<Coordinates>();
+                }
+                else
+                {
+                    MapCoordinates = Coordinates.Instance;
+                }
+
+
+            
+        }
 
 
         //prefabload

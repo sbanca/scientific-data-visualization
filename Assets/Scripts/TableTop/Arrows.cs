@@ -13,11 +13,16 @@ namespace TableTop
 
         private Vector4 size;
 
+        private GameObject MapUIParent;
+
         public void Initialize()
         {
 
+            getMapUIParent();
+
             CreateArrows();
 
+           
         }
 
         private void CreateArrows()
@@ -62,6 +67,8 @@ namespace TableTop
 
             arrows[number].name = name;
 
+            arrows[number].transform.parent = MapUIParent.transform;
+
             var arrow = arrows[number].AddComponent<Arrow>();
 
             arrow.target = gameObject;
@@ -80,6 +87,18 @@ namespace TableTop
 
         }
 
+        private void getMapUIParent() {
 
+            MapUIParent = GameObject.Find("ArrowsAndRulers");
+
+            if (MapUIParent==null) {
+                
+                MapUIParent = new GameObject();
+
+                MapUIParent.name = "ArrowsAndRulers";
+
+
+            }
+        }
     }
 }

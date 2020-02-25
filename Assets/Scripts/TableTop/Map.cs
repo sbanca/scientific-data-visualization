@@ -70,6 +70,7 @@ namespace TableTop
 
             MapArrows.Initialize();
 
+
             //Coordinates 
             MapCoordinates = gameObject.AddComponent<Coordinates>();
 

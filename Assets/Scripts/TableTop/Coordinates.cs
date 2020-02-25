@@ -33,7 +33,7 @@ namespace TableTop
         public Mapzen.MercatorMeters MapLocalCoordinateToMapWorldMercatorMeters(Vector3 localCoordinate)
         {
 
-            var Origin = Map.Instance.Origin;
+            var Origin = getMapOrigin();
 
             Mapzen.MercatorMeters LocalMercatorMeters = MapLocalCoordinateToMapLocalMercatorMeters(localCoordinate);
 
@@ -57,7 +57,7 @@ namespace TableTop
 
         public Vector3 LatLngToMapLocalCoordinates(Mapzen.LngLat LngLatCoordinate)
         {
-            var Origin = Map.Instance.Origin;
+            var Origin = getMapOrigin();
 
             Mapzen.MercatorMeters mercmeters = Mapzen.Geo.Project(LngLatCoordinate);
 
@@ -69,5 +69,25 @@ namespace TableTop
 
         }
 
+
+        private Vector2 getMapOrigin()
+        {
+
+            Map map;
+
+            if (Map.Instance == null)
+            {
+                map = gameObject.GetComponent<Map>();
+            }
+            else
+            {
+                map = Map.Instance;
+            }
+
+            return map.Origin;
+
+        }
     }
+
 }
+

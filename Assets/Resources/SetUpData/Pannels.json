@@ -98,14 +98,14 @@
 				"Duration":""
 				},
 				{
-				"Name":"First Meeting with Vserve Ebusiness Solutions",
+				"Name":"Meeting with Vserve",
 				"Description":"you agree to present your secure payment framework to this agency make sure you will be on time",
 				"Options":[{
 					"Name":"Vserve Ebusiness Solutions",
 					"Description":"Electronic store",
 					"Lng":-74.0074186,
 					"Lat":40.704794,
-					"Type":"ELECTRONICSHOP"
+					"Type":4
 				}],
 				"TimeLocked":"false",
 				"Time":"",

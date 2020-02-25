@@ -30,14 +30,14 @@ namespace TableTop
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("PannelPrefab"), true);
 
-            if (GUILayout.Button("generate "))
+            if (GUILayout.Button("Generate Panels"))
             {
                 pannels.GeneratePanels();
             }
 
-            if (GUILayout.Button("delete data "))
+            if (GUILayout.Button("Delete Panels"))
             {
-                pannels.DeleteData();
+                pannels.DeleteAll();
             }
 
             serializedObject.ApplyModifiedProperties();

@@ -96,7 +96,14 @@ namespace TableTop{
             }
         }
 
-        public void DeleteData() {
+
+        public void DeleteAll()
+        {
+            DeleteData();
+            DeletePannels();
+
+        }
+        private void DeleteData() {
             if(pannelsData != null) pannelsData = null;
         }
 

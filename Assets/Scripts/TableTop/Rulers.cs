@@ -25,11 +25,15 @@ namespace TableTop
 
         private Map map;
 
+        private GameObject MapUIParent;
+
         //methods
 
         public void Initialize(Mapzen.TileBounds tileBounds)
         {
-            map = Map.Instance;
+            getMapUIParent();
+
+            if (map == null) getMapInstance();
 
             TileBounds = tileBounds;
 
@@ -92,6 +96,8 @@ namespace TableTop
 
             rulers[number].name = name;
 
+            rulers[number].transform.parent = MapUIParent.transform;
+
             var ruler = rulers[number].AddComponent<Ruler>();
 
             ruler.Rangeticks = Rangeticks;
@@ -118,6 +124,41 @@ namespace TableTop
             RangeticksY = new Vector2(TileBounds.max.y, TileBounds.min.y);
             TicksnumberY = System.Math.Abs(TileBounds.max.y - TileBounds.min.y) + 2;
 
-        } 
+        }
+
+
+        private void getMapUIParent()
+        {
+
+            MapUIParent = GameObject.Find("ArrowsAndRulers");
+
+            if (MapUIParent == null)
+            {
+
+                MapUIParent = new GameObject();
+
+                MapUIParent.name = "ArrowsAndRulers";
+
+
+            }
+        }
+
+
+        private void getMapInstance()
+        {
+
+
+            if (Map.Instance == null)
+            {
+                map = gameObject.GetComponent<Map>();
+            }
+            else
+            {
+                map = Map.Instance;
+            }
+
+
+
+        }
     }
 }
