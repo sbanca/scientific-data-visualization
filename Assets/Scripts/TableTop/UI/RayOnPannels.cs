@@ -13,12 +13,14 @@ namespace TableTop
 
         private Camera maincam;
 
-        private LayerMask PannelsLayer;
+        private int PannelsLayer;
 
         private void Start()
         {
 
-            PannelsLayer = LayerMask.NameToLayer("Pannels");
+            // Bit shift the index of the layer(8) to get a bit mask
+
+            PannelsLayer = 1 << LayerMask.NameToLayer("Pannels");
 
             maincam = Camera.main;
 
@@ -30,7 +32,7 @@ namespace TableTop
            
             ray = maincam.ScreenPointToRay(Input.mousePosition);
 
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, ~PannelsLayer))
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, PannelsLayer))
             {
                 return hit;
             }

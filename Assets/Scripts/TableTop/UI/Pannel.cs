@@ -71,7 +71,16 @@ namespace TableTop
 
             foreach (GameObject g in PannelItems) {
 
-                Destroy(g);
+
+#if UNITY_EDITOR
+
+
+                DestroyImmediate(g);
+
+#else
+
+            Destroy(g);
+#endif
 
             }
 

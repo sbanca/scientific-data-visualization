@@ -9,6 +9,8 @@ namespace TableTop
 
         public void Exchange(Pannel origin, Pannel target, string taskName) {
 
+            if (origin == target) return;
+
             PannelTask task = origin.ExtractTask(taskName);
 
             target.AddTask(task);
