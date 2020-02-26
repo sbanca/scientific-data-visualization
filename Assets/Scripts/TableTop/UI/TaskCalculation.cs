@@ -38,7 +38,13 @@ namespace TableTop
 
             Response direction = await openRoutService.Direction(start,end);
 
-            //TODO need to save this in some form of cache somewehre 
+            //add name of route 
+
+            direction.features[0].properties.name = StartTask.Name + " to "+ EndTask.Name;
+
+            
+            //TODO need to save this in some form of cache somewehre using the name 
+
 
             //sum up connection choiche
 
@@ -48,6 +54,7 @@ namespace TableTop
 
             //display the curve
 
+            Routes.Instance.CreateRoute(direction);           
 
         }
 

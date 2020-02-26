@@ -41,6 +41,8 @@ namespace TableTop
 
         public SpatialAnchors MapSpatialAnchors;
 
+        public TaskCalculation MapTaskCalculation;
+
         public void Initialize(bool useSlippyMap, Vector2 origin, Mapzen.TileBounds bounds, MapStyle style, Vector4 slippyMapSize, float unitsPerMeter)
         {
             this.useSlippyMap = useSlippyMap;
@@ -86,6 +88,9 @@ namespace TableTop
             //SpatialAnchors
             MapSpatialAnchors = gameObject.AddComponent<SpatialAnchors>();
 
+            //TaskCalculation
+            MapTaskCalculation = gameObject.AddComponent<TaskCalculation>();
+
         }
 
         private void GetInstances()
@@ -105,6 +110,8 @@ namespace TableTop
             MapPannels = Pannels.Instance;
 
             MapSpatialAnchors = SpatialAnchors.Instance;
+
+            MapTaskCalculation = TaskCalculation.Instance;
 
         }
 

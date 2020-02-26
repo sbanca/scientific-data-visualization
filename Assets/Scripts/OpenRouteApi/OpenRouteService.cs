@@ -107,7 +107,6 @@ public class OpenRouteService : Singleton<OpenRouteService>
         }
     }
 
-
     private void GetCoordinatesInstance(){
 
             MapCoordinates = Coordinates.Instance;     

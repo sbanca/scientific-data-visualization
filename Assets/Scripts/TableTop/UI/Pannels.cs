@@ -22,8 +22,6 @@ namespace TableTop{
 
             if (PannelsParent == null) CreatePannelsParent();
 
-
-
 #if UNITY_EDITOR
 
             if (PannelPrefab == null) GetPannelPrefabFromResources();
@@ -43,9 +41,7 @@ namespace TableTop{
 
         private void  GetPannelPrefabFromResources() {
 
-            string filePath = "Prefab/Pannel_prefab";
-
-            PannelPrefab = Resources.Load<GameObject>(filePath);
+            PannelPrefab = Resources.Load<GameObject>("Prefabs/Pannel_prefab");
 
         }
         
@@ -57,6 +53,8 @@ namespace TableTop{
             if (pannelsData == null) GetPannelList();
 
             if (PannelsParent == null) CreatePannelsParent();
+
+            if (PannelPrefab == null) GetPannelPrefabFromResources();
 #endif
 
             foreach (PannelTasks t in pannelsData.List) {
@@ -140,6 +138,7 @@ namespace TableTop{
             PannelsParent.name = "Pannels";
 
         }
+
     }
 }
 
