@@ -59,6 +59,10 @@ namespace TableTop
                 PannelItems.Add(NewPannelItem);
             }
 
+            if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL)
+            {
+                TaskCalculation.Instance.CalculateTask(pannelTasks);
+            }
         }
 
         public void SetTitle() {
@@ -125,5 +129,7 @@ namespace TableTop
 
             return extractedTask;
         }
+    
+
     }
 }

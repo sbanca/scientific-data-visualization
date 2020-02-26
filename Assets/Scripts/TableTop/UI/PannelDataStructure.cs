@@ -34,6 +34,8 @@ namespace TableTop
         public bool TimeLocked; 
         public DateTime Time;
         public DateTimeOffset Duration;
+        public int SelectedOption;
+        public bool Selected;
 
     }
 

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using OVRSimpleJSON;
 
 
 [Serializable]
-public class PoisResponse
+public class Response
 {
     public string type;
     public List<GeoFeature> features;
@@ -25,7 +26,8 @@ public class Geometry
 {
     public string type;
     public double[] coordinates;
-    
+    public double[][] coordinatesRoute;
+
 }
 
 
@@ -63,5 +65,33 @@ public class Properties
     public string continent;
     public string continent_gid;
     public string label;
-    
+    public Summary summary;
+}
+
+public class Summary
+{
+
+    public float distance;
+    public float duration;
+
+}
+
+public static class JSONNodeUnityExt
+{
+  
+    public static double[][] ToVector2List(this JSONNode aNode)
+    {
+        double[][] list = new double[aNode.Count][];
+
+        for (int i = 0; i < aNode.Count; i++) {
+
+            list[i] = new double[2];
+            list[i][0] = aNode[i][0].AsDouble;
+            list[i][1] = aNode[i][1].AsDouble;
+
+        }
+
+        return list;
+
+    }
 }

@@ -28,8 +28,6 @@ namespace TableTop
 
             if (spatialAnchorsList == null) GetSpatialAnchorsList();
 
-            GenerateSpatialAnchors();
-
             loadPrefabs();
         }
 

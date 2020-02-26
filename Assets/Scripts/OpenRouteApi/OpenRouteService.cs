@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using TableTop;
+using OVRSimpleJSON;
 
 public class OpenRouteService : Singleton<OpenRouteService>
 {
@@ -17,7 +18,7 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
     private Coordinates MapCoordinates;
 
-    public async Task<PoisResponse> Pois(Mapzen.LngLat coordinates)
+    public async Task<Response> Pois(Mapzen.LngLat coordinates)
     {
         if (MapCoordinates == null) GetCoordinatesInstance();
 
@@ -30,7 +31,7 @@ public class OpenRouteService : Singleton<OpenRouteService>
             {
                 string responseData = await response.Content.ReadAsStringAsync();
 
-                PoisResponse responseDataparsed = JsonUtility.FromJson<PoisResponse>(responseData);
+                Response responseDataparsed = JsonUtility.FromJson<Response>(responseData);
 
                 return responseDataparsed;
 
@@ -44,7 +45,7 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
         if (MapCoordinates == null) GetCoordinatesInstance();
 
-        PoisResponse Response = await Pois(coordinates);
+        Response Response = await Pois(coordinates);
 
         Vector2 pointA = MapCoordinates.LatLngToMapLocalCoordinates(coordinates);
 
@@ -67,9 +68,49 @@ public class OpenRouteService : Singleton<OpenRouteService>
         return SortedList[0];
     }
 
+    public async Task<Response> Direction(Mapzen.LngLat Start, Mapzen.LngLat End) {
+
+        if (MapCoordinates == null) GetCoordinatesInstance();
+
+        var address = new Uri(baseAddress.OriginalString + "/v2/directions/driving-car?api_key=" + api_key +
+                                "&start=" + Start.longitude + "," + Start.latitude +
+                                "&end=" + End.longitude     + "," + End.latitude );
+
+        using (var httpClient = new HttpClient { BaseAddress = address })
+        {
+
+            using (var response = await httpClient.GetAsync(address))
+            {
+
+                string responseData = await response.Content.ReadAsStringAsync();
+
+                Response responseDataparsed = JsonUtility.FromJson<Response>(responseData);
+
+                // workaourd with OVRSimpleJSON
+
+                JSONNode data = JSON.Parse(responseData);
+
+                responseDataparsed.features[0].geometry.coordinatesRoute =  data["features"][0]["geometry"]["coordinates"].ToVector2List();
+
+                responseDataparsed.features[0].properties = new Properties();
+
+                responseDataparsed.features[0].properties.summary = new Summary();
+
+                responseDataparsed.features[0].properties.summary.distance = data["features"][0]["properties"]["summary"]["distance"].AsFloat;
+
+                responseDataparsed.features[0].properties.summary.duration = data["features"][0]["properties"]["summary"]["duration"].AsFloat;
+
+                return responseDataparsed;
+
+            }
+
+        }
+    }
+
+
     private void GetCoordinatesInstance(){
 
-        MapCoordinates = Coordinates.Instance; 
+            MapCoordinates = Coordinates.Instance;     
 
     }
 }
