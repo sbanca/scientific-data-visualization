@@ -9,6 +9,7 @@ namespace TableTop
 {
     public class Routes : Singleton<Routes>
     {
+        private GameObject RouteParentContainer;
 
         private Coordinates MapCoordinates;
 
@@ -18,6 +19,9 @@ namespace TableTop
 
         public void Start()
         {
+
+            
+
 #if UNITY_EDITOR
 
             Scene scene = SceneManager.GetActiveScene();
@@ -25,8 +29,39 @@ namespace TableTop
             if (scene.name == "RouteTest") TestRoute();
 
 #endif
+
+
+            CreateParentRouteContainer();
+
+
         }
 
+        private void CreateParentRouteContainer() {
+
+
+            //check if it already Exists in the scene 
+
+            RouteParentContainer = GameObject.Find("Routes Container");
+
+            if (RouteParentContainer != null) return;
+            
+            
+
+            RouteParentContainer = new GameObject();
+
+            //add parent 
+
+            if (map == null) getMapInstance();
+
+            RouteParentContainer.transform.parent = map.transform;
+
+
+            //add name 
+
+            RouteParentContainer.name = "Routes Container";
+
+        }
+       
         public void TestRoute() {
 
             //Vector3[] points = { new Vector3(0f, 0f, 0f),
@@ -66,11 +101,13 @@ namespace TableTop
 
             var points = FromLtdLngToLocalCoordinates(routeData.features[0].geometry.coordinatesRoute);
 
-            //CreateRouteLine(points, routeData.features[0].properties.name);
-
             if (map == null) getMapInstance();
 
-            CreateRouteMesh(points, routeData.features[0].properties.name, map.gameObject);
+            if (RouteParentContainer == null) CreateParentRouteContainer();
+
+            CreateRouteMesh(points, routeData.features[0].properties.name, RouteParentContainer);
+
+
         }
 
         private Vector3[] FromLtdLngToLocalCoordinates(double[][] points) {
@@ -97,39 +134,12 @@ namespace TableTop
 
         }
 
-        private void CreateRouteLime(Vector3[] points, string name) {
-
-            if (Map.Instance == null) getMapInstance();
-
-            //creating go renderer object
-            GameObject route = new GameObject();
-            route.transform.parent = Map.Instance.gameObject.transform;
-
-            route.name = name;
-
-            //creating line
-            LineRenderer lineRenderer = route.AddComponent<LineRenderer>();
-            lineRenderer.material = (Material)Resources.Load("Materials/line", typeof(Material));
-            lineRenderer.startColor = Color.blue;
-            lineRenderer.endColor = Color.blue;
-            lineRenderer.startWidth = 0.05f;
-            lineRenderer.endWidth = 0.05f;
-            lineRenderer.positionCount = points.Length;
-            lineRenderer.useWorldSpace = false;
-            lineRenderer.numCornerVertices = 2;
-            lineRenderer.numCapVertices = 2;
-
-            //drawing line 
-            for (int i = 0; i < points.Length; i++) lineRenderer.SetPosition(i, points[i]);
-
-
-        }
-
         private void CreateRouteMesh(Vector3[] points, string name, GameObject parent)
         {
             //check if route exists already 
             if (GameObject.Find(name) != null) return;
 
+           
             //creating go mesh object
             GameObject route = new GameObject();
             route.transform.parent = parent.transform;
@@ -415,6 +425,22 @@ namespace TableTop
             return triangles;
         }
 
+        public void DeleteRoutesContainingTaskName(string TaskName) {
+
+            var numberOfChildrens = RouteParentContainer.transform.childCount;
+
+            Transform child;
+
+            for (int x = 0; x < numberOfChildrens; x++) {
+
+                child = RouteParentContainer.transform.GetChild(x);
+
+                if (child.name.Contains(TaskName)) Destroy(child.gameObject);
+            }
+
+        }
+
+        //get instances 
         private void getCoordinateInstance()
         {
 
@@ -442,6 +468,7 @@ namespace TableTop
             }
 
         }
+
 
     }
 

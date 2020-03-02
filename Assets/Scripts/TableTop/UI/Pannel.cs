@@ -102,6 +102,12 @@ namespace TableTop
                 }
 
             }
+
+
+            if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL)
+            {
+                Routes.Instance.DeleteRoutesContainingTaskName(name);
+            }
         }
 
         public void AddTask(PannelTask task) {
