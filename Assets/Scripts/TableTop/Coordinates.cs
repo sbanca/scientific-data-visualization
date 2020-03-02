@@ -6,6 +6,7 @@ namespace TableTop
 {
     public class Coordinates : Singleton<Coordinates>
     {
+        private Map map;
 
         public Vector3 WorldCoordinatesToMapLocalCoordiantes(Vector3 point)
         {
@@ -69,11 +70,34 @@ namespace TableTop
 
         }
 
+        public Vector3 LatLngToMapCurrentWorldCoordinates(Mapzen.LngLat LngLatCoordinate)
+        {
+
+            Vector3 MapCurrentWorldPosition = getMapCurrentWorldPosition();
+
+            return  LatLngToMapLocalCoordinates(LngLatCoordinate) + MapCurrentWorldPosition;
+
+        }
 
         private Vector2 getMapOrigin()
         {
 
-            Map map;
+            if (map == null) getMapInstance();
+
+            return map.Origin;
+
+        }
+
+        private Vector3 getMapCurrentWorldPosition()
+        {
+
+            if (map == null) getMapInstance();
+
+            return map.gameObject.transform.position; 
+
+        }
+
+        private void getMapInstance() {
 
             if (Map.Instance == null)
             {
@@ -83,8 +107,6 @@ namespace TableTop
             {
                 map = Map.Instance;
             }
-
-            return map.Origin;
 
         }
     }

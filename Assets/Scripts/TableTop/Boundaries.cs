@@ -56,6 +56,7 @@ namespace TableTop {
           
         private void CalculateMapsBounds()
         {
+            
 
             MapBounds = new Bounds();
             MeshFilter[] meshfilter = GetComponentsInChildren<MeshFilter>();
@@ -64,7 +65,8 @@ namespace TableTop {
                 if (m.gameObject.name == "Water" || m.gameObject.name == "Earth")
                     MapBounds.Encapsulate(m.sharedMesh.bounds);
             }
-        
+
+
 
         }
 
@@ -115,6 +117,10 @@ namespace TableTop {
 
             }
 
+
+           
+
+        
 #else
 
         Renderer[] allRenderers = Object.FindObjectsOfType<Renderer>();
@@ -131,6 +137,8 @@ namespace TableTop {
                 }
             }
         }
+
+
 
 #endif
 

@@ -133,6 +133,10 @@ namespace TableTop{
 
         private void CreatePannelsParent() {
 
+            PannelsParent = GameObject.Find("Pannels");
+
+            if (PannelsParent != null) return;
+
             PannelsParent =  new GameObject();
 
             PannelsParent.name = "Pannels";

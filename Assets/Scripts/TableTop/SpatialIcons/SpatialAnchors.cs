@@ -230,6 +230,10 @@ namespace TableTop
 
         private void createParent() {
 
+            parent = GameObject.Find("SpatialAnchors");
+
+            if (parent != null) return;
+
             parent = new GameObject();
 
             parent.name = "SpatialAnchors";
