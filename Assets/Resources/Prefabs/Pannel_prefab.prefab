@@ -324,50 +324,78 @@ MonoBehaviour:
   thickenss: 0
   pannelTasks:
     List:
-    - Name: Label 1
+    - Name: task 1
       Description: 
-      Options: []
+      Options:
+      - Name: option1
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
+      - Name: option2
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
       TimeLocked: 0
-    - Name: Label 2
+      SelectedOption: 0
+      Selected: 0
+    - Name: task 2
       Description: 
-      Options: []
+      Options:
+      - Name: option1
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
+      - Name: option2
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
       TimeLocked: 0
+      SelectedOption: 0
+      Selected: 0
+    - Name: task3
+      Description: 
+      Options:
+      - Name: option1
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
+      - Name: option1
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
+      - Name: option1
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
+      - Name: option1
+        Description: 
+        Lng: 0
+        Lat: 0
+        LocalPos: {x: 0, y: 0, z: 0}
+        Type: 0
+      TimeLocked: 0
+      SelectedOption: 0
+      Selected: 0
     User: 0
     Title: 
     Position: []
     Scale: []
     Rotation: []
-    Type: 0
-  PannelItemPrefab: {fileID: 980222896304549124, guid: 450cb964e18a68b4495f001b38c15ce9,
+    Type: 1
+  PannelItemPrefab: {fileID: 980222896304549124, guid: b9468a84939ced84c8de8c856aecb8f6,
     type: 3}
-  PannelItems:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PannelItems: []

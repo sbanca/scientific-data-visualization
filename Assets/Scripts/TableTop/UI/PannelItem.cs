@@ -33,12 +33,14 @@ namespace TableTop
 
         }
 
-
         public float startingValue = 0.218f;
 
-        public float height = 0.1f  ;
+        public float height = 0.1f ;
 
         private TextMesh title;
+
+        public Options options;
+
         private void setTitle()
         {
 
@@ -58,7 +60,22 @@ namespace TableTop
 
         }
 
+        public void TriggerOptions() {
 
+            if (options == null) getOptions();
+
+            if (_pannelTask.Options.Count == 1) return;
+
+            options.OptionList = _pannelTask.Options.ToArray();
+
+            options.Generate();
+
+        }
+        private void getOptions() {
+
+            options = gameObject.GetComponent<Options>();
+
+        }
 
     }
 }

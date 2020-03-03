@@ -18,7 +18,7 @@ namespace TableTop
 
         public GameObject PannelItemPrefab;
         
-        public List<GameObject> PannelItems ;
+        public GameObject[] PannelItems;
 
         private TextMesh Title;
 
@@ -34,12 +34,18 @@ namespace TableTop
 
             DeletePannelsItems();
 
+            GameObject NewPannelItem;
+
+            PannelItem Manager;
+
+            PannelItems = new GameObject[pannelTasks.List.Count];
+
             for (int i =0; i< pannelTasks.List.Count; i++) {
 
-                var NewPannelItem = Instantiate(PannelItemPrefab);
+                NewPannelItem = Instantiate(PannelItemPrefab);
 
 
-                //set same position and rotation as the aprent pannel
+                //set same position and rotation as the parent pannel
 
                 NewPannelItem.transform.position = this.gameObject.transform.position;
 
@@ -50,19 +56,30 @@ namespace TableTop
 
                 //get pannel item manager and update the item details 
 
-                PannelItem Manager = NewPannelItem.GetComponent<PannelItem>();
+                Manager = NewPannelItem.GetComponent<PannelItem>();
 
                 Manager.panelItemNumber =i;
 
-                Manager.pannelTask = pannelTasks.List[i];                    
+                Manager.pannelTask = pannelTasks.List[i];          
 
-                PannelItems.Add(NewPannelItem);
+                PannelItems[i] = NewPannelItem;
+
             }
 
             if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL)
             {
+
+                //if there is more than one item trigger options for last task item 
+                if (pannelTasks.List.Count > 0) 
+                {
+                    PannelItems[pannelTasks.List.Count - 1].GetComponent<PannelItem>().TriggerOptions();
+                }
+
+                //trigger route calculations
                 TaskCalculation.Instance.CalculateTask(pannelTasks);
+
             }
+        
         }
 
         public void SetTitle() {
@@ -72,6 +89,8 @@ namespace TableTop
         }
 
         public void DeletePannelsItems() {
+
+            if (PannelItems == null) return;
 
             foreach (GameObject g in PannelItems) {
 
@@ -87,6 +106,8 @@ namespace TableTop
 #endif
 
             }
+
+            PannelItems = null;
 
         }
 

@@ -10,7 +10,7 @@ namespace TableTop
         public string JsonName = "Pannels.json";
 
 
-        public List<SpatialAnchor> spatialAnchorsList; 
+        public List<OptionItem> spatialAnchorsList; 
 
         private List<GameObject> spatialAnchorsGameObjectsList;
 
@@ -33,7 +33,7 @@ namespace TableTop
 
         private void GetSpatialAnchorsList()
         {
-            spatialAnchorsList = new List<SpatialAnchor>();
+            spatialAnchorsList = new List<OptionItem>();
 
             string pannelstext = LoadResourceTextfile(JsonName);
 
@@ -45,7 +45,7 @@ namespace TableTop
                 {
                     if (pt.Options.Count > 0)
                     {
-                        foreach (SpatialAnchor sa in pt.Options)
+                        foreach (OptionItem sa in pt.Options)
                         {
                             spatialAnchorsList.Add(sa);
                         }
@@ -78,7 +78,7 @@ namespace TableTop
 
             spatialAnchorsGameObjectsList = new List<GameObject>();
 
-            foreach (SpatialAnchor sa in spatialAnchorsList)
+            foreach (OptionItem sa in spatialAnchorsList)
             {
                 GameObject prefab = GetPrefabBasedOnType(sa.Type);
 

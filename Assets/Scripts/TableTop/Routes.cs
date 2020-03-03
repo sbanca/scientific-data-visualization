@@ -427,6 +427,8 @@ namespace TableTop
 
         public void DeleteRoutesContainingTaskName(string TaskName) {
 
+            if (RouteParentContainer == null) return;
+
             var numberOfChildrens = RouteParentContainer.transform.childCount;
 
             Transform child;

@@ -29,7 +29,6 @@ namespace TableTop
         public async void ConnectTaskSelectedOptions(PannelTask StartTask, PannelTask EndTask) {
 
             //get coordinates
-
             Mapzen.LngLat start = new Mapzen.LngLat(StartTask.Options[0].Lng, StartTask.Options[0].Lat);
 
             Mapzen.LngLat end = new Mapzen.LngLat(EndTask.Options[0].Lng, EndTask.Options[0].Lat);

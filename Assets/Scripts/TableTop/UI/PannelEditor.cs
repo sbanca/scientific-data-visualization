@@ -36,6 +36,12 @@ namespace TableTop
                 pannel.Relayout();
             }
 
+
+            if (GUILayout.Button("delete "))
+            {
+                pannel.DeletePannelsItems();
+            }
+
             serializedObject.ApplyModifiedProperties();
 
         }
