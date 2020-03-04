@@ -9,7 +9,9 @@ namespace TableTop
 {
     public class Routes : Singleton<Routes>
     {
-        private GameObject RouteParentContainer;
+        private GameObject SelectedRouteParentContainer;
+
+        private GameObject OptionalRouteParentContainer;
 
         private Coordinates MapCoordinates;
 
@@ -31,37 +33,70 @@ namespace TableTop
 #endif
 
 
-            CreateParentRouteContainer();
+            CreateParentsRouteContainer();
 
 
         }
 
-        private void CreateParentRouteContainer() {
+        private void CreateParentsRouteContainer() {
 
+            CreateSelectedParentRouteContainer();
+            CreateOptionalParentRouteContainer();
+        }
+
+        private void CreateSelectedParentRouteContainer()
+        {
 
             //check if it already Exists in the scene 
 
-            RouteParentContainer = GameObject.Find("Routes Container");
+            SelectedRouteParentContainer = GameObject.Find("Selected Routes Container");
 
-            if (RouteParentContainer != null) return;
-            
-            
+            if (SelectedRouteParentContainer != null) return;
 
-            RouteParentContainer = new GameObject();
+
+
+            SelectedRouteParentContainer = new GameObject();
 
             //add parent 
 
             if (map == null) getMapInstance();
 
-            RouteParentContainer.transform.parent = map.transform;
+            SelectedRouteParentContainer.transform.parent = map.transform;
 
 
             //add name 
 
-            RouteParentContainer.name = "Routes Container";
+            SelectedRouteParentContainer.name = "Selected Routes Container";
 
         }
-       
+
+        private void CreateOptionalParentRouteContainer()
+        {
+
+
+            //check if it already Exists in the scene 
+
+            OptionalRouteParentContainer = GameObject.Find("Optional Routes Container");
+
+            if (OptionalRouteParentContainer != null) return;
+
+
+
+            OptionalRouteParentContainer = new GameObject();
+
+            //add parent 
+
+            if (map == null) getMapInstance();
+
+            OptionalRouteParentContainer.transform.parent = map.transform;
+
+
+            //add name 
+
+            OptionalRouteParentContainer.name = "Optional Routes Container";
+
+        }
+        
         public void TestRoute() {
 
             //Vector3[] points = { new Vector3(0f, 0f, 0f),
@@ -92,21 +127,21 @@ namespace TableTop
                                 new Vector3(1.852027f,0f,1.041748f),
                                 new Vector3(1.89631f,0f,0.9913949f)};
 
-            CreateRouteMesh(points, "testRoute", gameObject);
+            CreateRouteMesh(points, "testRoute", gameObject,RouteType.SELECTED);
 
         }
 
-        public void CreateRoute(Response routeData) {
-
+        public void CreateRoute(Response routeData, RouteType type) {
 
             var points = FromLtdLngToLocalCoordinates(routeData.features[0].geometry.coordinatesRoute);
 
             if (map == null) getMapInstance();
 
-            if (RouteParentContainer == null) CreateParentRouteContainer();
+            if (SelectedRouteParentContainer == null || OptionalRouteParentContainer ==null) CreateParentsRouteContainer();
 
-            CreateRouteMesh(points, routeData.features[0].properties.name, RouteParentContainer);
+            if (type == RouteType.SELECTED)  CreateRouteMesh(points, routeData.features[0].properties.name, SelectedRouteParentContainer, type);
 
+            else if (type == RouteType.OPTIONAL) CreateRouteMesh(points, routeData.features[0].properties.name, OptionalRouteParentContainer, type);
 
         }
 
@@ -134,12 +169,11 @@ namespace TableTop
 
         }
 
-        private void CreateRouteMesh(Vector3[] points, string name, GameObject parent)
+        private void CreateRouteMesh(Vector3[] points, string name, GameObject parent, RouteType type)
         {
             //check if route exists already 
             if (GameObject.Find(name) != null) return;
-
-           
+        
             //creating go mesh object
             GameObject route = new GameObject();
             route.transform.parent = parent.transform;
@@ -157,13 +191,15 @@ namespace TableTop
             mesh.mesh.triangles = createtrianglesFromPointRoute(reducedPoints);
 
             //material
-            setMaterialAndMaterialBoundaries(renderer);
+            setMaterialAndMaterialBoundaries(renderer,type);
         }
 
-        public void setMaterialAndMaterialBoundaries(MeshRenderer renderer){
+        public void setMaterialAndMaterialBoundaries(MeshRenderer renderer,RouteType type){
+
+            name = type == RouteType.SELECTED ? "selected_route" : "optional_route";
 
             //createAsphereforVertex(mesh.mesh.vertices);
-            renderer.material = Resources.Load("Materials/route", typeof(Material)) as Material;
+            renderer.material = Resources.Load("Materials/"+name, typeof(Material)) as Material;
 
             //Set Material Boundaries
             var cornersBounds = Map.Instance.useSlippyMap ? Boundaries.Instance.TableBounds : Boundaries.Instance.MapBounds;
@@ -425,19 +461,38 @@ namespace TableTop
             return triangles;
         }
 
-        public void DeleteRoutesContainingTaskName(string TaskName) {
+        public void DeleteSelectedRoutesContainingTaskName(string TaskName) {
 
-            if (RouteParentContainer == null) return;
+            if (SelectedRouteParentContainer == null) return;
 
-            var numberOfChildrens = RouteParentContainer.transform.childCount;
+            var numberOfChildrens = SelectedRouteParentContainer.transform.childCount;
 
             Transform child;
 
             for (int x = 0; x < numberOfChildrens; x++) {
 
-                child = RouteParentContainer.transform.GetChild(x);
+                child = SelectedRouteParentContainer.transform.GetChild(x);
 
                 if (child.name.Contains(TaskName)) Destroy(child.gameObject);
+            }
+
+        }
+
+        public void DeleteOptionalRoutes()
+        {
+
+            if (OptionalRouteParentContainer == null) return;
+
+            var numberOfChildrens = OptionalRouteParentContainer.transform.childCount;
+
+            Transform child;
+
+            for (int x = 0; x < numberOfChildrens; x++)
+            {
+
+                child = OptionalRouteParentContainer.transform.GetChild(x);
+
+                Destroy(child.gameObject);
             }
 
         }

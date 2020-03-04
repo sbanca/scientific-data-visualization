@@ -23,6 +23,29 @@ namespace TableTop
         public float[] Rotation;
         public PanelType Type;
 
+        public void InitializeSelections() {
+
+
+            if (Type == PanelType.TASKASSEMBLYPANNEL)
+            {
+                for (int i = 0; i < List.Count; i++)
+                {
+
+                    for (int j=0; j < this.List[i].Options.Count; j++) {
+
+                        if (j == this.List[i].SelectedOption) this.List[i].Options[j].Selected = true;
+
+                        else this.List[i].Options[j].Selected = false;
+
+                        
+                    }
+
+                }
+            }
+
+
+        }
+
     }
 
     [Serializable]
@@ -35,8 +58,6 @@ namespace TableTop
         public DateTime Time;
         public DateTimeOffset Duration;
         public int SelectedOption;
-        public bool Selected;
-
     }
 
     [Serializable]
@@ -49,6 +70,7 @@ namespace TableTop
         public Vector3 LocalPos;
         public SpatialAnchorType Type;
         public int number;
+        public bool Selected;
 
     }
 
@@ -79,6 +101,15 @@ namespace TableTop
         USERPANEL = 0,
         TASKASSEMBLYPANNEL = 1,
         INFO = 3
+    }
+
+    [Serializable]
+    public enum RouteType
+    {
+
+        SELECTED = 0,
+        OPTIONAL = 1
+
     }
 
 }

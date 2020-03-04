@@ -23,15 +23,32 @@ namespace TableTop
 
                 ConnectTaskSelectedOptions(tasklist.List[i-1], tasklist.List[i]);
 
+                if (i == tasklist.List.Count-1)
+                    
+                    ConnectAllLastTaskOptions(tasklist.List[i - 1], tasklist.List[i]);
             }
+
+            //todo display route metrics of duration and length 
+
+            //todo develop metrics of punctuality
         }
 
         public async void ConnectTaskSelectedOptions(PannelTask StartTask, PannelTask EndTask) {
 
-            //get coordinates
-            Mapzen.LngLat start = new Mapzen.LngLat(StartTask.Options[0].Lng, StartTask.Options[0].Lat);
 
-            Mapzen.LngLat end = new Mapzen.LngLat(EndTask.Options[0].Lng, EndTask.Options[0].Lat);
+            //get start coordinates
+
+            OptionItem startOption = StartTask.Options[StartTask.SelectedOption];
+
+            Mapzen.LngLat start = new Mapzen.LngLat(startOption.Lng, startOption.Lat);
+
+
+            //get end coordinates
+
+            OptionItem endOption = EndTask.Options[EndTask.SelectedOption];
+
+            Mapzen.LngLat end = new Mapzen.LngLat(endOption.Lng, endOption.Lat);
+
 
             //query API 
 
@@ -39,10 +56,7 @@ namespace TableTop
 
             //add name of route 
 
-            direction.features[0].properties.name = StartTask.Name + " to "+ EndTask.Name;
-
-            
-            //TODO need to save this in some form of cache somewehre using the name 
+            direction.features[0].properties.name = StartTask.Name + "_" + EndTask.Name + "_SELECTED";
 
 
             //sum up connection choiche
@@ -51,9 +65,50 @@ namespace TableTop
 
             totalDuration += direction.features[0].properties.summary.duration;
 
-            //display the curve
 
-            Routes.Instance.CreateRoute(direction);           
+            //create route
+            Routes.Instance.CreateRoute(direction, RouteType.SELECTED);           
+
+        }
+
+        public async void ConnectAllLastTaskOptions(PannelTask StartTask, PannelTask EndTask)
+        {
+
+            //get start coordinates
+
+            OptionItem startOption = StartTask.Options[StartTask.SelectedOption];
+
+            Mapzen.LngLat start = new Mapzen.LngLat(startOption.Lng, startOption.Lat);
+
+
+
+            foreach (OptionItem option in EndTask.Options) {
+
+                if (!option.Selected)
+                {
+
+                    //get end coordinates
+
+                    Mapzen.LngLat end = new Mapzen.LngLat(option.Lng, option.Lat);
+
+
+                    //query API 
+
+                    Response direction = await openRoutService.Direction(start, end);
+
+
+                    //add name of route 
+
+                    direction.features[0].properties.name = startOption.Name + "_" + option.Name + "_OPTIONAL";
+
+
+                    //create route
+
+                    Routes.Instance.CreateRoute(direction, RouteType.OPTIONAL);
+                }
+            }
+
+
 
         }
 

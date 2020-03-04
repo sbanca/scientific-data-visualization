@@ -32,13 +32,25 @@ namespace TableTop
         public void Relayout()
         {
 
+            //clean the pannel
+
             DeletePannelsItems();
+
+            //make sure selection is initialize correctly
+
+            pannelTasks.InitializeSelections();
+
+
+            //intialize variables 
 
             GameObject NewPannelItem;
 
             PannelItem Manager;
 
             PannelItems = new GameObject[pannelTasks.List.Count];
+
+
+            //iterate
 
             for (int i =0; i< pannelTasks.List.Count; i++) {
 
@@ -127,7 +139,9 @@ namespace TableTop
 
             if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL)
             {
-                Routes.Instance.DeleteRoutesContainingTaskName(name);
+                Routes.Instance.DeleteSelectedRoutesContainingTaskName(name);
+
+                Routes.Instance.DeleteOptionalRoutes();
             }
         }
 

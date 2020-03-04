@@ -23,13 +23,11 @@ namespace TableTop
 
                 _optionData = value;
 
-                UnTick();
-
                 setTitle();
 
                 setPos();
 
-
+                intializeTick();
                     }
         }
 
@@ -39,7 +37,14 @@ namespace TableTop
 
         private float offset =  -0.058f;
 
-       public OptionClicked optionClicked;
+        public OptionClicked optionClicked;
+
+        private void intializeTick() {
+
+            if (_optionData.Selected) Tick();
+            else UnTick();
+
+        }
 
         public void Tick() { selected.SetActive(true); }
 
