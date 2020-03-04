@@ -41,6 +41,8 @@ namespace TableTop
 
         public Options options;
 
+        public TaskOptionClicked taskOptionClicked;
+
         private void setTitle()
         {
 
@@ -70,6 +72,14 @@ namespace TableTop
 
             options.Generate();
 
+            options.optionClicked.AddListener(SelectOption);
+
+        }
+
+        public void SelectOption(string name) {
+
+            taskOptionClicked.Invoke(pannelTask.Name, name);
+        
         }
         private void getOptions() {
 

@@ -84,6 +84,7 @@ namespace TableTop
                 //if there is more than one item trigger options for last task item 
                 if (pannelTasks.List.Count > 0) 
                 {
+                    PannelItems[pannelTasks.List.Count - 1].GetComponent<PannelItem>().taskOptionClicked.AddListener(SelectedTaskOption);
                     PannelItems[pannelTasks.List.Count - 1].GetComponent<PannelItem>().TriggerOptions();
                 }
 
@@ -143,6 +144,34 @@ namespace TableTop
 
                 Routes.Instance.DeleteOptionalRoutes();
             }
+        }
+
+        private void SelectedTaskOption(string optiontask, string optionName) {
+
+            for (int j = 0; j < pannelTasks.List.Count; j++)
+            {
+
+                if (pannelTasks.List[j].Name == optiontask) {
+
+                    PannelTask pannelTask = pannelTasks.List[j];
+
+                    for (int i = 0; i < pannelTask.Options.Count; i++)
+                    {
+
+                        OptionItem o = pannelTask.Options[i];
+
+                        if (o.Name == optionName)
+                        {
+                            o.Selected = true;
+                            pannelTasks.List[j].SelectedOption = i;
+                        }
+                        else o.Selected = false;
+
+                    }
+                }
+            }
+
+            Relayout();
         }
 
         public void AddTask(PannelTask task) {

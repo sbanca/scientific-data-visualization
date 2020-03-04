@@ -84,28 +84,31 @@ namespace TableTop
 
             foreach (OptionItem option in EndTask.Options) {
 
-                if (!option.Selected)
-                {
+                
+                //get end coordinates
 
-                    //get end coordinates
-
-                    Mapzen.LngLat end = new Mapzen.LngLat(option.Lng, option.Lat);
+                Mapzen.LngLat end = new Mapzen.LngLat(option.Lng, option.Lat);
 
 
-                    //query API 
+                //query API 
 
-                    Response direction = await openRoutService.Direction(start, end);
-
-
-                    //add name of route 
-
-                    direction.features[0].properties.name = startOption.Name + "_" + option.Name + "_OPTIONAL";
+                Response direction = await openRoutService.Direction(start, end);
 
 
-                    //create route
+                //add name of route 
 
-                    Routes.Instance.CreateRoute(direction, RouteType.OPTIONAL);
+                direction.features[0].properties.name = startOption.Name + "_" + option.Name + "_OPTIONAL";
+
+
+                //this is not very clean get rid in refactoring
+                //create route if option is not selected otherewise if it exist destroy 
+
+                if (!option.Selected) Routes.Instance.CreateRoute(direction, RouteType.OPTIONAL);
+                else {
+                    var route = GameObject.Find(direction.features[0].properties.name);
+                    if (route != null) Destroy(route);
                 }
+               
             }
 
 

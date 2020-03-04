@@ -29,19 +29,19 @@ namespace TableTop
         private Vector3? point;
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
+            //if (Input.GetMouseButtonDown(0))
+            //{
                 
-                point = rayOnMap.MouseRay();
+            //    point = rayOnMap.MouseRay();
 
-                if (point == null) return;
+            //    if (point == null) return;
 
-                Vector3 p = (Vector3)point;
+            //    Vector3 p = (Vector3)point;
 
-                GetPointInfo(p);
-                SpanAnnotation(p);
+            //    GetPointInfo(p);
+            //    SpanAnnotation(p);
 
-            }
+            //}
         }
 
         private async void GetPointInfo(Vector3 point)

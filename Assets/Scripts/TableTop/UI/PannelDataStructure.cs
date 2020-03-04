@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TableTop
 {
@@ -111,5 +112,15 @@ namespace TableTop
         OPTIONAL = 1
 
     }
+
+    // Class declaration
+    [System.Serializable]
+    public class OptionClicked : UnityEvent<string> { }
+
+    // Class declaration
+    [System.Serializable]
+    public class TaskOptionClicked : UnityEvent<string,string> { }
+
+
 
 }

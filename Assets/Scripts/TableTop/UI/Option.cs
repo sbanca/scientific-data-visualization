@@ -5,10 +5,6 @@ using UnityEngine.Events;
 
 namespace TableTop
 {
-    // Class declaration
-    [System.Serializable]
-    public class OptionClicked : UnityEvent<string> { }
-    
 
     public class Option : MonoBehaviour
     {
@@ -61,7 +57,7 @@ namespace TableTop
 
         public void OnMouseDown()
         {
-            selected.SetActive(!selected.activeSelf);
+            //selected.SetActive(!selected.activeSelf);
 
             optionClicked.Invoke(name);
 

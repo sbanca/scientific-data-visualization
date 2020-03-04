@@ -17,8 +17,10 @@ namespace TableTop
 
         private Option[] optionManagersList;
 
-        OpenRouteService openRoutService;
-        
+        private OpenRouteService openRoutService;
+
+        public OptionClicked optionClicked;
+
         public void Generate() {
 
             Parent = new GameObject("Option Container");
@@ -76,11 +78,15 @@ namespace TableTop
 
         public void OptionSelector(string name) {
 
-            foreach (Option optionManager in optionManagersList) {
+            //for (int i=0; i< optionManagersList.Length; i++) {
 
-                if (optionManager.optionData.Name != name) optionManager.UnTick();
+            //    Option optionManager = optionManagersList[i];
 
-            }
+            //    if (optionManager.optionData.Name != name) optionManager.UnTick();
+             
+            //}
+            
+            optionClicked.Invoke(name);
         }
   
         public void DeleteAllOptions()
