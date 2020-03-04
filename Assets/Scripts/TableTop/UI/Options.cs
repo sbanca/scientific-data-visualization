@@ -17,8 +17,9 @@ namespace TableTop
 
         private Option[] optionManagersList;
 
+        OpenRouteService openRoutService;
+        
         public void Generate() {
-
 
             Parent = new GameObject("Option Container");
 
@@ -30,7 +31,6 @@ namespace TableTop
 
 
             for (int i= 0; i < OptionList.Length; i++) {
-
 
                 //get option data item 
 
@@ -127,6 +127,32 @@ namespace TableTop
 
             }
 
+        }
+
+        public async void ConnectOptions(OptionItem StartOption, OptionItem EndOption)
+        {
+
+            if (openRoutService == null) GetOpenRouteService();
+
+            //get coordinates
+            Mapzen.LngLat start = new Mapzen.LngLat(StartOption.Lng, StartOption.Lat);
+            Mapzen.LngLat end = new Mapzen.LngLat(EndOption.Lng, EndOption.Lat);
+
+            //query API 
+            Response direction = await openRoutService.Direction(start, end);
+
+            //add name of route 
+            direction.features[0].properties.name = StartOption.Name + " to " + EndOption.Name;
+
+
+            //display the curve
+            Routes.Instance.CreateRoute(direction);
+
+        }
+
+        public void GetOpenRouteService()
+        {
+            openRoutService = OpenRouteService.Instance;
         }
 
     }

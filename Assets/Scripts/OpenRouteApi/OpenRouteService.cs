@@ -18,6 +18,8 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
     private Coordinates MapCoordinates;
 
+    private OpenRouteDirectionCache directionCache = new OpenRouteDirectionCache(100);
+
     public async Task<Response> Pois(Mapzen.LngLat coordinates)
     {
         if (MapCoordinates == null) GetCoordinatesInstance();
@@ -72,36 +74,57 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
         if (MapCoordinates == null) GetCoordinatesInstance();
 
+        //if (directionCache == null) GetDirectionCacheInstance();
+
         var address = new Uri(baseAddress.OriginalString + "/v2/directions/driving-car?api_key=" + api_key +
                                 "&start=" + Start.longitude + "," + Start.latitude +
                                 "&end=" + End.longitude     + "," + End.latitude );
 
-        using (var httpClient = new HttpClient { BaseAddress = address })
-        {
 
-            using (var response = await httpClient.GetAsync(address))
+        Response responseDataparsed = directionCache.Get(address);
+
+        if (responseDataparsed != null)
+        {
+            return responseDataparsed;
+        }
+        else {
+
+            using (var httpClient = new HttpClient { BaseAddress = address })
             {
 
-                string responseData = await response.Content.ReadAsStringAsync();
+                using (var response = await httpClient.GetAsync(address))
+                {
 
-                Response responseDataparsed = JsonUtility.FromJson<Response>(responseData);
+                    string responseData = await response.Content.ReadAsStringAsync();
 
-                // workaourd with OVRSimpleJSON
+                    responseDataparsed = JsonUtility.FromJson<Response>(responseData);
 
-                JSONNode data = JSON.Parse(responseData);
 
-                responseDataparsed.features[0].geometry.coordinatesRoute =  data["features"][0]["geometry"]["coordinates"].ToVector2List();
+                    // workaourd with OVRSimpleJSON
 
-                responseDataparsed.features[0].properties = new Properties();
+                    JSONNode data = JSON.Parse(responseData);
 
-                responseDataparsed.features[0].properties.summary = new Summary();
+                    responseDataparsed.features[0].geometry.coordinatesRoute = data["features"][0]["geometry"]["coordinates"].ToVector2List();
 
-                responseDataparsed.features[0].properties.summary.distance = data["features"][0]["properties"]["summary"]["distance"].AsFloat;
+                    responseDataparsed.features[0].properties = new Properties();
 
-                responseDataparsed.features[0].properties.summary.duration = data["features"][0]["properties"]["summary"]["duration"].AsFloat;
+                    responseDataparsed.features[0].properties.summary = new Summary();
 
-                return responseDataparsed;
+                    responseDataparsed.features[0].properties.summary.distance = data["features"][0]["properties"]["summary"]["distance"].AsFloat;
 
+                    responseDataparsed.features[0].properties.summary.duration = data["features"][0]["properties"]["summary"]["duration"].AsFloat;
+
+
+                    //save in cache 
+
+                    directionCache.Add(address, responseDataparsed);
+
+
+                    //return
+
+                    return responseDataparsed;
+
+                }
             }
 
         }
@@ -109,11 +132,9 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
     private void GetCoordinatesInstance(){
 
-            MapCoordinates = Coordinates.Instance;     
+        MapCoordinates = Coordinates.Instance;     
 
     }
 }
-
-
 
 
