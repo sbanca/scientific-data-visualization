@@ -58,6 +58,8 @@ namespace TableTop
 
         public Vector3 LatLngToMapLocalCoordinates(Mapzen.LngLat LngLatCoordinate)
         {
+            if (Map.Instance == null) getMapInstance();
+
             var Origin = getMapOrigin();
 
             Mapzen.MercatorMeters mercmeters = Mapzen.Geo.Project(LngLatCoordinate);
