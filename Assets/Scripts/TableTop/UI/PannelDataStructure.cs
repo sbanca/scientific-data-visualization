@@ -54,6 +54,7 @@ namespace TableTop
     {
         public string Name;
         public string Description;
+        public bool Draggable;
         public List<OptionItem> Options;
         public bool TimeLocked; 
         public DateTime Time;
@@ -83,7 +84,8 @@ namespace TableTop
         HOTEL = 1,
         RESTAURANT = 2,
         ELECTRONICSHOP = 3,
-        WORKMEETING=4
+        WORKMEETING=4,
+        APPLESTORE=5
 
     }
 

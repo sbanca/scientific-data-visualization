@@ -179,7 +179,6 @@ GameObject:
   - component: {fileID: 980222896304549131}
   - component: {fileID: 818468936768351056}
   - component: {fileID: 7269447399361655670}
-  - component: {fileID: 6145554807625512769}
   - component: {fileID: 2455875956000677429}
   m_Layer: 10
   m_Name: PannelItem
@@ -219,6 +218,9 @@ MonoBehaviour:
   startingValue: 0.218
   height: 0.13
   options: {fileID: 0}
+  taskOptionClicked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &7269447399361655670
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -232,18 +234,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.47761968, y: 0.02235204, z: 0.098676085}
   m_Center: {x: 0.0014591068, y: 0.0057823956, z: -0.0014585853}
---- !u!114 &6145554807625512769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 980222896304549124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09726a14d684f3a499e8f9f1049f9b4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2455875956000677429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,3 +249,6 @@ MonoBehaviour:
   OptionPrefab: {fileID: 980222896304549124, guid: 6ffa8cf5eb46cd54b9865cf8a1e4d7d6,
     type: 3}
   OptionList: []
+  optionClicked:
+    m_PersistentCalls:
+      m_Calls: []

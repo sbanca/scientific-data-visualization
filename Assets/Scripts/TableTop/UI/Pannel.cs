@@ -22,6 +22,8 @@ namespace TableTop
 
         private TextMesh Title;
 
+        private TaskCalculation task;
+
         public void Generate()
         {   
             SetTitle();
@@ -54,7 +56,10 @@ namespace TableTop
 
             for (int i =0; i< pannelTasks.List.Count; i++) {
 
+
                 NewPannelItem = Instantiate(PannelItemPrefab);
+
+                if(pannelTasks.List[i].Draggable) NewPannelItem.AddComponent<Draggable>();
 
 
                 //set same position and rotation as the parent pannel

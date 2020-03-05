@@ -13,7 +13,7 @@ namespace TableTop{
 
         private GameObject PannelsParent;
 
-        public List<GameObject> pannelsGameObjects = new List<GameObject>();
+        public GameObject[] pannelsGameObjects;
 
         public void Start()
         {
@@ -57,7 +57,11 @@ namespace TableTop{
             if (PannelPrefab == null) GetPannelPrefabFromResources();
 #endif
 
-            foreach (PannelTasks t in pannelsData.List) {
+            pannelsGameObjects = new GameObject[pannelsData.List.Count];
+
+            for (int i=0; i<pannelsData.List.Count;i++) {
+
+                PannelTasks t = pannelsData.List[i];
 
                 //pannel object
                 var newPannelGameObject = Instantiate(PannelPrefab);
@@ -89,7 +93,7 @@ namespace TableTop{
 
                 newPanelManager.Generate();
 
-                pannelsGameObjects.Add(newPannelGameObject);
+                pannelsGameObjects[i]=newPannelGameObject ;
 
             }
         }
@@ -118,6 +122,7 @@ namespace TableTop{
         public void DeletePannels()
         {
 
+
             foreach (GameObject go in pannelsGameObjects)
             {
              
@@ -128,6 +133,8 @@ namespace TableTop{
 #endif
 
             }
+
+            pannelsGameObjects = null;
 
         }
 

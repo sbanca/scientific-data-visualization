@@ -241,8 +241,7 @@ namespace TableTop
             parent.transform.parent = gameObject.transform;
         }
 
-        private void getCoordinates() {
-            
+        private void getCoordinates() {           
 
                 if (Coordinates.Instance == null)
                 {
@@ -252,8 +251,6 @@ namespace TableTop
                 {
                     MapCoordinates = Coordinates.Instance;
                 }
-
-
             
         }
 
