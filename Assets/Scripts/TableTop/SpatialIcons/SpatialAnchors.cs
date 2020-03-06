@@ -69,7 +69,7 @@ namespace TableTop
 
 #if UNITY_EDITOR
 
-            if (spatialAnchorsList == null) GetSpatialAnchorsList();
+            if (spatialAnchorsList == null || spatialAnchorsList.Count==0) GetSpatialAnchorsList();
 
             if (parent == null) createParent();
 
@@ -226,6 +226,13 @@ namespace TableTop
 #endif
 
             }
+
+#if UNITY_EDITOR
+            DestroyImmediate(parent);
+#else
+                Destroy(parent);
+#endif
+
         }
 
         private void createParent() {

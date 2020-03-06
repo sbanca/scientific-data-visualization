@@ -164,13 +164,13 @@ namespace TableTop
             maxPosition = 0f;
             minPosition = Math.Abs(Vector3.Dot(extent, direction.normalized)) - Math.Abs(Vector3.Dot(mapbounds.size, direction.normalized));
 
-            float futureposition = Vector3.Dot(target.transform.position + direction.normalized * 0.001f, Axe);
+            float futureposition = Vector3.Dot(target.transform.position + direction.normalized * 0.0025f, Axe);
 
             if (futureposition < minPosition || futureposition > maxPosition) return;
 
-            target.transform.position += direction.normalized * 0.001f;
-            rulers[0].transform.position += direction.normalized * 0.001f;
-            rulers[1].transform.position += direction.normalized * 0.001f;
+            target.transform.position += direction.normalized * 0.0025f;
+            rulers[0].transform.position += direction.normalized * 0.0025f;
+            rulers[1].transform.position += direction.normalized * 0.0025f;
 
         }
 

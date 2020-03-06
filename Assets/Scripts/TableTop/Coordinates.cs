@@ -58,15 +58,15 @@ namespace TableTop
 
         public Vector3 LatLngToMapLocalCoordinates(Mapzen.LngLat LngLatCoordinate)
         {
-            if (Map.Instance == null) getMapInstance();
+            if (map == null) getMapInstance();
 
             var Origin = getMapOrigin();
 
             Mapzen.MercatorMeters mercmeters = Mapzen.Geo.Project(LngLatCoordinate);
 
-            double XmetersLocal = ( mercmeters.x - Origin.x ) * Map.Instance.UnitsPerMeter ;
+            double XmetersLocal = ( mercmeters.x - Origin.x ) * map.UnitsPerMeter ;
 
-            double YmetersLocal = ( mercmeters.y - Origin.y ) * Map.Instance.UnitsPerMeter ; 
+            double YmetersLocal = ( mercmeters.y - Origin.y ) * map.UnitsPerMeter ; 
 
             return new Vector3((float)XmetersLocal, 0f, (float)YmetersLocal);
 

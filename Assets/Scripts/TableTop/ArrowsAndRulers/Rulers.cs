@@ -46,7 +46,9 @@ namespace TableTop
         private void CreateRulers()
         {
 
-            var mapbounds = Map.Instance.MapBoundaries.MapBounds;
+            if (map == null) getMapInstance();
+
+            var mapbounds = map.MapBoundaries.MapBounds;
             var size = new Vector4(Boundaries.Instance.TableBounds.min.x, Boundaries.Instance.TableBounds.min.z, Boundaries.Instance.TableBounds.max.x, Boundaries.Instance.TableBounds.max.z);
 
             // X top ruler 
