@@ -172,10 +172,15 @@ namespace TableTop
         private void CreateRouteMesh(Vector3[] points, string name, GameObject parent, RouteType type)
         {
             //check if route exists already 
-            if (GameObject.Find(name) != null) return;
+            GameObject route = GameObject.Find(name);
+            if (route != null) {
+                //return;
+                Destroy(route);
+            }
+                
         
             //creating go mesh object
-            GameObject route = new GameObject();
+            route = new GameObject();
             route.transform.parent = parent.transform;
             route.name = name;
 
@@ -187,7 +192,7 @@ namespace TableTop
             Vector3[] reducedPoints = reducePointsbyDistance(points);
 
             //create mesh
-            mesh.mesh.vertices = createVerticesFromPointRoute(reducedPoints);
+            mesh.mesh.vertices = createVerticesFromPointRoute(reducedPoints,type);
             mesh.mesh.triangles = createtrianglesFromPointRoute(reducedPoints);
 
             //material
@@ -314,10 +319,10 @@ namespace TableTop
 
         }
 
-        private Vector3[] createVerticesFromPointRoute(Vector3[] points) {
+        private Vector3[] createVerticesFromPointRoute(Vector3[] points,RouteType type) {
 
-            var Width = 0.01f;
-            var Height = 0.02f;
+            var Width = type == RouteType.SELECTED? 0.02f : 0.01f;
+            var Height = type == RouteType.SELECTED ? 0.06f : 0.05f;
 
             Vector3[] vertices = new Vector3[points.Length * 4];
 
@@ -459,6 +464,44 @@ namespace TableTop
             }
 
             return triangles;
+        }
+
+        public void DeleteRoutes()
+        {
+
+            //delete parent routes
+
+            if (SelectedRouteParentContainer == null) return;
+
+            var numberOfChildrens = SelectedRouteParentContainer.transform.childCount;
+
+            Transform child;
+
+            for (int x = 0; x < numberOfChildrens; x++)
+            {
+
+                child = SelectedRouteParentContainer.transform.GetChild(x);
+
+                Destroy(child.gameObject);
+            }
+
+
+            //delete optional routes
+
+            if (OptionalRouteParentContainer == null) return;
+
+            numberOfChildrens = OptionalRouteParentContainer.transform.childCount;
+
+
+
+            for (int x = 0; x < numberOfChildrens; x++)
+            {
+
+                child = OptionalRouteParentContainer.transform.GetChild(x);
+
+                Destroy(child.gameObject);
+            }
+
         }
 
         public void DeleteSelectedRoutesContainingTaskName(string TaskName) {

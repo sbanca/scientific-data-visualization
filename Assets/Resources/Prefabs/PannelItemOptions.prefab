@@ -84,7 +84,7 @@ TextMesh:
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 1
-  m_FontSize: 30
+  m_FontSize: 20
   m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 4c90d3c4d98a33647872e06a6f654f9f, type: 3}
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 980222895701435241}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.56229}
+  m_LocalScale: {x: 1, y: 1, z: 0.3867487}
   m_Children: []
   m_Father: {fileID: 980222896304549131}
   m_RootOrder: 0
@@ -215,8 +215,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8672535, y: 1.9738007, z: 0.44077158}
-  m_Center: {x: 0.008413494, y: 2.109877, z: 0.013314933}
+  m_Size: {x: 0.8672535, y: 6.8042765, z: 0.30741125}
+  m_Center: {x: 0.008413478, y: 2.6289814, z: -0.010578036}
 --- !u!114 &7633175344637743866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 4764515060713463404}
   text: {fileID: 980222895397617867}
+  offset: -0.048
   optionClicked:
     m_PersistentCalls:
       m_Calls: []

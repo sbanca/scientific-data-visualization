@@ -19,7 +19,9 @@ namespace TableTop
 
         public void CalculateTask(PannelTasks tasklist) {
 
-            for(int i = 1; i < tasklist.List.Count; i++ ) {
+            Routes.Instance.DeleteRoutes();
+
+            for (int i = 1; i < tasklist.List.Count; i++ ) {
 
                 ConnectTaskSelectedOptions(tasklist.List[i-1], tasklist.List[i]);
 
@@ -56,7 +58,7 @@ namespace TableTop
 
             //add name of route 
 
-            direction.features[0].properties.name = StartTask.Name + "_" + EndTask.Name + "_SELECTED";
+            direction.features[0].properties.name = startOption.Name + "_" + endOption.Name + "_SELECTED";
 
 
             //sum up connection choiche

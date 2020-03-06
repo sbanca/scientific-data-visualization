@@ -24,6 +24,7 @@ namespace TableTop
 
         private TaskCalculation task;
 
+
         public void Generate()
         {   
             SetTitle();
@@ -93,8 +94,9 @@ namespace TableTop
                     PannelItems[pannelTasks.List.Count - 1].GetComponent<PannelItem>().TriggerOptions();
                 }
 
+
                 //trigger route calculations
-                TaskCalculation.Instance.CalculateTask(pannelTasks);
+                if (Application.isPlaying) TaskCalculation.Instance.CalculateTask(pannelTasks);
 
             }
         
@@ -129,7 +131,9 @@ namespace TableTop
 
         }
 
-        public void RemoveTask(string name) {
+        public void RemoveTask(PannelTask extractedTask) {
+
+            string name = extractedTask.Name;
 
             for (int i =0; i< pannelTasks.List.Count; i++) {
 
@@ -142,13 +146,6 @@ namespace TableTop
 
             }
 
-
-            if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL)
-            {
-                Routes.Instance.DeleteSelectedRoutesContainingTaskName(name);
-
-                Routes.Instance.DeleteOptionalRoutes();
-            }
         }
 
         private void SelectedTaskOption(string optiontask, string optionName) {
@@ -200,7 +197,7 @@ namespace TableTop
 
             PannelTask extractedTask = GetTask(name);
 
-            if (extractedTask != null) RemoveTask(name);
+            if (extractedTask != null) RemoveTask(extractedTask);
 
             return extractedTask;
         }

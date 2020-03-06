@@ -50,7 +50,7 @@ namespace TableTop{
 
 #if UNITY_EDITOR
 
-            if (pannelsData == null) GetPannelList();
+            if (pannelsData == null || pannelsData.List.Count<1 ) GetPannelList();
 
             if (PannelsParent == null) CreatePannelsParent();
 
@@ -121,20 +121,65 @@ namespace TableTop{
 
         public void DeletePannels()
         {
+            if (PannelsParent == null) GetParent();
 
+            if (PannelsParent == null) return;
 
-            foreach (GameObject go in pannelsGameObjects)
+            if (pannelsGameObjects.Length < 1) getChildFromParent();
+
+            if (pannelsGameObjects.Length > 0)
             {
-             
+
+                foreach (GameObject go in pannelsGameObjects)
+                {
+
 #if UNITY_EDITOR
-                DestroyImmediate(go);
+                    DestroyImmediate(go);
 #else
                 Destroy(go);
 #endif
 
+                }
             }
 
             pannelsGameObjects = null;
+
+#if UNITY_EDITOR
+            DestroyImmediate(PannelsParent);
+#else
+                Destroy(PannelsParent);
+#endif
+
+        }
+
+        private void getChildFromParent()
+        {
+
+            PannelsParent = GameObject.Find("Pannels");
+
+            if (PannelsParent == null) return;
+
+            int childCount = PannelsParent.transform.childCount;
+
+            if (childCount < 1) return;
+
+            GameObject child;
+
+            pannelsGameObjects = new GameObject[childCount];
+
+            for (int i = 0; i < childCount; i++)
+            {
+
+                child = PannelsParent.transform.GetChild(i).gameObject;
+
+            }
+
+        }
+
+        private void GetParent()
+        {
+
+            PannelsParent = GameObject.Find("Pannels");
 
         }
 

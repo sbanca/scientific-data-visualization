@@ -12,7 +12,7 @@ namespace TableTop
 
         public List<OptionItem> spatialAnchorsList; 
 
-        private List<GameObject> spatialAnchorsGameObjectsList;
+        private GameObject[] spatialAnchorsGameObjectsList;
 
 
         private Coordinates MapCoordinates;
@@ -76,15 +76,17 @@ namespace TableTop
 
 #endif
 
-            spatialAnchorsGameObjectsList = new List<GameObject>();
+            spatialAnchorsGameObjectsList = new GameObject[spatialAnchorsList.Count];
 
-            foreach (OptionItem sa in spatialAnchorsList)
+            for (int i=0; i< spatialAnchorsList.Count; i++)
             {
+                OptionItem sa = spatialAnchorsList[i];
+
                 GameObject prefab = GetPrefabBasedOnType(sa.Type);
 
                 GameObject SpawnedPrefab = SpawnPrefab(sa.Lat, sa.Lng, prefab);
 
-                spatialAnchorsGameObjectsList.Add(SpawnedPrefab);
+                spatialAnchorsGameObjectsList[i]=SpawnedPrefab;
             }
 
         }
@@ -214,6 +216,8 @@ namespace TableTop
 
         private void DeleteGameObjects() {
 
+            getChildFromParent();
+
             if (spatialAnchorsGameObjectsList == null) return;
 
             foreach (GameObject go in spatialAnchorsGameObjectsList)
@@ -261,6 +265,27 @@ namespace TableTop
             
         }
 
+        private void getChildFromParent() {
+
+            parent = GameObject.Find("SpatialAnchors");
+
+            if (parent == null) return;
+
+            int childCount = parent.transform.childCount;
+
+            if (childCount < 1) return;
+
+            GameObject child;
+
+            spatialAnchorsGameObjectsList = new GameObject[childCount];
+
+            for (int i = 0; i < childCount; i++) {
+
+                child = parent.transform.GetChild(i).gameObject;
+
+            }
+
+        }
 
         //prefabload
 

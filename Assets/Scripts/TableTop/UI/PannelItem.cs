@@ -33,9 +33,9 @@ namespace TableTop
 
         }
 
-        public float startingValue = 0.218f;
+        public float startingValue = 0.118f;
 
-        public float height = 0.1f ;
+        public float height = 0.05f ;
 
         private TextMesh title;
 

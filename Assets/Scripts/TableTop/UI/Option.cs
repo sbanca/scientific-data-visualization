@@ -31,7 +31,7 @@ namespace TableTop
 
         public TextMesh text;
 
-        private float offset =  -0.058f;
+        public float offset =  -0.058f;
 
         public OptionClicked optionClicked;
 
