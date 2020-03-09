@@ -39,6 +39,7 @@ namespace TableTop
 
             DeletePannelsItems();
 
+
             //make sure selection is initialize correctly
 
             pannelTasks.InitializeSelections();
@@ -99,7 +100,9 @@ namespace TableTop
                 if (Application.isPlaying) TaskCalculation.Instance.CalculateTask(pannelTasks);
 
             }
-        
+
+            //last bit
+            UpdateTime();
         }
 
         public void SetTitle() {
@@ -178,7 +181,10 @@ namespace TableTop
 
         public void AddTask(PannelTask task) {
 
-            pannelTasks.List.Add(task);
+
+            pannelTasks.List.Add(task); //add the task
+
+
         }
 
         public PannelTask GetTask(string name) {
@@ -201,7 +207,21 @@ namespace TableTop
 
             return extractedTask;
         }
-    
+
+        public void UpdateTime() {
+
+            for (int i = 0; i < PannelItems.Length; i++)
+            {
+
+                OptionItem option= pannelTasks.List[i].returnSelectedOption();
+
+                PannelItem PannelItemManager = PannelItems[i].GetComponent<PannelItem>();               
+
+                PannelItemManager.setTime(pannelTasks.List[i].Duration);
+
+            }
+
+        }
 
     }
 }

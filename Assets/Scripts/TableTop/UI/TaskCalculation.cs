@@ -1,5 +1,7 @@
 ﻿
 using OVRSimpleJSON;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TableTop
@@ -35,41 +37,28 @@ namespace TableTop
             //todo develop metrics of punctuality
         }
 
-        public async void ConnectTaskSelectedOptions(PannelTask StartTask, PannelTask EndTask) {
+        public async Task ConnectTaskSelectedOptions(PannelTask StartTask, PannelTask EndTask) {
 
-
-            //get start coordinates
 
             OptionItem startOption = StartTask.Options[StartTask.SelectedOption];
 
-            Mapzen.LngLat start = new Mapzen.LngLat(startOption.Lng, startOption.Lat);
-
-
-            //get end coordinates
-
             OptionItem endOption = EndTask.Options[EndTask.SelectedOption];
 
-            Mapzen.LngLat end = new Mapzen.LngLat(endOption.Lng, endOption.Lat);
 
+            RoutesBetweenOptions route = new RoutesBetweenOptions(startOption, endOption, RouteType.SELECTED);
 
             //query API 
 
-            Response direction = await openRoutService.Direction(start,end);
-
-            //add name of route 
-
-            direction.features[0].properties.name = startOption.Name + "_" + endOption.Name + "_SELECTED";
-
+            await Task.Run(()=>route.apiCall());
 
             //sum up connection choiche
 
-            totalDistance += direction.features[0].properties.summary.distance;
+            totalDistance += route.direction.features[0].properties.summary.distance;
 
-            totalDuration += direction.features[0].properties.summary.duration;
-
-
-            //create route
-            Routes.Instance.CreateRoute(direction, RouteType.SELECTED);           
+            totalDuration += route.direction.features[0].properties.summary.duration;
+            
+            // 
+            Routes.Instance.CreateRoute(route.direction, RouteType.OPTIONAL);
 
         }
 
@@ -80,35 +69,24 @@ namespace TableTop
 
             OptionItem startOption = StartTask.Options[StartTask.SelectedOption];
 
-            Mapzen.LngLat start = new Mapzen.LngLat(startOption.Lng, startOption.Lat);
-
-
 
             foreach (OptionItem option in EndTask.Options) {
 
-                
-                //get end coordinates
 
-                Mapzen.LngLat end = new Mapzen.LngLat(option.Lng, option.Lat);
-
+                //create route
+                RoutesBetweenOptions route = new RoutesBetweenOptions(startOption, option, RouteType.OPTIONAL);
 
                 //query API 
-
-                Response direction = await openRoutService.Direction(start, end);
-
-
-                //add name of route 
-
-                direction.features[0].properties.name = startOption.Name + "_" + option.Name + "_OPTIONAL";
+                await Task.Run(() => route.apiCall());
 
 
                 //this is not very clean get rid in refactoring
                 //create route if option is not selected otherewise if it exist destroy 
 
-                if (!option.Selected) Routes.Instance.CreateRoute(direction, RouteType.OPTIONAL);
+                if (!option.Selected) Routes.Instance.CreateRoute(route.direction, RouteType.OPTIONAL);
                 else {
-                    var route = GameObject.Find(direction.features[0].properties.name);
-                    if (route != null) Destroy(route);
+                    var routeObject = GameObject.Find(route.direction.features[0].properties.name);
+                    if (routeObject != null) Destroy(routeObject);
                 }
                
             }
@@ -118,4 +96,109 @@ namespace TableTop
         }
 
     }
+
+
+    [Serializable]
+    public class RoutesBetweenOptions
+    {
+
+        //constructor
+        public RoutesBetweenOptions(OptionItem startOption, OptionItem endOption, RouteType type  )
+        {
+            this.startOption = startOption;
+            this.endOption = endOption;
+            this.type = type;
+
+        }
+
+
+        //name id
+        public string name=null;
+
+        private void CreateName() {
+
+            name = _startOption.Name + "_" + _endOption.Name + "_SELECTED";
+
+        }
+
+
+        //route type 
+
+        public RouteType type;
+
+
+        //start coordinates
+
+        private OptionItem _startOption;
+        
+        private Mapzen.LngLat start;
+        
+        public OptionItem startOption {
+
+            get { return _startOption; }
+            set {
+
+                _startOption = value;
+
+                start = new Mapzen.LngLat(_startOption.Lng, _startOption.Lat);
+
+            }
+
+        }
+
+
+
+        //end coordinates
+
+        private OptionItem _endOption;
+
+        private Mapzen.LngLat end;
+
+        public OptionItem endOption
+        {
+
+            get { return _endOption; }
+            set
+            {
+
+                _endOption = value;
+
+                end = new Mapzen.LngLat(_endOption.Lng, _endOption.Lat);
+
+            }
+
+        }
+
+
+
+        //direction 
+
+        OpenRouteService openRoutService;
+
+        public Response direction;
+        public async void apiCall() {
+
+            //get the API
+
+            if(openRoutService==null) openRoutService = OpenRouteService.Instance;
+
+            //query API 
+
+            direction = await openRoutService.Direction(start, end);
+
+            //add name of route 
+
+            if (name == null) CreateName();
+
+            direction.features[0].properties.name = name;
+
+           
+
+        }
+
+    
+
+    }
+
 }
+

@@ -58,8 +58,34 @@ namespace TableTop
         public List<OptionItem> Options;
         public bool TimeLocked; 
         public DateTime Time;
-        public DateTimeOffset Duration;
+        public int Duration; //dureation in seconds
         public int SelectedOption;
+
+        OpenRouteService openRoutService;
+
+        private float totalDistance;
+
+        private float totalDuration;
+        
+        public OptionItem returnSelectedOption()
+        {
+            OptionItem selectedOption=null;
+
+            for (int j = 0; j < this.Options.Count; j++)
+            {
+
+                if (j == this.SelectedOption) { 
+                    selectedOption = this.Options[j];
+                    break;
+                }
+            }
+
+            return selectedOption;
+
+        }
+
+     
+
     }
 
     [Serializable]
@@ -73,6 +99,7 @@ namespace TableTop
         public SpatialAnchorType Type;
         public int number;
         public bool Selected;
+        
 
     }
 
@@ -85,7 +112,8 @@ namespace TableTop
         RESTAURANT = 2,
         ELECTRONICSHOP = 3,
         WORKMEETING=4,
-        APPLESTORE=5
+        APPLESTORE=5,
+        AIRPORT=6
 
     }
 

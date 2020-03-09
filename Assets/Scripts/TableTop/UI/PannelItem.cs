@@ -39,19 +39,41 @@ namespace TableTop
 
         private TextMesh title;
 
+        private TextMesh time;
+
         public Options options;
 
         public TaskOptionClicked taskOptionClicked;
 
         private void setTitle()
         {
-
-            title = this.gameObject.GetComponentInChildren<TextMesh>();
+            if (title == null) title = getTextMeshChildByName("Title");
 
             title.text = _pannelTask.Name;
 
             this.gameObject.name = _pannelTask.Name;
 
+        }
+
+        private TextMesh getTextMeshChildByName(string name) {
+        
+            TextMesh[] TextMeshes = this.gameObject.GetComponentsInChildren<TextMesh>();
+
+            TextMesh textMesh = null;
+
+            foreach (TextMesh tm in TextMeshes) {
+
+                if (tm.name == name) { 
+
+                    textMesh = tm;
+
+                    break;
+                }
+
+            }
+
+            return textMesh;
+        
         }
 
         private void setPos()
@@ -81,9 +103,22 @@ namespace TableTop
             taskOptionClicked.Invoke(pannelTask.Name, name);
         
         }
+        
         private void getOptions() {
 
             options = gameObject.GetComponent<Options>();
+
+        }
+
+        public void setTime(int timeInSeconds) {
+
+            int minutes = timeInSeconds % 60;
+
+            int hours = minutes % 60;
+
+            if (time == null) time = getTextMeshChildByName("Title");
+
+            title.text = hours +":"+ minutes;
 
         }
 

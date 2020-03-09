@@ -1,5 +1,5 @@
 {
-	"List":[
+  "List": [
     {
       "Title": "User A",
       "User": 0,
@@ -205,30 +205,51 @@
           "TimeLocked": true,
           "Time": "",
           "Duration": ""
+        }, 
+        {
+          "Name": "Airport",
+          "Description": "Your flight is at 6 pm, don't loose the flight !!",
+          "Draggable": true,
+          "Options": [
+            {
+              "Name": "La Guardia",
+              "Description": "Airport",
+              "Lng": -73.87189837755841,
+              "Lat": 40.77458285725081,
+              "Type": 6
+            }
+          ],
+          "TimeLocked": "false",
+          "Time": "",
+          "Duration": ""
         }
       ]
-    },{
-		"Title":"Task Construction",
-		"SetPosition":"true",
+    },
+    {
+      "Title": "Task Construction",
+      "SetPosition": "true",
       "Position": [ -0.6473582, 1.361385, -0.655601 ],
       "Rotation": [ -21.876, 46.684, -0.427 ],
-        "Scale":[0.8,0.8,0.8],	
-		"Type":1,
-		"List":[{
-				"Name":"Union Square Hotel",
-				"Description":"This is the hotel which has been booked for you by the company",
-				"Draggable":false,
-				"Options":[{
-					"Name":"Union Square",
-					"Description":"Electronic store",
-					"Lng":-73.9886263,
-					"Lat":40.7364874,
-					"Type":1
-					}],
-				"TimeLocked":"false",
-				"Time":"",
-				"Duration":""
-				}]
-		}]
-
+      "Scale": [ 0.8, 0.8, 0.8 ],
+      "Type": 1,
+      "List": [
+        {
+          "Name": "Union Square Hotel",
+          "Description": "This is the hotel which has been booked for you by the company",
+          "Draggable": false,
+          "Options": [
+            {
+              "Name": "Union Square",
+              "Description": "Electronic store",
+              "Lng": -73.9886263,
+              "Lat": 40.7364874,
+              "Type": 1
+            }
+          ],
+          "TimeLocked": "false",
+          "Time": "",
+          "Duration": ""
+        }]
+    }
+  ]
 }

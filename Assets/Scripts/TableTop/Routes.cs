@@ -19,6 +19,8 @@ namespace TableTop
 
         private bool[] largeBoolArray;
 
+        private RouteCache routeCache = new RouteCache(100);
+
         public void Start()
         {
 
@@ -99,13 +101,6 @@ namespace TableTop
         
         public void TestRoute() {
 
-            //Vector3[] points = { new Vector3(0f, 0f, 0f),
-            //    new Vector3(0.05f, 0f, 0.001f),
-            //    new Vector3(0.1f, 0f, 0f),
-            //    new Vector3(0.1f, 0f, 0.2f),
-            //    new Vector3(0.2f, 0f, 0.3f),
-            //    new Vector3(0.3f, 0f, 0.3f),
-            //    new Vector3(0.4f, 0f, 0.4f)};
 
             Vector3[] points = { new Vector3(1.281359f,0f,1.161354f),
                                 new Vector3(1.26623f,0f,1.13849f),
@@ -190,11 +185,11 @@ namespace TableTop
 
             //this is optional could be removed
             Vector3[] reducedPoints = reducePointsbyDistance(points);
-
+         
             //create mesh
-            mesh.mesh.vertices = createVerticesFromPointRoute(reducedPoints,type);
+            mesh.mesh.vertices = createVerticesFromPointRoute(reducedPoints, type);
             mesh.mesh.triangles = createtrianglesFromPointRoute(reducedPoints);
-
+ 
             //material
             setMaterialAndMaterialBoundaries(renderer,type);
         }
