@@ -116,9 +116,9 @@ namespace TableTop
 
             int hours = minutes % 60;
 
-            if (time == null) time = getTextMeshChildByName("Title");
+            if (time == null) time = getTextMeshChildByName("Time");
 
-            title.text = hours +":"+ minutes;
+            time.text = hours +":"+ minutes;
 
         }
 
