@@ -17,16 +17,17 @@ namespace TableTop
         public Material material_optional;
 
 
-        public void CreateRouteMesh(Route route)
+        public void CreateRouteMesh(RouteManager route)
         {
-            Vector3[] points = FromLtdLngToWorldCoordinates(route.coordinatesRoute);
+            Vector3[] points = FromLtdLngToWorldCoordinates(route.routeData.coordinatesRoute);
 
             //creating Mesh and Renderer
             MeshFilter mesh = route.gameObject.AddComponent<MeshFilter>();
             MeshRenderer renderer = route.gameObject.AddComponent<MeshRenderer>();
 
             //this is optional could be removed
-            Vector3[] reducedPoints = reducePointsbyDistance(points);
+            //Vector3[] reducedPoints = reducePointsbyDistance(points);
+            Vector3[] reducedPoints = points;
 
             //save both vertices 
             route.vertices_optional = createVerticesFromPointRoute(reducedPoints, RouteType.OPTIONAL);
@@ -135,7 +136,7 @@ namespace TableTop
         public Vector3[] reducePointsbyDistance(Vector3[] points)
         {
 
-            float threshold = 0.02f;
+            float threshold = 0.01f;
 
             List<Vector3> listPoints = new List<Vector3>();
 
@@ -151,6 +152,8 @@ namespace TableTop
 
 
             }
+
+            listPoints.Add(points[points.Length - 1]);
 
             return listPoints.ToArray();
 

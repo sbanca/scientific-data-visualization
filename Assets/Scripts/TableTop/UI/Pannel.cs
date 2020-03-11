@@ -22,9 +22,7 @@ namespace TableTop
 
         private TextMesh Title;
 
-        private TaskCalculation task;
-
-
+ 
         public void Generate()
         {   
             SetTitle();
@@ -32,7 +30,7 @@ namespace TableTop
             
         }
 
-        public void Relayout()
+        public async void Relayout()
         {
 
             //clean the pannel
@@ -42,7 +40,7 @@ namespace TableTop
 
             //make sure selection is initialize correctly
 
-            pannelTasks.InitializeSelections();
+            await pannelTasks.Update();
 
 
             //intialize variables 
@@ -88,7 +86,7 @@ namespace TableTop
             if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL)
             {
 
-                //if there is more than one item trigger options for last task item 
+                //if there is more than one pannel item trigger options for last task item 
                 if (pannelTasks.List.Count > 0) 
                 {
                     PannelItems[pannelTasks.List.Count - 1].GetComponent<PannelItem>().taskOptionClicked.AddListener(SelectedTaskOption);
@@ -97,12 +95,13 @@ namespace TableTop
 
 
                 //trigger route calculations
-                if (Application.isPlaying) TaskCalculation.Instance.CalculateTask(pannelTasks);
+                if (Application.isPlaying) RoutesDisplay.Instance.DisplayRoutes(pannelTasks);
+
 
             }
 
-            //last bit
-            UpdateTime();
+           
+            
         }
 
         public void SetTitle() {
@@ -208,20 +207,32 @@ namespace TableTop
             return extractedTask;
         }
 
-        public void UpdateTime() {
+        //public void UpdateTime() {
 
-            for (int i = 0; i < PannelItems.Length; i++)
-            {
+        //    for (int i = 0; i < PannelItems.Length; i++)
+        //    {
 
-                OptionItem option= pannelTasks.List[i].returnSelectedOption();
+        //        Route r = null;
 
-                PannelItem PannelItemManager = PannelItems[i].GetComponent<PannelItem>();               
+        //        int duration = 0;
 
-                PannelItemManager.setTime(pannelTasks.List[i].Duration);
+        //        if (i > 0) {
 
-            }
+        //           r = Routes.Instance.getRoute(pannelTasks.List[i].RouteSegment);
 
-        }
+        //        }
+
+        //        if (r != null) duration = pannelTasks.List[i].Duration + (int)r.duration;
+
+        //        //display time
+
+        //        PannelItem PannelItemManager = PannelItems[i].GetComponent<PannelItem>();               
+
+        //        PannelItemManager.setTime(duration);
+
+        //    }
+
+        //}
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TableTop
@@ -7,20 +8,24 @@ namespace TableTop
     public class Routes : Singleton<Routes>
     {
 
-        public List<Route> routes = new List<Route> { };
 
-        //this method creates or activate a route
-        public void Add(OptionItem startOption, OptionItem endOption, RouteType type) {
+        public List<RouteManager> routes = new List<RouteManager> { };
+
+       
+        public void Add(RouteData routedata) {
+
+            RouteManager retrievedRoute = null;
+
+            RouteManager newRoute = null;
 
             lock (routes)
             {
-                Route retrievedRoute = null;
-
-                string entryName = startOption.Name + "_" + endOption.Name;
+                
+                string entryName = routedata.name;
 
                 if (routes.Count > 0)
                 {
-                    retrievedRoute = this.routes.FirstOrDefault(entry => entry.name.Equals(entryName)); 
+                    retrievedRoute = this.routes.FirstOrDefault(entry => entry.routeData.name.Equals(entryName)); 
                    
                 }
 
@@ -28,9 +33,7 @@ namespace TableTop
                 {
                     var newGameobject = new GameObject();
 
-                    var newRoute = Route.CreateComponent(newGameobject,startOption, endOption, type);
-
-                    newRoute.Generate();
+                    newRoute = RouteManager.CreateComponent(newGameobject, routedata);
 
                     routes.Add(newRoute);
 
@@ -38,13 +41,17 @@ namespace TableTop
                 else
                 {
                     
-                    retrievedRoute.gameObject.SetActive(true);//make sure the object is active
+                    retrievedRoute.gameObject.SetActive(true); //make sure the object is active
 
-                    retrievedRoute.type = type; //update type will trigger material change
+                    retrievedRoute.type = routedata.type; //update type will trigger material change
 
-                }
-               
+                }               
+
             }
+
+            if (newRoute != null) 
+                
+                newRoute.CreateMesh(); //asynch task must be outside lock 
 
         }
 
@@ -62,7 +69,7 @@ namespace TableTop
 
         }
 
-
+  
         public object DequeuInactive() {
 
             lock (routes)

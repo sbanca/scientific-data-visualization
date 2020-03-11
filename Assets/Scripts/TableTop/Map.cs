@@ -41,7 +41,7 @@ namespace TableTop
 
         public SpatialAnchors MapSpatialAnchors;
 
-        public TaskCalculation MapTaskCalculation;
+        public RoutesDisplay MapRoutesDisplay;
 
         public void Initialize(bool useSlippyMap, Vector2 origin, Mapzen.TileBounds bounds, MapStyle style, Vector4 slippyMapSize, float unitsPerMeter)
         {
@@ -89,7 +89,7 @@ namespace TableTop
             MapSpatialAnchors = gameObject.AddComponent<SpatialAnchors>();
 
             //TaskCalculation
-            MapTaskCalculation = gameObject.AddComponent<TaskCalculation>();
+            MapRoutesDisplay = gameObject.AddComponent<RoutesDisplay>();
 
         }
 
@@ -111,7 +111,7 @@ namespace TableTop
 
             MapSpatialAnchors = SpatialAnchors.Instance;
 
-            MapTaskCalculation = TaskCalculation.Instance;
+            MapRoutesDisplay = RoutesDisplay.Instance;
 
         }
 
