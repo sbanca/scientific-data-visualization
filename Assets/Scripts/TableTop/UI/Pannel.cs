@@ -16,9 +16,11 @@ namespace TableTop
 
         public PannelTasks pannelTasks;
 
-        public GameObject PannelItemPrefab;
-        
-        public GameObject[] PannelItems;
+        public GameObject TaskUiItemPrefab;
+
+        public GameObject RouteUiItemPrefab;
+
+        public List<GameObject> PannelUiItems;
 
         private TextMesh Title;
 
@@ -38,71 +40,108 @@ namespace TableTop
             DeletePannelsItems();
 
 
-            //make sure selection is initialize correctly
+            //update route calculation and options update
 
             await pannelTasks.Update();
 
 
-            //intialize variables 
+            //createUiItems
 
-            GameObject NewPannelItem;
+            PannelUiItems = new List<GameObject>();
 
-            PannelItem Manager;
-
-            PannelItems = new GameObject[pannelTasks.List.Count];
+            foreach (UiItem item in pannelTasks.UiItemList) InstantiateUIitem(item);
 
 
-            //iterate
-
-            for (int i =0; i< pannelTasks.List.Count; i++) {
-
-
-                NewPannelItem = Instantiate(PannelItemPrefab);
-
-                if(pannelTasks.List[i].Draggable) NewPannelItem.AddComponent<Draggable>();
-
-
-                //set same position and rotation as the parent pannel
-
-                NewPannelItem.transform.position = this.gameObject.transform.position;
-
-                NewPannelItem.transform.rotation = this.gameObject.transform.rotation;
-
-                NewPannelItem.transform.parent = this.gameObject.transform;
-
-
-                //get pannel item manager and update the item details 
-
-                Manager = NewPannelItem.GetComponent<PannelItem>();
-
-                Manager.panelItemNumber =i;
-
-                Manager.pannelTask = pannelTasks.List[i];          
-
-                PannelItems[i] = NewPannelItem;
-
-            }
-
-            if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL)
+            if (pannelTasks.Type == PanelType.TASKASSEMBLYPANNEL && Application.isPlaying)
             {
-
-                //if there is more than one pannel item trigger options for last task item 
-                if (pannelTasks.List.Count > 0) 
+  
+                // trigger options for last pannel item 
+                if (pannelTasks.List.Count > 0)
                 {
-                    PannelItems[pannelTasks.List.Count - 1].GetComponent<PannelItem>().taskOptionClicked.AddListener(SelectedTaskOption);
-                    PannelItems[pannelTasks.List.Count - 1].GetComponent<PannelItem>().TriggerOptions();
+                    PannelUiItems[PannelUiItems.Count - 1].GetComponent<TaskUiItemManager>().taskOptionClicked.AddListener(SelectedTaskOption);
+                    PannelUiItems[PannelUiItems.Count - 1].GetComponent<TaskUiItemManager>().TriggerOptions();
                 }
 
 
-                //trigger route calculations
-                if (Application.isPlaying) RoutesDisplay.Instance.DisplayRoutes(pannelTasks);
+                //trigger display of routes
+                pannelTasks.DisplayRoutes();
 
 
             }
 
-           
-            
+      
         }
+
+        public void InstantiateUIitem(UiItem item )
+        {
+            switch (item.type) {
+
+                case (UiItemType.TASK):
+
+                    PannelUiItems.Add(InstantiateTaskUIitem(item.taskData,item.itemNumber));
+
+                    break;
+
+                case (UiItemType.ROUTE):
+
+                    PannelUiItems.Add(InstantiateRouteUIitem(item.routeData,item.itemNumber));
+
+                    break;
+            }
+        }
+
+        public GameObject InstantiateTaskUIitem(PannelTask task,int i) {
+
+
+            //instantiate pannel task prefab
+
+            GameObject NewPannelTask = Instantiate(TaskUiItemPrefab);          
+
+
+            //set same position and rotation as the parent pannel
+
+            NewPannelTask.transform.position = this.gameObject.transform.position;
+
+            NewPannelTask.transform.rotation = this.gameObject.transform.rotation;
+
+            NewPannelTask.transform.parent = this.gameObject.transform;
+
+
+            //get pannel item manager and update the item details 
+
+            TaskUiItemManager Manager = TaskUiItemManager.CreateComponent(NewPannelTask, task,i);
+
+
+            return NewPannelTask;
+
+        }
+
+        public GameObject InstantiateRouteUIitem(RouteData routeData,int i)
+        {
+
+            //instantiate pannel task prefab
+
+            GameObject RouteUIItem = Instantiate(RouteUiItemPrefab);
+
+
+            //set same position and rotation as the parent pannel
+
+            RouteUIItem.transform.position = this.gameObject.transform.position;
+
+            RouteUIItem.transform.rotation = this.gameObject.transform.rotation;
+
+            RouteUIItem.transform.parent = this.gameObject.transform;
+
+
+            //get pannel item manager and update the item details 
+
+            RouteUiItemManager Manager = RouteUiItemManager.CreateComponent(RouteUIItem, routeData, i);
+
+
+            return RouteUIItem;
+
+        }
+
 
         public void SetTitle() {
 
@@ -112,9 +151,9 @@ namespace TableTop
 
         public void DeletePannelsItems() {
 
-            if (PannelItems == null) return;
+            if (PannelUiItems == null) return;
 
-            foreach (GameObject g in PannelItems) {
+            foreach (GameObject g in PannelUiItems) {
 
 
 #if UNITY_EDITOR
@@ -129,7 +168,7 @@ namespace TableTop
 
             }
 
-            PannelItems = null;
+            PannelUiItems = null;
 
         }
 
@@ -207,32 +246,6 @@ namespace TableTop
             return extractedTask;
         }
 
-        //public void UpdateTime() {
-
-        //    for (int i = 0; i < PannelItems.Length; i++)
-        //    {
-
-        //        Route r = null;
-
-        //        int duration = 0;
-
-        //        if (i > 0) {
-
-        //           r = Routes.Instance.getRoute(pannelTasks.List[i].RouteSegment);
-
-        //        }
-
-        //        if (r != null) duration = pannelTasks.List[i].Duration + (int)r.duration;
-
-        //        //display time
-
-        //        PannelItem PannelItemManager = PannelItems[i].GetComponent<PannelItem>();               
-
-        //        PannelItemManager.setTime(duration);
-
-        //    }
-
-        //}
 
     }
 }

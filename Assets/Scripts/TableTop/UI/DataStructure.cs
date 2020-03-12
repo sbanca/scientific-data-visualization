@@ -20,6 +20,7 @@ namespace TableTop
         public List<PannelTask> List;
         public List<RouteData> SelectedRoutes;
         public List<RouteData> OptionalRoutes;
+        public List<UiItem> UiItemList;
         public UserID User;
         public string Title;
         public float[] Position;
@@ -38,10 +39,12 @@ namespace TableTop
             await UpdateRouteData();
             UpdateRouteDuration();
             UpdateRouteDistance();
+            CreateUiElementList();
 
         }
-        
-        public void InitializeSelections() {
+
+        public void InitializeSelections()
+        {
 
 
             if (Type == PanelType.TASKASSEMBLYPANNEL)
@@ -49,7 +52,8 @@ namespace TableTop
                 for (int i = 0; i < List.Count; i++)
                 {
 
-                    for (int j = 0; j < this.List[i].Options.Count; j++) {
+                    for (int j = 0; j < this.List[i].Options.Count; j++)
+                    {
 
                         if (j == this.List[i].SelectedOption) this.List[i].Options[j].Selected = true;
 
@@ -63,11 +67,12 @@ namespace TableTop
 
         }
 
-        private async Task UpdateRouteData() {
+        private async Task UpdateRouteData()
+        {
 
             if (Type == PanelType.TASKASSEMBLYPANNEL)
             {
-               
+
                 SelectedRoutes = new List<RouteData>();
                 OptionalRoutes = new List<RouteData>();
 
@@ -83,7 +88,7 @@ namespace TableTop
 
                     SelectedRoutes.Add(new RouteData(startOption, endOption, RouteType.SELECTED));
 
-                    await SelectedRoutes[i-1].apiCall();
+                    await SelectedRoutes[i - 1].apiCall();
 
                     //add a selected route end 
                     ///////////////////////////
@@ -95,29 +100,30 @@ namespace TableTop
                         ////add an optional routes start
                         startOption = List[i - 1].Options[List[i - 1].SelectedOption];
 
-                        int optionCount = 0;
+                    int optionCount = 0;
 
-                        for (int j = 0; j < List[i].Options.Count; j++)
-                        {
-                            OptionItem option = List[i].Options[j];
-                            
-                            
-                            if (!option.Selected) { // if the option is not selected add it to the optional routes
+                    for (int j = 0; j < List[i].Options.Count; j++)
+                    {
+                        OptionItem option = List[i].Options[j];
 
-                                OptionalRoutes.Add(new RouteData(startOption, option, RouteType.OPTIONAL));
 
-                                List[i].Options[j].RouteSegment = startOption.Name + "_" + option.Name;
+                        if (!option.Selected)
+                        { // if the option is not selected add it to the optional routes
 
-                                await OptionalRoutes[optionCount].apiCall();
+                            OptionalRoutes.Add(new RouteData(startOption, option, RouteType.OPTIONAL));
 
-                                optionCount +=1;
+                            List[i].Options[j].RouteSegment = startOption.Name + "_" + option.Name;
 
-                            }
+                            await OptionalRoutes[optionCount].apiCall();
+
+                            optionCount += 1;
 
                         }
 
-                        ///add an optional routes end 
-                        /////////////////////////////
+                    }
+
+                    ///add an optional routes end 
+                    /////////////////////////////
                 }
 
             }
@@ -153,6 +159,52 @@ namespace TableTop
             }
         }
 
+        public void DisplayRoutes()
+        {
+
+            if (Type == PanelType.TASKASSEMBLYPANNEL)
+            {
+
+                Routes.Instance.DeactivateAll();
+
+                foreach (RouteData rs in SelectedRoutes) Routes.Instance.Add(rs);
+
+                foreach (RouteData rs in OptionalRoutes) Routes.Instance.Add(rs);
+
+            }
+
+        }
+
+        public void CreateUiElementList() {
+
+            UiItemList = new List<UiItem>();
+
+            if (Type == PanelType.TASKASSEMBLYPANNEL)
+            {
+
+
+                for (int i = 0; i < List.Count; i++)
+                {
+
+                    UiItemList.Add(new UiItem(UiItemType.TASK, List[i]));
+
+                    if (i < SelectedRoutes.Count)
+                    {
+                        UiItemList.Add(new UiItem(UiItemType.ROUTE, SelectedRoutes[i]));
+                    }
+
+                }
+
+            }
+            else
+            {
+
+                foreach (PannelTask task in List) UiItemList.Add(new UiItem(UiItemType.TASK, task));
+               
+            }
+
+            for (int i = 0; i< UiItemList.Count; i++) UiItemList[i].itemNumber = i;
+        }
 
     }
 
@@ -205,6 +257,43 @@ namespace TableTop
         public bool Selected;
         public string RouteSegment;
 
+    }
+
+    public class UiItem
+    {
+
+        public UiItemType type;
+        public RouteData routeData;
+        public PannelTask taskData;
+        public int itemNumber;
+
+        public UiItem(UiItemType type, object Data) {
+
+            this.type = type;
+
+                switch (type) {
+
+                    case (UiItemType.ROUTE):
+
+                        this.routeData = (RouteData)Data;
+
+                        break;
+
+                    case (UiItemType.TASK):
+
+                        this.taskData = (PannelTask)Data;
+
+                        break;
+                }
+            
+        }
+    
+    }
+
+    public enum UiItemType { 
+    
+        TASK=0,
+        ROUTE=1
     }
 
 

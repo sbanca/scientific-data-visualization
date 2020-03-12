@@ -26,8 +26,11 @@ namespace TableTop
             MeshRenderer renderer = route.gameObject.AddComponent<MeshRenderer>();
 
             //this is optional could be removed
-            //Vector3[] reducedPoints = reducePointsbyDistance(points);
-            Vector3[] reducedPoints = points;
+            Vector3[] reducedPoints = reducePointsbyDistance(points);
+            //Vector3[] reducedPoints = points;
+
+            //move start and end point slightly to create subdivision between start and end of subsequent routes
+            reducedPoints = moveStarAndEnd(reducedPoints);
 
             //save both vertices 
             route.vertices_optional = createVerticesFromPointRoute(reducedPoints, RouteType.OPTIONAL);
@@ -133,12 +136,31 @@ namespace TableTop
 
         }
 
+        public Vector3[] moveStarAndEnd(Vector3[] points) {
+
+            //move start 
+            
+            Vector3 direction =  points[1] - points[0];
+
+            points[0] = points[0] + direction.normalized * 0.01f;
+
+            //move end
+
+            direction = points[points.Length-2] - points[points.Length - 1];
+
+            points[points.Length - 1] = points[points.Length - 1] + direction.normalized * 0.01f;
+
+            return points;
+        }
+
         public Vector3[] reducePointsbyDistance(Vector3[] points)
         {
 
-            float threshold = 0.01f;
+            float threshold = 0.02f;
 
             List<Vector3> listPoints = new List<Vector3>();
+
+            listPoints.Add(points[0]);
 
             for (int i = 1; i < points.Length - 1; i++)
             {

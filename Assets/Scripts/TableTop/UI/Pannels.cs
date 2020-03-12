@@ -93,7 +93,7 @@ namespace TableTop{
 
                 newPanelManager.Generate();
 
-                pannelsGameObjects[i]=newPannelGameObject ;
+                pannelsGameObjects[i] = newPannelGameObject;
 
             }
         }

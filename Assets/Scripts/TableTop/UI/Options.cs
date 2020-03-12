@@ -17,8 +17,6 @@ namespace TableTop
 
         private Option[] optionManagersList;
 
-        private OpenRouteService openRoutService;
-
         public OptionClicked optionClicked;
 
         public void Generate() {
@@ -77,14 +75,6 @@ namespace TableTop
         }
 
         public void OptionSelector(string name) {
-
-            //for (int i=0; i< optionManagersList.Length; i++) {
-
-            //    Option optionManager = optionManagersList[i];
-
-            //    if (optionManager.optionData.Name != name) optionManager.UnTick();
-             
-            //}
             
             optionClicked.Invoke(name);
         }
@@ -135,10 +125,6 @@ namespace TableTop
 
         }
 
-        public void GetOpenRouteService()
-        {
-            openRoutService = OpenRouteService.Instance;
-        }
 
     }
 

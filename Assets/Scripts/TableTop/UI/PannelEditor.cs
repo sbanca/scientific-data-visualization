@@ -29,7 +29,9 @@ namespace TableTop
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("pannelTasks"), true);
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("PannelItemPrefab"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("TaskUiItemPrefab"), true);
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("RouteUiItemPrefab"), true);
 
             if (GUILayout.Button("generate "))
             {
