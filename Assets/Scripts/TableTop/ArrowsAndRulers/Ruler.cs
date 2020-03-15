@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TableTop
@@ -29,7 +30,7 @@ namespace TableTop
         [SerializeField]
 
         private int ticksNumber = 5;
-
+        private int coordinatesNumber=4;
         public int Ticksnumber
         {
 
@@ -40,6 +41,7 @@ namespace TableTop
                 {
 
                     ticksNumber = value;
+                    coordinatesNumber = value - 1;
                 }
             }
 
@@ -110,11 +112,15 @@ namespace TableTop
         public Rect VisibilityRectagle;
 
 
+        public RulerCoordinateType type;
+
         //private variables 
 
         private GameObject bar;
 
         private List<GameObject> ticks = new List<GameObject>();
+
+        private List<GameObject> coordinates = new List<GameObject>();
 
 
         //functions 
@@ -124,6 +130,8 @@ namespace TableTop
             Createbar();
 
             Createticks();
+
+            CreateCoordinates();
 
             AdjustCenter();
 
@@ -241,6 +249,57 @@ namespace TableTop
 
         }
 
+        private void CreateCoordinates()
+        {
+
+            string[] CoordArray = CoordinatesArray();
+
+            if (name== "ruler-bottom" || name== "ruler-left") Array.Reverse(CoordArray);
+
+            float step = WorldTicksStep();
+            Vector3 stepvector = direction * step;
+            Vector3 distance = new Vector3();
+
+            Vector3 start = gameObject.transform.position - (direction * (length / 2)) + stepvector/2;
+
+            for(int i=0;i< coordinatesNumber; i++)
+            {
+
+                //loadprefab
+                string folder = RulerCoordinateType.LETTERS == type ?"letters/":"numbers/";
+                GameObject prefab = loadPrefabFromResoureces(folder+CoordArray[i]);
+
+                //instantiate
+                GameObject coordObject = Instantiate(prefab);
+                coordObject.name = CoordArray[i];
+                coordObject.transform.parent = gameObject.transform;
+
+                //material
+                Renderer r = coordObject.GetComponentInChildren<MeshRenderer>();
+                Material m = Resources.Load("Materials/" + name, typeof(Material)) as Material;
+                r.material = m;
+
+                //rendered boundaries
+                r.gameObject.transform.position = r.transform.position - r.bounds.center;
+                if (OrientCoordinatesToCamera.Instance == null) getOrientCoordinateInstance();
+                OrientCoordinatesToCamera.Instance.objects.Add(r.gameObject);
+
+                //scale ticks 
+                Vector3 scale = coordObject.transform.localScale;
+                scale.Set(0.1f, 0.1f, 0.1f);
+                coordObject.transform.localScale = scale;
+
+                //position           
+                coordObject.transform.position = start + distance + (oppositeDirection * 0.075f);
+                distance += stepvector;
+        
+                //add to the list 
+                ticks.Add(coordObject);
+
+            }
+
+        }
+
         private List<float> TicksArray()
         {
 
@@ -265,6 +324,22 @@ namespace TableTop
             return array;
         }
 
+        private string[] CoordinatesArray()
+        {
+
+            string[] Alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "Z" };
+
+            string[] Numbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21" };
+
+
+            string[] array = new string[coordinatesNumber];
+
+
+            for (int i = 0; i < coordinatesNumber; i++) array[i] = type == RulerCoordinateType.LETTERS ? Alphabet[i] : Numbers[i];
+
+            return array;
+        }
+
         private float TicksStep()
         {
             return (rangeTicks.y - rangeTicks.x) / (ticksNumber - 1);
@@ -273,6 +348,13 @@ namespace TableTop
         private float WorldTicksStep()
         {
             return length / (ticksNumber - 1);
+        }
+
+        private GameObject loadPrefabFromResoureces(string name)
+        {
+
+            return Resources.Load("Prefabs/" + name, typeof(GameObject)) as GameObject;
+
         }
 
         private void RulerVisibilityWindow()
@@ -316,6 +398,29 @@ namespace TableTop
 #endif
 
 
+        }
+
+        private void getOrientCoordinateInstance() {
+
+            var MapUIParent = GameObject.Find("ArrowsAndRulers");
+
+
+            if (MapUIParent == null)
+            {
+
+                MapUIParent = new GameObject();
+
+                MapUIParent.name = "ArrowsAndRulers";
+
+                MapUIParent.AddComponent<OrientCoordinatesToCamera>();
+
+            }
+            else {
+
+                var orientCoord = MapUIParent.GetComponent<OrientCoordinatesToCamera>();
+
+                if(orientCoord==null) MapUIParent.AddComponent<OrientCoordinatesToCamera>();
+            }
         }
 
     }

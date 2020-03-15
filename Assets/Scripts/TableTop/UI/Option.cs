@@ -9,9 +9,9 @@ namespace TableTop
     public class Option : MonoBehaviour
     {
 
-        private OptionItem _optionData;
+        private OptionData _optionData;
 
-        public OptionItem optionData {
+        public OptionData optionData {
 
             get { return _optionData; }
 

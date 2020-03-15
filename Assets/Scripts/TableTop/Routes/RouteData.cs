@@ -13,9 +13,9 @@ namespace TableTop
         public RouteType type;
 
         //start coordinates
-        private OptionItem _startOption;
+        private OptionData _startOption;
         private Mapzen.LngLat start;
-        public OptionItem startOption
+        public OptionData startOption
         {
 
             get { return _startOption; }
@@ -31,9 +31,9 @@ namespace TableTop
         }
 
         //end coordinates
-        private OptionItem _endOption;
+        private OptionData _endOption;
         private Mapzen.LngLat end;
-        public OptionItem endOption
+        public OptionData endOption
         {
 
             get { return _endOption; }
@@ -48,11 +48,15 @@ namespace TableTop
         }
 
         //route specifics
+        public float departure;
         public float duration;
+        public float arrival;
         public float distance;
+        public float pollution;
+
         public double[][] coordinatesRoute;
 
-        public RouteData(OptionItem start, OptionItem end, RouteType type)
+        public RouteData(OptionData start, OptionData end, RouteType type)
         {
             this.startOption = start;
             this.endOption = end;

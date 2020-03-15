@@ -7,13 +7,13 @@ namespace TableTop
     public class ExchangeTask : Singleton<ExchangeTask>
     {
 
-        public void Exchange(Pannel origin, Pannel target, string taskName) {
+        public void Exchange(Panel origin, Panel target, string taskName) {
 
             if (origin == target) return;
 
-            PannelTask task = origin.ExtractTask(taskName);
+            TaskData taskData = origin.ExtractTask(taskName);
 
-            target.AddTask(task);
+            target.AddTask(taskData);
 
             origin.Relayout();
 

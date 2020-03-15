@@ -7,7 +7,7 @@ namespace TableTop
 
         //public variables
 
-        public float rulerdistance = 0.025f;
+        public float rulerdistance = 0.05f;
 
         //priavet variables
 
@@ -45,8 +45,11 @@ namespace TableTop
 
         }
 
-        private void CreateRulers()
+        public void CreateRulers()
         {
+            DeleteRulers();
+
+            if (MapUIParent == null) getMapUIParent();
 
             if (map == null) getMapInstance();
 
@@ -63,7 +66,7 @@ namespace TableTop
                 RulerCenter = new Vector3(mapbounds.center.x, 0f, size.z + rulerdistance);
                 VisibilityRectagle = new Rect(size.x, size.z, size.z, size.w);
             }
-            CreateRuler("ruler-top", 0, RangeticksX, TicksnumberX, mapbounds.size.x, Vector3.right, RulerCenter, VisibilityRectagle);
+            CreateRuler("ruler-top", 0, RangeticksX, TicksnumberX, mapbounds.size.x, Vector3.right, RulerCenter, VisibilityRectagle, RulerCoordinateType.LETTERS);
 
             // X Bottom ruler 
             RulerCenter = new Vector3(mapbounds.center.x, 0f, mapbounds.center.z - (mapbounds.size.z / 2));
@@ -72,7 +75,7 @@ namespace TableTop
                 RulerCenter = new Vector3(mapbounds.center.x, 0f, size.y - rulerdistance);
                 VisibilityRectagle = new Rect(size.x, -size.z, size.z, size.w);
             }
-            CreateRuler("ruler-bottom", 1, RangeticksX, TicksnumberX, mapbounds.size.x, Vector3.left, RulerCenter, VisibilityRectagle);
+            CreateRuler("ruler-bottom", 1, RangeticksX, TicksnumberX, mapbounds.size.x, Vector3.left, RulerCenter, VisibilityRectagle, RulerCoordinateType.LETTERS);
 
 
             // Z left ruler 
@@ -82,7 +85,7 @@ namespace TableTop
                 RulerCenter = new Vector3(size.w + rulerdistance, 0f, mapbounds.center.z);
                 VisibilityRectagle = new Rect(size.w, size.y, size.z, size.w);
             }
-            CreateRuler("ruler-right", 2, RangeticksY, TicksnumberY, mapbounds.size.z, Vector3.back, RulerCenter, VisibilityRectagle);
+            CreateRuler("ruler-right", 2, RangeticksY, TicksnumberY, mapbounds.size.z, Vector3.back, RulerCenter, VisibilityRectagle, RulerCoordinateType.NUMBERS);
 
             // Z Right ruler 
             RulerCenter = new Vector3(mapbounds.center.x - (mapbounds.size.x / 2), 0f, mapbounds.center.z);
@@ -91,11 +94,28 @@ namespace TableTop
                 RulerCenter = new Vector3(size.x - rulerdistance, 0f, mapbounds.center.z);
                 VisibilityRectagle = new Rect(-size.w, size.y, size.z, size.w);
             }
-            CreateRuler("ruler-left", 3, RangeticksY, TicksnumberY, mapbounds.size.z, Vector3.forward, RulerCenter, VisibilityRectagle);
+            CreateRuler("ruler-left", 3, RangeticksY, TicksnumberY, mapbounds.size.z, Vector3.forward, RulerCenter, VisibilityRectagle, RulerCoordinateType.NUMBERS);
 
         }
 
-        private void CreateRuler(string name, int number, Vector2 Rangeticks, int Ticksnumber, float Length, Vector3 Direction, Vector3 Center, Rect VisibilityRect)
+        public void DeleteRulers() {
+
+            foreach (GameObject r in rulers) {
+
+                if (r == null) return;
+
+#if UNITY_EDITOR
+                DestroyImmediate(r);
+#else
+                Destroy(r);
+#endif
+            }
+
+            rulers = new GameObject[4];
+
+        }
+
+        private void CreateRuler(string name, int number, Vector2 Rangeticks, int Ticksnumber, float Length, Vector3 Direction, Vector3 Center, Rect VisibilityRect, RulerCoordinateType type)
         {
 
             rulers[number] = new GameObject();
@@ -118,6 +138,8 @@ namespace TableTop
 
             ruler.VisibilityRectagle = VisibilityRect;
 
+            ruler.type = type;
+
             ruler.Generate();
 
         }
@@ -132,7 +154,6 @@ namespace TableTop
 
         }
 
-
         private void getMapUIParent()
         {
 
@@ -145,10 +166,9 @@ namespace TableTop
 
                 MapUIParent.name = "ArrowsAndRulers";
 
-
+                MapUIParent.AddComponent<OrientCoordinatesToCamera>();
             }
         }
-
 
         private void getMapInstance()
         {
@@ -166,7 +186,6 @@ namespace TableTop
 
 
         }
-
 
         private void getBoundariesInstance()
         {

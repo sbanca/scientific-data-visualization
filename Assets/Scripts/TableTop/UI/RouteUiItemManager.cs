@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TableTop
 {
-    public class RouteUiItemManager : MonoBehaviour
+    public class RouteUiItemManager : UiItemManager
     {
 
         private RouteData _routeData;
@@ -16,34 +16,22 @@ namespace TableTop
                 _routeData = value;
 
                 this.gameObject.name = _routeData.name;
+             
 
-                setValue("DurationValue", _routeData.duration.ToString());
+                setValue("DepartureValue", transformSecondsToTime((int)_routeData.departure));//route departure time        
+                
+                setValue("DurationValue", transformSecondsToTime((int)_routeData.duration));//route duration 
 
-                setValue("DistanceValue", _routeData.distance.ToString());
+                setValue("ArrivalValue", transformSecondsToTime((int)_routeData.arrival));//route Arrival  time 
+
+                setValue("DistanceValue", _routeData.distance.ToString() + " m");//route distance
 
             }
 
         }
 
-        private int _routeItemNumber;
 
-        public int routeItemNumber
-        {
-
-            get { return _routeItemNumber; }
-            set
-            {
-                _routeItemNumber = value;
-                setPos();
-            }
-
-        }
-
-        public float startingValue = 0.258f;
-
-        public float height = 0.05f;
-
-
+      
         //static constructor
         public static RouteUiItemManager CreateComponent(GameObject where, RouteData routeData, int routeItemNumber)
         {
@@ -52,56 +40,14 @@ namespace TableTop
 
             routeUiItemManagerObject.routeData = routeData;
 
-            routeUiItemManagerObject.routeItemNumber = routeItemNumber;
+            routeUiItemManagerObject.itemNumber = routeItemNumber;
 
 
             return routeUiItemManagerObject;
 
         }
 
-
-        //other methods
-        private void setValue(string ValueName, string value)
-        {
-            TextMesh valueToSet = getTextMeshChildByName(ValueName);
-
-            valueToSet.text = value;          
-
-        }
-
-        private TextMesh getTextMeshChildByName(string name)
-        {
-
-            TextMesh[] TextMeshes = this.gameObject.GetComponentsInChildren<TextMesh>();
-
-            TextMesh textMesh = null;
-
-            foreach (TextMesh tm in TextMeshes)
-            {
-
-                if (tm.name == name)
-                {
-
-                    textMesh = tm;
-
-                    break;
-                }
-
-            }
-
-            return textMesh;
-
-        }
-
-        private void setPos()
-        {
-            float newValue = startingValue - (_routeItemNumber * height);
-
-            this.gameObject.transform.localPosition = new Vector3(0f, 0f, newValue);
-
-        }
-
-
+   
     }
 }
 

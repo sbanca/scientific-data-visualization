@@ -37,7 +37,7 @@ namespace TableTop
 
         public Augmentations MapAugmentations;
 
-        public Pannels MapPannels;
+        public Panels MapPanels;
 
         public SpatialAnchors MapSpatialAnchors;
 
@@ -82,8 +82,8 @@ namespace TableTop
             //Interaction 
             MapAugmentations = gameObject.AddComponent<Augmentations>();
 
-            //Pannels
-            MapPannels = gameObject.AddComponent<Pannels>();
+            //Panels
+            MapPanels = gameObject.AddComponent<Panels>();
 
             //SpatialAnchors
             MapSpatialAnchors = gameObject.AddComponent<SpatialAnchors>();
@@ -105,7 +105,7 @@ namespace TableTop
 
             MapAugmentations = Augmentations.Instance;
 
-            MapPannels = Pannels.Instance;
+            MapPanels = Panels.Instance;
 
             MapSpatialAnchors = SpatialAnchors.Instance;
 

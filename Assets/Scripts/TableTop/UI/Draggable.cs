@@ -17,23 +17,23 @@ namespace TableTop {
 
         private Camera maincam;
 
-        private RayOnPannels rayOnPannels;
+        private RayOnPanels rayOnPanels;
 
         private ExchangeTask exchangeTask;
 
-        private Pannel originPannel;
+        private Panel originPanel;
 
-        private Pannel targetPannel;
+        private Panel targetPanel;
 
         private void Start()
         {
             maincam = Camera.main;
 
-            rayOnPannels = RayOnPannels.Instance;
+            rayOnPanels = RayOnPanels.Instance;
 
             exchangeTask = ExchangeTask.Instance;
 
-            originPannel = transform.parent.gameObject.GetComponent<Pannel>();
+            originPanel = transform.parent.gameObject.GetComponent<Panel>();
         }
 
         void OnMouseDown()
@@ -66,21 +66,21 @@ namespace TableTop {
 
         void OnMouseUp()
         {
-            RaycastHit? hit = rayOnPannels.PannelHit();
+            RaycastHit? hit = rayOnPanels.PanelHit();
 
             if (hit != null)
             {
 
-               targetPannel = hit.Value.collider.gameObject.transform.parent.GetComponent<Pannel>();
+               targetPanel = hit.Value.collider.gameObject.transform.parent.GetComponent<Panel>();
 
-                if (targetPannel == originPannel) {
+                if (targetPanel == originPanel) {
 
                     reinstateOriginalPosRot();
 
                 }
                 else { 
 
-                    exchangeTask.Exchange(originPannel, targetPannel, this.gameObject.name);
+                    exchangeTask.Exchange(originPanel, targetPanel, this.gameObject.name);
 
                 }
             }

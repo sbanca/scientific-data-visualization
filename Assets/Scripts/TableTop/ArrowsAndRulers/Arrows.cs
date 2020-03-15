@@ -7,13 +7,17 @@ namespace TableTop
     public class Arrows : Singleton<Arrows>
     {
 
-        public float arrowdistance = 0.08f;
+        public float arrowdistance = 0.16f;
 
         private GameObject[] arrows = new GameObject[4];
 
         private Vector4 size;
 
         private GameObject MapUIParent;
+
+        private Map map;
+
+        private Boundaries boundaries;
 
         public void Initialize()
         {
@@ -25,9 +29,17 @@ namespace TableTop
            
         }
 
-        private void CreateArrows()
+        public void CreateArrows()
         {
-            
+
+            DeleteArrows();
+
+            if (MapUIParent == null) getMapUIParent();
+
+            if (map == null) getMapInstance();
+
+            if (boundaries == null) getBoundariesInstance();
+
             var rulers = Rulers.Instance.rulers;
             size = new Vector4(Boundaries.Instance.TableBounds.min.x, Boundaries.Instance.TableBounds.min.z, Boundaries.Instance.TableBounds.max.x, Boundaries.Instance.TableBounds.max.z);
             var rulerdistance = Rulers.Instance.rulerdistance;
@@ -87,6 +99,26 @@ namespace TableTop
 
         }
 
+
+        public void DeleteArrows()
+        {
+
+            foreach (GameObject r in arrows)
+            {
+
+                if (r == null) return;
+
+#if UNITY_EDITOR
+                DestroyImmediate(r);
+#else
+                Destroy(r);
+#endif
+            }
+
+            arrows = new GameObject[4];
+
+        }
+
         private void getMapUIParent() {
 
             MapUIParent = GameObject.Find("ArrowsAndRulers");
@@ -99,6 +131,41 @@ namespace TableTop
 
 
             }
+        }
+
+
+        private void getMapInstance()
+        {
+
+
+            if (Map.Instance == null)
+            {
+                map = gameObject.GetComponent<Map>();
+            }
+            else
+            {
+                map = Map.Instance;
+            }
+
+
+
+        }
+
+        private void getBoundariesInstance()
+        {
+
+
+            if (Map.Instance == null)
+            {
+                boundaries = gameObject.GetComponent<Boundaries>();
+            }
+            else
+            {
+                boundaries = Boundaries.Instance;
+            }
+
+
+
         }
     }
 }

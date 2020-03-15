@@ -76,7 +76,7 @@ public class OpenRouteService : Singleton<OpenRouteService>
 
         //if (directionCache == null) GetDirectionCacheInstance();
 
-        var address = new Uri(baseAddress.OriginalString + "/v2/directions/driving-car?api_key=" + api_key +
+        var address = new Uri(baseAddress.OriginalString + "/v2/directions/driving-hgv?api_key=" + api_key +
                                 "&start=" + Start.longitude + "," + Start.latitude +
                                 "&end=" + End.longitude     + "," + End.latitude );
 

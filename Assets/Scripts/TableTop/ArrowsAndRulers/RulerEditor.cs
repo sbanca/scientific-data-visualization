@@ -23,6 +23,7 @@ namespace TableTop
 
         public OPTIONS op;
 
+        public RulerCoordinateType type;
 
         [MenuItem("Examples/Editor GUILayout Popup usage")]
 
@@ -52,12 +53,15 @@ namespace TableTop
 
             OPTIONS newop = (OPTIONS)EditorGUILayout.EnumPopup("Direction:", op);
 
+            
+
             if (newop != op)
             {
                 op = newop;
                 directionCompute();
             }
 
+   
             if (GUILayout.Button("Generate "))
             {
                 ruler.Generate();

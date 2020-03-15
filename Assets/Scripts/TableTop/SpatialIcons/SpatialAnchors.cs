@@ -7,10 +7,10 @@ namespace TableTop
     public class SpatialAnchors : Singleton<SpatialAnchors>
     {
 
-        public string JsonName = "Pannels.json";
+        public string JsonName = "Panels.json";
 
 
-        public List<OptionItem> spatialAnchorsList; 
+        public List<OptionData> spatialAnchorsList; 
 
         private GameObject[] spatialAnchorsGameObjectsList;
 
@@ -33,19 +33,19 @@ namespace TableTop
 
         private void GetSpatialAnchorsList()
         {
-            spatialAnchorsList = new List<OptionItem>();
+            spatialAnchorsList = new List<OptionData>();
 
-            string pannelstext = LoadResourceTextfile(JsonName);
+            string panelstext = LoadResourceTextfile(JsonName);
 
-            PannelsList pannelsData = JsonUtility.FromJson<PannelsList>(pannelstext);
+            TasksDataGroups panelsData = JsonUtility.FromJson<TasksDataGroups>(panelstext);
 
-            foreach (PannelTasks pts in pannelsData.List)
+            foreach (TasksData pts in panelsData.List)
             {
-                foreach (PannelTask pt in pts.List)
+                foreach (TaskData pt in pts.List)
                 {
                     if (pt.Options.Count > 0)
                     {
-                        foreach (OptionItem sa in pt.Options)
+                        foreach (OptionData sa in pt.Options)
                         {
                             spatialAnchorsList.Add(sa);
                         }
@@ -80,7 +80,7 @@ namespace TableTop
 
             for (int i=0; i< spatialAnchorsList.Count; i++)
             {
-                OptionItem sa = spatialAnchorsList[i];
+                OptionData sa = spatialAnchorsList[i];
 
                 GameObject prefab = GetPrefabBasedOnType(sa.Type);
 

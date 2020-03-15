@@ -11,7 +11,7 @@ namespace TableTop
         public GameObject OptionPrefab;
 
         [SerializeField]
-        public OptionItem[] OptionList;
+        public OptionData[] OptionList;
 
         private GameObject Parent;
 
@@ -34,7 +34,7 @@ namespace TableTop
 
                 //get option data item 
 
-                OptionItem optionData = OptionList[i];
+                OptionData optionData = OptionList[i];
 
                 optionData.number = i;
 
