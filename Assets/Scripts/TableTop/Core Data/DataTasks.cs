@@ -160,6 +160,8 @@ namespace TableTop
 
                 routeDelay = 0;
 
+                routeDistance = 0;
+
                 foreach (UiItem item in UiItemList) {
 
 
@@ -184,21 +186,36 @@ namespace TableTop
                             //delay 
                             if (item.taskData.TimeLocked) item.taskData.TimeDifferenceInSeconds = totalDuration - item.taskData.TimeInSeconds ;
 
-                            if (item.taskData.TimeDifferenceInSeconds < 0) routeDelay += item.taskData.TimeDifferenceInSeconds;
+                            if (item.taskData.TimeDifferenceInSeconds > 0) routeDelay += item.taskData.TimeDifferenceInSeconds;
                             //end delay
 
                             totalDuration += (int)item.taskData.Duration;
 
                             break;
 
-                        case (UiItemType.METRICS):
-
-                            item.metricsData = new MetricsData(routeDuration, routeDistance, routeDelay);
-
-                            break;
 
                     }  
                    
+                }
+
+
+                foreach (UiItem item in UiItemList)
+                {
+
+
+                    switch (item.type)
+                    {
+
+                        
+
+                        case (UiItemType.METRICS):
+
+                            item.metricsData = new MetricsData( routeDistance,routeDuration, routeDelay);
+
+                            break;
+
+                    }
+
                 }
 
             }

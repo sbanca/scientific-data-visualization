@@ -10,36 +10,36 @@
       "Type": "USERPANEL",
       "List": [
         {
-          "Name": "Print Materials",
+          "Name": "Print Brouchure",
           "Description": "Before your first meeting you need to print some documents ",
           "Draggable": true,
           "Options": [
             {
               "Name": "Menu Printing",
               "Description": "printing shop",
-              "Lng": -73.9967794,
-              "Lat": 40.7210974,
+              "Lng": -73.9854698985268, 
+              "Lat": 40.7483551104904,
               "Type": 0
             },
             {
               "Name": "iDesign Digital Printing",
               "Description": "printing shop",
-              "Lng": -74.0015429257945,
-              "Lat": 40.7281450574549,
+              "Lng": -73.9846485321931 ,
+              "Lat": 40.755668776125,
               "Type": 0
             },
             {
               "Name": "Staples Print & Marketing Services",
               "Description": "printing shop",
-              "Lng": -73.991707029186,
-              "Lat": 40.7102892328057,
+              "Lng": -73.9925730338501,
+              "Lat":  40.7513730543488,
               "Type": 0
             },
             {
               "Name": "Big Apple Copy Center",
               "Description": "printing shop",
-              "Lng": -74.0129046,
-              "Lat": 40.7092186,
+              "Lng": -73.9775895921834,
+              "Lat": 40.7509500584711,
               "Type": 0
             }
           ],
@@ -47,43 +47,43 @@
           "Duration":1800
         },
         {
-          "Name": "Choose Lunch Place",
+          "Name": "Lunch",
           "Description": "At a certain point you will have to eat somenthing and you have received few advices which one works best ?",
           "Draggable": true,
           "Options": [
             {
               "Name": "L'Artusi",
               "Description": "refined italian fare",
-              "Lng": -74.0056883,
-              "Lat": 40.7338474,
+              "Lng": -73.9731842307826,
+              "Lat": 40.7415833626209,
               "Type": 2
             },
             {
               "Name": "Freemans",
               "Description": "hip hideways serving american fare",
-              "Lng": -73.9932916,
-              "Lat": 40.7221225,
+              "Lng": -73.9730790033233,
+              "Lat": 40.7278064969106,
               "Type": 2
             },
             {
               "Name": "Wo-hop",
               "Description": "Long running chinese eatery,open late",
-              "Lng": -73.998797,
-              "Lat": 40.714059,
+              "Lng": -73.9727229121097,
+              "Lat":  40.7429429270543,
               "Type": 2
             },
             {
               "Name": "Raclette",
               "Description": "Casually hip cheese-centric restaurant",
-              "Lng": -73.9808435,
-              "Lat": 40.728912,
+              "Lng": -73.9863099198162,
+              "Lat": 40.7423623087957,
               "Type": 2
             },
             {
               "Name": "Buddakan",
               "Description": "Splashy Asian eatery",
-              "Lng": -74.0049543,
-              "Lat": 40.7422832,
+              "Lng": -74.0025450052939,
+              "Lat": 40.7433955806278,
               "Type": 2
             }
           ],

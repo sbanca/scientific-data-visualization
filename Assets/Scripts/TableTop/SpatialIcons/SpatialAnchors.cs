@@ -7,7 +7,7 @@ namespace TableTop
     public class SpatialAnchors : Singleton<SpatialAnchors>
     {
 
-        public string JsonName = "Panels.json";
+        public string JsonName = "data.json";
 
 
         public List<OptionData> spatialAnchorsList; 
