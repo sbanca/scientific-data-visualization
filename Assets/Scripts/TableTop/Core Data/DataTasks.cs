@@ -23,8 +23,7 @@ namespace TableTop
         public float[] Position;
         public float[] Scale;
         public float[] Rotation;
-        public PanelType Type;
-              
+        public PanelType Type;      
 
         public async Task Update()
         {
@@ -39,34 +38,38 @@ namespace TableTop
         public void InitializeSelectionsAndMetrics()
         {
 
-
-            if (Type == PanelType.TASKASSEMBLYPANNEL)
+            lock (List)
             {
-                for (int i = 0; i < List.Count; i++)
-                {
 
-                    for (int j = 0; j < this.List[i].Options.Count; j++)
+                if (Type == PanelType.TASKASSEMBLYPANNEL)
+                {
+                    for (int i = 0; i < List.Count; i++)
                     {
 
-                        if (j == this.List[i].SelectedOption) this.List[i].Options[j].Selected = true;
+                        for (int j = 0; j < this.List[i].Options.Count; j++)
+                        {
 
-                        else this.List[i].Options[j].Selected = false;
+                            if (j == this.List[i].SelectedOption) this.List[i].Options[j].Selected = true;
 
+                            else this.List[i].Options[j].Selected = false;
+
+                        }
 
                     }
-
                 }
-            }
-            else {
-
-                for (int i = 0; i < List.Count; i++)
+                else
                 {
 
-                    this.List[i].TimeDifferenceInSeconds = 0;
+                    for (int i = 0; i < List.Count; i++)
+                    {
 
+                        this.List[i].TimeDifferenceInSeconds = 0;
+
+                        this.List[i].OriginName = this.Title;
+
+                    }
                 }
             }
-
         }
 
 
@@ -76,67 +79,68 @@ namespace TableTop
 
         private async Task UpdateRouteData()
         {
-
-            if (Type == PanelType.TASKASSEMBLYPANNEL)
-            {
-
-                SelectedRoutes = new List<RouteData>();
-                OptionalRoutes = new List<RouteData>();
-
-                for (int i = 1; i < List.Count; i++)
+            
+                if (Type == PanelType.TASKASSEMBLYPANNEL)
                 {
 
-                    ////////////////////////////
-                    //add a selected route start
+                    SelectedRoutes = new List<RouteData>();
+                    OptionalRoutes = new List<RouteData>();
 
-                    OptionData startOption = List[i - 1].Options[List[i - 1].SelectedOption];
+                    for (int i = 1; i < List.Count; i++)
+                    {
 
-                    OptionData endOption = List[i].Options[List[i].SelectedOption];
+                        ////////////////////////////
+                        //add a selected route start
 
-                    SelectedRoutes.Add(new RouteData(startOption, endOption, RouteType.SELECTED));
+                        OptionData startOption = List[i - 1].Options[List[i - 1].SelectedOption];
 
-                    await SelectedRoutes[i - 1].apiCall();
+                        OptionData endOption = List[i].Options[List[i].SelectedOption];
 
-                    //add a selected route end 
-                    ///////////////////////////
+                        SelectedRoutes.Add(new RouteData(startOption, endOption, RouteType.SELECTED));
+
+                        await SelectedRoutes[i - 1].apiCall();
+
+                        //add a selected route end 
+                        ///////////////////////////
 
 
-                    if (i == List.Count - 1) { 
-
-                        //////////////////////////////
-                        ////add an optional routes start
-                        startOption = List[i - 1].Options[List[i - 1].SelectedOption];
-
-                        int optionCount = 0;
-
-                        for (int j = 0; j < List[i].Options.Count; j++)
+                        if (i == List.Count - 1)
                         {
-                            OptionData option = List[i].Options[j];
+
+                            //////////////////////////////
+                            ////add an optional routes start
+                            startOption = List[i - 1].Options[List[i - 1].SelectedOption];
+
+                            int optionCount = 0;
+
+                            for (int j = 0; j < List[i].Options.Count; j++)
+                            {
+                                OptionData option = List[i].Options[j];
 
 
-                            if (!option.Selected)
-                            { // if the option is not selected add it to the optional routes
+                                if (!option.Selected)
+                                { // if the option is not selected add it to the optional routes
 
-                                OptionalRoutes.Add(new RouteData(startOption, option, RouteType.OPTIONAL));
+                                    OptionalRoutes.Add(new RouteData(startOption, option, RouteType.OPTIONAL));
 
-                                List[i].Options[j].RouteSegment = startOption.Name + "_" + option.Name;
+                                    List[i].Options[j].RouteSegment = startOption.Name + "_" + option.Name;
 
-                                await OptionalRoutes[optionCount].apiCall();
+                                    await OptionalRoutes[optionCount].apiCall();
 
-                                optionCount += 1;
+                                    optionCount += 1;
+
+                                }
 
                             }
 
+                            ///add an optional routes end 
+                            /////////////////////////////
+
                         }
-
-                        ///add an optional routes end 
-                        /////////////////////////////
-                    
                     }
+
                 }
-
-            }
-
+            
 
         }
 
@@ -151,74 +155,82 @@ namespace TableTop
         private void UpdateRoutesMetrics()
         {
 
-            if (Type == PanelType.TASKASSEMBLYPANNEL)
-            {
+            lock (List) {
 
-                totalDuration = StartTime;
-
-                routeDuration = 0;
-
-                routeDelay = 0;
-
-                routeDistance = 0;
-
-                foreach (UiItem item in UiItemList) {
-
-
-                    switch (item.type) {
-
-                        case (UiItemType.ROUTE):
-
-                            item.routeData.departure = totalDuration;
-
-                            totalDuration += (int)item.routeData.duration;
-
-                            routeDuration += (int)item.routeData.duration;
-
-                            item.routeData.arrival = totalDuration;
-
-                            routeDistance += (int)item.routeData.distance;
-
-                            break;
-
-                        case (UiItemType.TASK):
-
-                            //delay 
-                            if (item.taskData.TimeLocked) item.taskData.TimeDifferenceInSeconds = totalDuration - item.taskData.TimeInSeconds ;
-
-                            if (item.taskData.TimeDifferenceInSeconds > 0) routeDelay += item.taskData.TimeDifferenceInSeconds;
-                            //end delay
-
-                            totalDuration += (int)item.taskData.Duration;
-
-                            break;
-
-
-                    }  
-                   
-                }
-
-
-                foreach (UiItem item in UiItemList)
+                if (Type == PanelType.TASKASSEMBLYPANNEL)
                 {
 
+                    totalDuration = StartTime;
 
-                    switch (item.type)
+                    routeDuration = 0;
+
+                    routeDelay = 0;
+
+                    routeDistance = 0;
+
+                    foreach (UiItem item in UiItemList)
                     {
 
-                        
 
-                        case (UiItemType.METRICS):
+                        switch (item.type)
+                        {
 
-                            item.metricsData = new MetricsData( routeDistance,routeDuration, routeDelay);
+                            case (UiItemType.ROUTE):
 
-                            break;
+                                item.routeData.departure = totalDuration;
+
+                                totalDuration += (int)item.routeData.duration;
+
+                                routeDuration += (int)item.routeData.duration;
+
+                                item.routeData.arrival = totalDuration;
+
+                                routeDistance += (int)item.routeData.distance;
+
+                                break;
+
+                            case (UiItemType.ADDEDTASK):
+
+                                //delay 
+                                if (item.taskData.TimeLocked) item.taskData.TimeDifferenceInSeconds = totalDuration - item.taskData.TimeInSeconds;
+
+                                if (item.taskData.TimeDifferenceInSeconds > 0) routeDelay += item.taskData.TimeDifferenceInSeconds;
+                                //end delay
+
+                                totalDuration += (int)item.taskData.Duration;
+
+                                break;
+
+
+                        }
+
+
+                    }
+
+
+                    foreach (UiItem item in UiItemList)
+                    {
+
+
+                        switch (item.type)
+                        {
+
+
+
+                            case (UiItemType.METRICS):
+
+                                item.metricsData = new MetricsData(routeDistance, routeDuration, routeDelay);
+
+                                break;
+
+                        }
 
                     }
 
                 }
 
             }
+        
         }
 
 
@@ -228,16 +240,18 @@ namespace TableTop
 
         public void DisplayRoutes()
         {
-
-            if (Type == PanelType.TASKASSEMBLYPANNEL)
+            lock (List)
             {
+                if (Type == PanelType.TASKASSEMBLYPANNEL)
+                {
 
-                Routes.Instance.DeactivateAll();
+                    Routes.Instance.DeactivateAll();
 
-                foreach (RouteData rs in SelectedRoutes) Routes.Instance.Add(rs);
+                    foreach (RouteData rs in SelectedRoutes) Routes.Instance.Add(rs);
 
-                foreach (RouteData rs in OptionalRoutes) Routes.Instance.Add(rs);
+                    foreach (RouteData rs in OptionalRoutes) Routes.Instance.Add(rs);
 
+                }
             }
 
         }
@@ -245,40 +259,100 @@ namespace TableTop
         public void CreateUiElementList()
         {
 
-            UiItemList = new List<UiItem>();
-
-            if (Type == PanelType.TASKASSEMBLYPANNEL)
+            lock (List)
             {
+                UiItemList = new List<UiItem>();
 
-                UiItemList.Add(new UiItem(UiItemType.METRICS, new MetricsData(0, 0, 0)));
+                if (Type == PanelType.TASKASSEMBLYPANNEL)
+                {
 
+                    UiItemList.Add(new UiItem(UiItemType.METRICS, new MetricsData(0, 0, 0)));
+
+
+                    for (int i = 0; i < List.Count; i++)
+                    {
+
+                        UiItemList.Add(new UiItem(UiItemType.ADDEDTASK, List[i]));
+
+                        if (i < SelectedRoutes.Count)
+                        {
+                            UiItemList.Add(new UiItem(UiItemType.ROUTE, SelectedRoutes[i]));
+                        }
+
+                    }
+
+
+
+                }
+                else
+                {
+
+                    foreach (TaskData task in List) UiItemList.Add(new UiItem(UiItemType.TASK, task));
+
+                }
+
+                for (int i = 0; i < UiItemList.Count; i++) UiItemList[i].itemNumber = i;
+            }
+        }
+
+
+
+        //get extract add remove tasks 
+        public TaskData GetTask(string name)
+        {
+
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (List[i].Name == name) return List[i];
+
+            }
+
+            return null;
+
+        }
+
+        public TaskData ExtractTask(string name)
+        {
+
+            TaskData extractedTask = GetTask(name);
+
+            if (extractedTask != null) RemoveTask(extractedTask);
+
+            return extractedTask;
+        }
+
+        public void RemoveTask(TaskData extractedTask)
+        {
+            lock (List)
+            {
+                string name = extractedTask.Name;
 
                 for (int i = 0; i < List.Count; i++)
                 {
 
-                    UiItemList.Add(new UiItem(UiItemType.TASK, List[i]));
-
-                    if (i < SelectedRoutes.Count)
+                    if (List[i].Name == name)
                     {
-                        UiItemList.Add(new UiItem(UiItemType.ROUTE, SelectedRoutes[i]));
+
+                        List.Remove(List[i]);
+
+                        break;
                     }
 
                 }
-
-               
-
-            }
-            else
-            {
-
-                foreach (TaskData task in List) UiItemList.Add(new UiItem(UiItemType.TASK, task));
-
             }
 
-            for (int i = 0; i < UiItemList.Count; i++) UiItemList[i].itemNumber = i;
         }
 
+        public void AddTask(TaskData task)
+        {
 
+            lock (List)
+            {
+                List.Add(task); //add the task
+            }
+
+        }
+    
     }
 
     [Serializable]
@@ -286,13 +360,15 @@ namespace TableTop
     {
         public string Name;
         public string Description;
-        public bool Draggable;
+        public bool Clickable;
         public List<OptionData> Options;
         public bool TimeLocked;
         public int TimeInSeconds;
         public int Duration; //duration in seconds
         public int SelectedOption;
         public string RouteSegment;
+
+        public string OriginName;
 
         public int TimeDifferenceInSeconds;
 
@@ -372,6 +448,12 @@ namespace TableTop
                     break;
 
                 case (UiItemType.TASK):
+
+                    this.taskData = (TaskData)Data;
+
+                    break;
+
+                case (UiItemType.ADDEDTASK):
 
                     this.taskData = (TaskData)Data;
 

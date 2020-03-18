@@ -28,6 +28,10 @@ namespace TableTop
 
             serializedObject.Update();
 
+
+
+     
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty("PanelPrefab"), true);
 
             if (GUILayout.Button("Generate Panels"))

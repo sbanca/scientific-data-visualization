@@ -25,7 +25,7 @@ namespace TableTop
 
                     var center = g.transform.GetComponent<Renderer>().bounds.center;
 
-                    g.transform.RotateAround(center,Vector3.up,-angle);
+                    g.transform.RotateAround(center,Vector3.up,angle);
 
                 }
 

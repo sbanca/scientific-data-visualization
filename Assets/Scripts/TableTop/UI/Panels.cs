@@ -15,6 +15,8 @@ namespace TableTop{
 
         public GameObject[] panelsGameObjects;
 
+
+
         public void Start()
         {
 
@@ -28,6 +30,7 @@ namespace TableTop{
 
 #endif
 
+         
         }
         
         private void GetPanelList()

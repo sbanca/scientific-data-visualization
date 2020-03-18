@@ -48,7 +48,7 @@ namespace TableTop
 
             TaskUiItemManager taskUiItemManagerObject = where.AddComponent<TaskUiItemManager>();
 
-            if (taskData.Draggable) where.AddComponent<Draggable>();
+            if (taskData.Clickable) where.AddComponent<Clickable>();
 
             taskUiItemManagerObject.itemNumber = routeItemNumber;
 

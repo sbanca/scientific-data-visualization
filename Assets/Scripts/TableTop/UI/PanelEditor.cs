@@ -23,11 +23,11 @@ namespace TableTop
         public override void OnInspectorGUI()
         {
 
-            serializedObject.Update();
-
-          
+            serializedObject.Update();         
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("panelTasks"), true);
+            
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("AddedTaskUiItemPrefab"), true);
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("TaskUiItemPrefab"), true);
 

@@ -49,7 +49,28 @@ namespace TableTop
 
             return null;
         }
-    
+
+        public Nullable<Vector3> HeadRay() 
+        {
+
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+            if (MapCollider.Raycast(ray, out hit, 200f))
+            {
+
+                if (hit.point.x < TableTopSize.x || hit.point.x > TableTopSize.z || hit.point.z < TableTopSize.y || hit.point.z > TableTopSize.w)
+                {
+
+                    return null;
+                }
+
+                return hit.point;
+
+            }
+
+            return null;
+
+        }
 
 
     }

@@ -18,6 +18,8 @@ namespace TableTop
 
         public GameObject TaskUiItemPrefab;
 
+        public GameObject AddedTaskUiItemPrefab;
+
         public GameObject RouteUiItemPrefab;
 
         public GameObject MetricsUiItemPrefab;
@@ -26,7 +28,7 @@ namespace TableTop
 
         private TextMesh Title;
 
- 
+
         public void Generate()
         {   
             SetTitle();
@@ -60,8 +62,8 @@ namespace TableTop
                 // trigger options for last panel item 
                 if (panelTasks.List.Count > 0)
                 {
-                    PanelUiItems[PanelUiItems.Count - 1].GetComponent<TaskUiItemManager>().taskOptionClicked.AddListener(SelectedTaskOption);
-                    PanelUiItems[PanelUiItems.Count - 1].GetComponent<TaskUiItemManager>().TriggerOptions();
+                    PanelUiItems[PanelUiItems.Count - 1].GetComponent<AddedTaskUiItemManager>().taskOptionClicked.AddListener(SelectedTaskOption);
+                    PanelUiItems[PanelUiItems.Count - 1].GetComponent<AddedTaskUiItemManager>().TriggerOptions();
                 }
 
 
@@ -79,6 +81,12 @@ namespace TableTop
             int indexaddition = panelTasks.Type == PanelType.TASKASSEMBLYPANNEL ? 1 : 0; //this is an excamotage for the layout;
 
             switch (item.type) {
+
+                case (UiItemType.ADDEDTASK):
+
+                    PanelUiItems.Add(InstantiateAddedTaskUIitem(item.taskData, item.itemNumber + indexaddition));
+
+                    break;
 
                 case (UiItemType.TASK):
 
@@ -100,21 +108,40 @@ namespace TableTop
             }
         }
 
+        public GameObject InstantiateAddedTaskUIitem(TaskData task, int i)
+        {
+
+
+            //instantiate panel task prefab
+
+            GameObject NewPanelTask = Instantiate(AddedTaskUiItemPrefab);
+
+
+            //set same position and rotation as the parent panel
+
+            setTransform(NewPanelTask);
+
+
+            //get panel item manager and update the item details 
+
+            AddedTaskUiItemManager Manager = AddedTaskUiItemManager.CreateComponent(NewPanelTask, task, i);
+
+
+            return NewPanelTask;
+
+        }
+
         public GameObject InstantiateTaskUIitem(TaskData task,int i) {
 
 
             //instantiate panel task prefab
 
-            GameObject NewPanelTask = Instantiate(TaskUiItemPrefab);          
+            GameObject NewPanelTask = Instantiate(TaskUiItemPrefab);
 
 
             //set same position and rotation as the parent panel
 
-            NewPanelTask.transform.position = this.gameObject.transform.position;
-
-            NewPanelTask.transform.rotation = this.gameObject.transform.rotation;
-
-            NewPanelTask.transform.parent = this.gameObject.transform;
+            setTransform(NewPanelTask);
 
 
             //get panel item manager and update the item details 
@@ -136,12 +163,7 @@ namespace TableTop
 
             //set same position and rotation as the parent panel
 
-            RouteUIItem.transform.position = this.gameObject.transform.position;
-
-            RouteUIItem.transform.rotation = this.gameObject.transform.rotation;
-
-            RouteUIItem.transform.parent = this.gameObject.transform;
-
+            setTransform(RouteUIItem);
 
             //get panel item manager and update the item details 
 
@@ -162,11 +184,7 @@ namespace TableTop
 
             //set same position and rotation as the parent panel
 
-            MetricsUIItem.transform.position = this.gameObject.transform.position;
-
-            MetricsUIItem.transform.rotation = this.gameObject.transform.rotation;
-
-            MetricsUIItem.transform.parent = this.gameObject.transform;
+            setTransform(MetricsUIItem);
 
 
             //get panel item manager and update the item details 
@@ -175,6 +193,18 @@ namespace TableTop
 
 
             return MetricsUIItem;
+
+        }
+
+        private void setTransform(GameObject NewPanelTask) {
+
+            NewPanelTask.transform.localScale = this.gameObject.transform.localScale;
+
+            NewPanelTask.transform.position = this.gameObject.transform.position;
+
+            NewPanelTask.transform.rotation = this.gameObject.transform.rotation;
+
+            NewPanelTask.transform.parent = this.gameObject.transform;
 
         }
 
@@ -193,8 +223,9 @@ namespace TableTop
 
 #if UNITY_EDITOR
 
+                if (Application.isPlaying) Destroy(g);
+                else DestroyImmediate(g);
 
-                DestroyImmediate(g);
 
 #else
 
@@ -204,23 +235,6 @@ namespace TableTop
             }
 
             PanelUiItems = null;
-
-        }
-
-        public void RemoveTask(TaskData extractedTask) {
-
-            string name = extractedTask.Name;
-
-            for (int i =0; i< panelTasks.List.Count; i++) {
-
-                if (panelTasks.List[i].Name == name) {
-
-                    panelTasks.List.Remove(panelTasks.List[i]);
-
-                    break;
-                }
-
-            }
 
         }
 
@@ -250,35 +264,6 @@ namespace TableTop
             }
 
             Relayout();
-        }
-
-        public void AddTask(TaskData task) {
-
-
-            panelTasks.List.Add(task); //add the task
-
-
-        }
-
-        public TaskData GetTask(string name) {
-            
-            for (int i = 0; i < panelTasks.List.Count; i++)
-            {
-                if (panelTasks.List[i].Name == name) return panelTasks.List[i];
-
-            }
-
-            return null;
-
-        }
-
-        public TaskData ExtractTask(string name) {
-
-            TaskData extractedTask = GetTask(name);
-
-            if (extractedTask != null) RemoveTask(extractedTask);
-
-            return extractedTask;
         }
 
 

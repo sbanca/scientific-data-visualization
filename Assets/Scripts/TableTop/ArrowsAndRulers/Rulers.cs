@@ -49,6 +49,8 @@ namespace TableTop
         {
             DeleteRulers();
 
+            CalculateRangeThick();
+
             if (MapUIParent == null) getMapUIParent();
 
             if (map == null) getMapInstance();

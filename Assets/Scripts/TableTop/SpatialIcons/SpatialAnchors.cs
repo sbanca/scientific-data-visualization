@@ -129,7 +129,7 @@ namespace TableTop
 #if UNITY_EDITOR
                         Object.DestroyImmediate(collider);
 #else
-                    Object.Destroy(go);
+                        Object.Destroy(collider);
 #endif
 
                         break;
@@ -138,7 +138,7 @@ namespace TableTop
 #if UNITY_EDITOR
                     Object.DestroyImmediate(collider);
 #else
-                    Object.Destroy(go);
+                    Object.Destroy(collider);
 #endif
 
                 }

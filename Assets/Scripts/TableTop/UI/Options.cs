@@ -19,13 +19,13 @@ namespace TableTop
 
         public OptionClicked optionClicked;
 
+     
+
         public void Generate() {
 
             Parent = new GameObject("Option Container");
 
-            Parent.transform.parent = gameObject.transform;
-
-            Vector3 InitialOffset = new Vector3(0f,0f, -0.058f);
+            Parent.transform.parent = gameObject.transform;          
 
             optionManagersList = new Option[OptionList.Length]; 
 
@@ -50,9 +50,7 @@ namespace TableTop
 
                 //set transfrom from parent object 
 
-                optionObject.transform.position = Parent.transform.parent.transform.position;
-
-                optionObject.transform.rotation = Parent.transform.parent.transform.rotation;
+                setTransform(optionObject);
 
 
                 //set option title and selection
@@ -71,6 +69,20 @@ namespace TableTop
             }
 
 
+
+        }
+
+
+        private void setTransform(GameObject optionObject)
+        {
+
+            optionObject.transform.localScale = Parent.transform.parent.transform.parent.transform.localScale;
+
+            optionObject.transform.position = Parent.transform.parent.transform.position;
+
+            optionObject.transform.rotation = Parent.transform.parent.transform.rotation;
+
+            optionObject.transform.parent = Parent.transform.parent.transform;
 
         }
 

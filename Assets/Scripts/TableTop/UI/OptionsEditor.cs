@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
+
 namespace TableTop
 {
 
@@ -37,3 +39,5 @@ namespace TableTop
     }
 
 }
+
+#endif

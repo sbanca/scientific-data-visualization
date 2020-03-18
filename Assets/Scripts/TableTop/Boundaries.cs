@@ -120,10 +120,10 @@ namespace TableTop {
 
            
 
-        
+                
 #else
 
-        Renderer[] allRenderers = Object.FindObjectsOfType<Renderer>();
+        Renderer[] allRenderers = UnityEngine.Object.FindObjectsOfType<Renderer>();
         //Renderer[] allRenderers = gameObject.GetComponentsInChildren<Renderer>();
         
         foreach (Renderer r in allRenderers)

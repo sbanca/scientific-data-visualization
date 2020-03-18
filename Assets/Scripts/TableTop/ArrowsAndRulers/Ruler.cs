@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace TableTop
 {
     public class Ruler : MonoBehaviour
@@ -262,7 +263,9 @@ namespace TableTop
 
             Vector3 start = gameObject.transform.position - (direction * (length / 2)) + stepvector/2;
 
-            for(int i=0;i< coordinatesNumber; i++)
+            
+
+            for (int i=0;i< coordinatesNumber; i++)
             {
 
                 //loadprefab
@@ -380,7 +383,7 @@ namespace TableTop
 
 #else
 
-        Renderer[] allRenderers = Object.FindObjectsOfType<Renderer>();
+        Renderer[] allRenderers = UnityEngine.Object.FindObjectsOfType<Renderer>();
         //Renderer[] allRenderers = gameObject.GetComponentsInChildren<Renderer>();
         
         foreach (Renderer r in allRenderers)

@@ -31,7 +31,7 @@ namespace TableTop
 
         public TextMesh text;
 
-        public float offset =  -0.058f;
+        public float offset =  -0.025f;
 
         public OptionClicked optionClicked;
 
@@ -57,10 +57,12 @@ namespace TableTop
 
         public void OnMouseDown()
         {
-            //selected.SetActive(!selected.activeSelf);
-
             optionClicked.Invoke(name);
+        }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            optionClicked.Invoke(name);
         }
 
         private static string Truncate(string value, int maxLength)

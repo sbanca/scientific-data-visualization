@@ -12,7 +12,8 @@ namespace TableTop
 
         TASK = 0,
         ROUTE = 1,
-        METRICS =2
+        METRICS =2,
+        ADDEDTASK=3
     }
 
 

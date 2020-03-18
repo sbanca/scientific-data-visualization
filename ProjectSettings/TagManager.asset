@@ -16,7 +16,7 @@ TagManager:
   - PostProcessing
   - Panels
   - IgnoreRaycast
-  - 
+  - IgnoreProjector
   - 
   - 
   - 

@@ -339,6 +339,8 @@ MonoBehaviour:
     routeDelay: 0
   TaskUiItemPrefab: {fileID: 980222896304549124, guid: b9468a84939ced84c8de8c856aecb8f6,
     type: 3}
+  AddedTaskUiItemPrefab: {fileID: 980222896304549124, guid: 18efcb20f9f923143985adc38b1491a8,
+    type: 3}
   RouteUiItemPrefab: {fileID: 980222896304549124, guid: 5a5e5e26f9c03984398c2a3994521806,
     type: 3}
   MetricsUiItemPrefab: {fileID: 980222896304549124, guid: 67d08301916586e4b889381c20a7b6fe,
