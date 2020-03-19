@@ -44,6 +44,8 @@ namespace TableTop
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("DefaultIconPrefab"), true);
 
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("AppleIconPrefab"), true);
+
             if (GUILayout.Button("generate "))
             {
                 spatialAnchors.GenerateSpatialAnchors();

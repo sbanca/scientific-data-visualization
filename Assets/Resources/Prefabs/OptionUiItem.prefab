@@ -229,8 +229,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4503005, y: 0.014910221, z: 0.023494974}
-  m_Center: {x: -0.017543368, y: 0.006007999, z: -0.042268552}
+  m_Size: {x: 0.4503005, y: 0.0075773, z: 0.013223596}
+  m_Center: {x: -0.017543375, y: 0.0023415387, z: -0.042232107}
 --- !u!114 &1105468418599101251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +245,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 2641326098628423637}
   text: {fileID: 7720127041953427826}
-  offset: -0.025
   optionClicked:
     m_PersistentCalls:
       m_Calls: []

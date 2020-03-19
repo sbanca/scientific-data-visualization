@@ -192,6 +192,9 @@ namespace TableTop
                 case (SpatialAnchorType.WORKMEETING):
                     prefab = WorkMeetingPrefeab;
                     break;
+                case (SpatialAnchorType.APPLESTORE):
+                    prefab = AppleIconPrefab;
+                    break;
                 default:
                     prefab = DefaultIconPrefab;
                     break;
@@ -307,6 +310,9 @@ namespace TableTop
         [SerializeField]
         public GameObject DefaultIconPrefab;
 
+        [SerializeField]
+        public GameObject AppleIconPrefab;
+
         public void loadPrefabs() {
 
             ElectronicShopIconPrefeab = loadPrefabFromResoureces("ElectronicShopIcon_Prefab");
@@ -318,6 +324,8 @@ namespace TableTop
             RestaurantIconPrefeab = loadPrefabFromResoureces("RestaurantIcon_Prefab");
 
             WorkMeetingPrefeab = loadPrefabFromResoureces("WorkMeeting_Prefab");
+
+            AppleIconPrefab = loadPrefabFromResoureces("AppleIcon_prefab");
 
             DefaultIconPrefab = loadPrefabFromResoureces("annotation_prefab");
 

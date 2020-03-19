@@ -29,8 +29,9 @@ namespace TableTop
 
         private void OnTriggerEnter(Collider other)
         {
-
-            Clicked();
+            if (other.transform.gameObject.name == "GrabVolumeSmall")
+            { Clicked(); }
+            
 
         }
 

@@ -284,13 +284,14 @@ namespace TableTop
 
                 //rendered boundaries
                 r.gameObject.transform.position = r.transform.position - r.bounds.center;
-                if (OrientCoordinatesToCamera.Instance == null) getOrientCoordinateInstance();
-                OrientCoordinatesToCamera.Instance.objects.Add(r.gameObject);
+                //if (OrientCoordinatesToCamera.Instance == null) getOrientCoordinateInstance();
+                //OrientCoordinatesToCamera.Instance.objects.Add(r.gameObject);
 
                 //scale ticks 
                 Vector3 scale = coordObject.transform.localScale;
                 scale.Set(0.1f, 0.1f, 0.1f);
                 coordObject.transform.localScale = scale;
+                coordObject.transform.Rotate(new Vector3(0f,180f,0f));
 
                 //position           
                 coordObject.transform.position = start + distance + (oppositeDirection * 0.075f);

@@ -31,7 +31,7 @@ namespace TableTop
 
         public TextMesh text;
 
-        public float offset =  -0.025f;
+        private float offset =  -0.05f;
 
         public OptionClicked optionClicked;
 
@@ -62,7 +62,8 @@ namespace TableTop
 
         private void OnTriggerEnter(Collider other)
         {
-            optionClicked.Invoke(name);
+            if (other.transform.gameObject.name == "GrabVolumeSmall")
+            { optionClicked.Invoke(name); }
         }
 
         private static string Truncate(string value, int maxLength)

@@ -54,8 +54,8 @@
             {
               "Name": "L'Artusi",
               "Description": "refined italian fare",
-              "Lng": -73.9731842307826,
-              "Lat": 40.7415833626209,
+              "Lng": -73.9990002691654, 
+              "Lat": 40.7452304962205,
               "Type": 2
             },
             {
@@ -98,22 +98,22 @@
             {
               "Name": "Apple store West 14th Street",
               "Description": "",
-              "Lng": -74.0055692,
-              "Lat": 40.7412482,
+              "Lng": -73.9955376749612, 
+              "Lat": 40.7453165590901,
               "Type": 5
             },
             {
               "Name": "Apple store SoHo",
               "Description": "",
-              "Lng": -73.9990994,
-              "Lat": 40.7250937,
+              "Lng": -73.9966206542382,
+              "Lat": 40.7586641008501,
               "Type": 5
             },
             {
               "Name": "Apple World Trade Center",
               "Description": "",
-              "Lng": -74.0116196,
-              "Lat": 40.7116172,
+              "Lng": -73.9776260248335,
+              "Lat": 40.7590922871651,
               "Type": 5
             }
           ],
@@ -146,22 +146,22 @@
             {
               "Name": "xCubicle",
               "Description": "Electronic store",
-              "Lng": -74.0113336960961,
-              "Lat": 40.7176356413902,
+              "Lng":  -73.9861580692234 ,
+              "Lat": 40.7299650729869,
               "Type": 3
             },
             {
               "Name": "Microtech Computer Systems Inc",
               "Description": "Electronic store",
-              "Lng": -73.994161693245,
-              "Lat": 40.7399543916936,
+              "Lng": -73.977436001324,
+              "Lat": 40.7394148716074,
               "Type": 3
             },
             {
               "Name": "Ciamara",
               "Description": "Electronic store",
-              "Lng": -74.0083626,
-              "Lat": 40.705802,
+              "Lng": -73.9964962734294, 
+              "Lat":40.7539711973,
               "Type": 3
             }
           ],
@@ -176,8 +176,8 @@
             {
               "Name": "Vserve Ebusiness Solutions",
               "Description": "Ecommerce company",
-              "Lng": -74.0074186,
-              "Lat": 40.704794,
+              "Lng": -73.967839138605,
+              "Lat": 40.7583510229968,
               "Type": 4
             }
           ],
