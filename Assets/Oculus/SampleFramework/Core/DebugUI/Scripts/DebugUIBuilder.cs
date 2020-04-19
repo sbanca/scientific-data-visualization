@@ -206,7 +206,7 @@ public class DebugUIBuilder : MonoBehaviour
     }
   }
 
-  public void AddRect(RectTransform r, int targetCanvas)
+  private void AddRect(RectTransform r, int targetCanvas)
   {
     if (targetCanvas > targetContentPanels.Length)
     {
@@ -222,7 +222,7 @@ public class DebugUIBuilder : MonoBehaviour
     }
   }
 
-  public RectTransform AddButton(string label, OnClick handler ,int targetCanvas = 0)
+  public RectTransform AddButton(string label, OnClick handler, int targetCanvas = 0)
   {
     RectTransform buttonRT = GameObject.Instantiate(buttonPrefab).GetComponent<RectTransform>();
     Button button = buttonRT.GetComponentInChildren<Button>();
