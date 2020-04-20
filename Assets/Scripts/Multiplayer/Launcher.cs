@@ -9,14 +9,17 @@ public class Launcher : MonoBehaviourPunCallbacks
    
     void Start()
     {
+        Resources.LoadAll("ScriptableObjects");
         Debug.Log("[PUN] connecting to server");
-        PhotonNetwork.GameVersion = "0.0.1";
+        PhotonNetwork.NickName = MasterManager.GameSettings.Nickname;
+        PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster() {
 
         Debug.Log("[PUN] connected to server");
+        Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName);
 
     }
 
