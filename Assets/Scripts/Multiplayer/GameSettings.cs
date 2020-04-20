@@ -24,4 +24,13 @@ public class GameSettings : ScriptableObject
         } 
     }
 
+
+    [SerializeField]
+    private string _roomName = "CollaborationRoom"; 
+
+    public string RoomName { get { return _roomName; } }
+
+    [SerializeField]
+    public byte InstantiateVrAvatarEventCode = 1; // example code, change to any value between 1 and 199
+
 }

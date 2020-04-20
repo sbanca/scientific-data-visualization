@@ -1,10 +1,9 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using ExitGames.Client.Photon;
 
-public class Launcher : MonoBehaviourPunCallbacks
+public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
    
     void Start()
@@ -21,6 +20,48 @@ public class Launcher : MonoBehaviourPunCallbacks
         Debug.Log("[PUN] connected to server");
         Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName);
 
+        Debug.Log("[PUN] joining room " + MasterManager.GameSettings.RoomName);
+        PhotonNetwork.JoinOrCreateRoom(MasterManager.GameSettings.RoomName, new RoomOptions(), TypedLobby.Default);
+    }
+
+    void IMatchmakingCallbacks.OnJoinedRoom()
+    {
+        Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
+
+        Debug.Log("[PUN] instantiate LocalAvatar" );
+        //GameObject localAvatar = Instantiate(Resources.Load("LocalAvatar")) as GameObject;
+        GameObject TrackingSpace = GameObject.Find("TrackingSpace");
+        GameObject localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;
+        PhotonView photonView = localAvatar.GetComponent<PhotonView>();
+
+        if (PhotonNetwork.AllocateViewID(photonView))
+        {
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions
+            {
+                CachingOption = EventCaching.AddToRoomCache,
+                Receivers = ReceiverGroup.Others
+            };
+                        
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
+
+            Debug.Log("[PUN] LocalAvatar instantiated");
+        }
+        else
+        {
+            Debug.LogError("[PUN] Failed instantiate LocalAvatar, Failed to allocate a ViewId.");
+
+            Destroy(localAvatar);
+        }
+    }
+
+    void IOnEventCallback.OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == MasterManager.GameSettings.InstantiateVrAvatarEventCode)
+        {
+            GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
+            PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
+            photonView.ViewID = (int)photonEvent.CustomData;
+        }
     }
 
     public override void OnDisconnected(DisconnectCause cause)
