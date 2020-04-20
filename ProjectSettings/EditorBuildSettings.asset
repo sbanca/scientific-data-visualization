@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sample_scene.unity
     guid: 1b59f28fc2ff73a448d7324d33c038f9
   - enabled: 0
@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/SampleFramework/Usage/AvatarGrab.unity
     guid: 941c413af7c367d40aab0725f5a59530
+  - enabled: 1
+    path: Assets/Scenes/Sample_scene_networking.unity
+    guid: 32131146c50cc9644b594cfd4897e61f
   m_configObjects: {}
