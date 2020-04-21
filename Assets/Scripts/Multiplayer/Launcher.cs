@@ -27,7 +27,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         RoomOptions options = new RoomOptions();
         options.PublishUserId = true;
-        PhotonNetwork.JoinOrCreateRoom(MasterManager.GameSettings.RoomName, new RoomOptions(), TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(MasterManager.GameSettings.RoomName, options, TypedLobby.Default);
     }
 
     void IMatchmakingCallbacks.OnJoinedRoom()
@@ -70,7 +70,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         {
             //sender 
             Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
-            Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName);
+            Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
             
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
