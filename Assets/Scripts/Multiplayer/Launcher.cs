@@ -21,9 +21,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     public override void OnConnectedToMaster() {
 
         Debug.Log("[PUN] connected to server");
-        Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName +"/n UserID: " + PhotonNetwork.LocalPlayer.UserId);
+        Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName + "\n UserID: " + PhotonNetwork.LocalPlayer.UserId);
 
         Debug.Log("[PUN] joining room " + MasterManager.GameSettings.RoomName);
+
+        RoomOptions options = new RoomOptions();
+        options.PublishUserId = true;
         PhotonNetwork.JoinOrCreateRoom(MasterManager.GameSettings.RoomName, new RoomOptions(), TypedLobby.Default);
     }
 
