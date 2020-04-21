@@ -44,6 +44,10 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
                         
             PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
 
+            //
+            OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
+            ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
+
             Debug.Log("[PUN] LocalAvatar instantiated");
         }
         else
