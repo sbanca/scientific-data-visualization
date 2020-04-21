@@ -11,14 +11,17 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Resources.LoadAll("ScriptableObjects");
         Debug.Log("[PUN] connecting to server");
         PhotonNetwork.NickName = MasterManager.GameSettings.Nickname;
+        PhotonNetwork.AuthValues = new AuthenticationValues();
+        PhotonNetwork.AuthValues.UserId = MasterManager.GameSettings.UserID;
         PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;
         PhotonNetwork.ConnectUsingSettings();
+  
     }
 
     public override void OnConnectedToMaster() {
 
         Debug.Log("[PUN] connected to server");
-        Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName);
+        Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName +"/n UserID: " + PhotonNetwork.LocalPlayer.UserId);
 
         Debug.Log("[PUN] joining room " + MasterManager.GameSettings.RoomName);
         PhotonNetwork.JoinOrCreateRoom(MasterManager.GameSettings.RoomName, new RoomOptions(), TypedLobby.Default);
@@ -62,9 +65,19 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         if (photonEvent.Code == MasterManager.GameSettings.InstantiateVrAvatarEventCode)
         {
+            //sender 
+            Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
+            Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName);
+            
+
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
+
+            OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
+            ovrAvatar.oculusUserID = player.UserId;
+
+            Debug.Log("[PUN] RemoteAvatar instantiated" );
         }
     }
 
