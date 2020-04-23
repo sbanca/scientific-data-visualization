@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Manager/GameSettings")]
 public class GameSettings : ScriptableObject
@@ -22,20 +20,39 @@ public class GameSettings : ScriptableObject
             return _nickname + value.ToString();
 
         }
+
+        set { _nickname = value; }
     }
+
 
     [SerializeField]
 
     private string _userID = "2671308206268206";
 
-    public string UserID { get {return _userID; } }
+    public string UserID { 
+        get {return _userID; }
+        set { _userID = value; }
+    }
+
 
     [SerializeField]
     private string _roomName = "CollaborationRoom"; 
 
-    public string RoomName { get { return _roomName; } }
+    public string RoomName { 
+        get { return _roomName; }
+        set { _roomName = value; }
+    }
+
+  
 
     [SerializeField]
     public byte InstantiateVrAvatarEventCode = 1; // example code, change to any value between 1 and 199
 
+}
+
+
+public enum RoomType { 
+
+    CollaborativeRoom =0 ,
+    PersonalRoom =1
 }
