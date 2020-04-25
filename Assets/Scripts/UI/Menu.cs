@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
-using Tayx.Graphy;
-using FireStorage;
+﻿using UnityEngine;
+
 
 public class Menu : Singleton<Menu>
 {
-    public GameObject[] menuList;
+    public GameObject[] menuHandList;
     bool inMenu;
 
     [SerializeField]
@@ -19,6 +16,15 @@ public class Menu : Singleton<Menu>
     private GameObject DataMenuPrefab ;
     private GameObject DataMenu;
 
+    [SerializeField]
+    [Tooltip("The Prefab of the performance monitor")]
+    private GameObject PerformancesPrefab;
+    public GameObject Performances;
+
+    [SerializeField]
+    [Tooltip("The Console Log ")]
+    private GameObject ConsoleLogPrefab;
+    public GameObject ConsoleLog;
 
     [SerializeField]
     [Tooltip("The transform used to align the menu")]
@@ -47,12 +53,14 @@ public class Menu : Singleton<Menu>
     {
 
         //instantiate menus
-        MainMenu = InstantiateMenus( MainMenuPrefab);
-        DataMenu = InstantiateMenus( DataMenuPrefab);
+        MainMenu = InstantiateMenuHand( MainMenuPrefab);
+        DataMenu = InstantiateMenuHand( DataMenuPrefab);
+        ConsoleLog = InstantiateMenu(ConsoleLogPrefab);
+        Performances = InstantiateMenu(PerformancesPrefab);
 
-        menuList = new GameObject[2];
-        menuList[0] = MainMenu;
-        menuList[1] = DataMenu;
+        menuHandList = new GameObject[2];
+        menuHandList[0] = MainMenu;
+        menuHandList[1] = DataMenu;
 
         switchActiveMenu(0);
 
@@ -68,22 +76,22 @@ public class Menu : Singleton<Menu>
         }
         lp.laserBeamBehavior = laserBeamBehavior;
 
-        //GetComponent<OVRRaycaster>().pointer = lp.gameObject;
-
         Hide();
 
     }
 
     public void switchActiveMenu(int i) {
 
-        foreach (GameObject go in menuList) go.SetActive(false);
+        foreach (GameObject go in menuHandList) go.SetActive(false);
 
-        menuList[i].SetActive(true);
-        
-    
+        menuHandList[i].SetActive(true);
+
+        ActiveMenu = i;
+
+
     }
 
-    GameObject InstantiateMenus( GameObject prefab) {
+    GameObject InstantiateMenuHand( GameObject prefab) {
 
         GameObject go;
 
@@ -102,38 +110,44 @@ public class Menu : Singleton<Menu>
         return go;
     }
 
-   
+    GameObject InstantiateMenu(GameObject prefab)
+    {
+
+        GameObject go;
+
+        go = Instantiate(prefab);
+
+        go.SetActive(false);
+
+        return go;
+    }
+
     void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.Two) || OVRInput.GetDown(OVRInput.Button.Start))
         {
 
-
             if (inMenu)
             {
-
                 Hide();
             }
             else
             {
                 Show();
-
-
             }
             inMenu = !inMenu;
         }
     }
 
-    void Hide()
+    public void Hide()
     {
-        foreach (GameObject go in menuList) go.SetActive(false);
-        UiHelper.SetActive(false);
+        foreach (GameObject go in menuHandList) go.SetActive(false);
     }
 
     void Show()
     {
         MainMenu.SetActive(true);
-        UiHelper.SetActive(true);
+        ActiveMenu = 0;
     }
 
 }

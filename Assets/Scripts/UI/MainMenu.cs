@@ -10,12 +10,34 @@ public class MainMenu : MonoBehaviour
 
         int i = 0;
 
-        foreach (Button btn in btnlist) {
 
-            btn.onClick.AddListener(delegate { Menu.Instance.switchActiveMenu(i); });
+        GameObject.Find("Data Download").GetComponentInChildren<Button>().onClick.AddListener(delegate { 
 
-            i=+1;
-        }
+            Menu.Instance.switchActiveMenu(1); 
+        
+        });
+
+        GameObject.Find("Debug Console").GetComponentInChildren<Button>().onClick.AddListener(delegate
+        {
+
+            Menu.Instance.ConsoleLog.gameObject.GetComponentInChildren<MoveAround>().Place();
+
+            Menu.Instance.ConsoleLog.gameObject.SetActive(true);
+
+            Menu.Instance.Hide();
+
+        });
+
+        GameObject.Find("Performances").GetComponentInChildren<Button>().onClick.AddListener(delegate {
+
+            Menu.Instance.Performances.gameObject.GetComponentInChildren<MoveAround>().Place();
+
+            Menu.Instance.Performances.gameObject.SetActive(true);
+
+            Menu.Instance.Hide();
+
+        });
+
     }
 
    

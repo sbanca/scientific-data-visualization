@@ -52,7 +52,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
             //
             OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
-            ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
+            //ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
 
             Debug.Log("[PUN] LocalAvatar instantiated");
         }
@@ -78,7 +78,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             photonView.ViewID = (int)photonEvent.CustomData;
 
             OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
-            ovrAvatar.oculusUserID = player.UserId;
+            //ovrAvatar.oculusUserID = player.UserId;
 
             Debug.Log("[PUN] RemoteAvatar instantiated" );
         }

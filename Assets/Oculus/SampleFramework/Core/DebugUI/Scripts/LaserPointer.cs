@@ -47,9 +47,9 @@ public class LaserPointer : OVRCursor
             return _laserBeamBehavior;
         }
     }
-    private Vector3 _startPoint;
+    public Vector3 _startPoint;
     private Vector3 _forward;
-    private Vector3 _endPoint;
+    public Vector3 _endPoint;
     private bool _hitTarget;
     private LineRenderer lineRenderer;
 

@@ -656,7 +656,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Framerate
+  m_Text: 'Performances
+
+'
 --- !u!1 &7759240225661472205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1081,7 @@ GameObject:
   - component: {fileID: 7652356823441685365}
   - component: {fileID: 7655140053884067959}
   m_Layer: 0
-  m_Name: FrameRate
+  m_Name: Performances
   m_TagString: VRUIButtonList
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
