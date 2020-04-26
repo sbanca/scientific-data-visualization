@@ -43,6 +43,9 @@ public class PacketRecordSettings
 
 public class OvrAvatar : MonoBehaviour
 {
+    public delegate void OnLocalAvatarInstantiated();
+    public static event OnLocalAvatarInstantiated LocalAvatarInstantiated;
+
     [Header("Avatar")]
     public IntPtr sdkAvatar = IntPtr.Zero;
     public string oculusUserID;
@@ -1187,7 +1190,7 @@ public class OvrAvatar : MonoBehaviour
 
         if (MouthAnchor == null)
         {
-            MouthAnchor = CreateHelperObject(head, MOUTH_HEAD_OFFSET, MOUTH_HELPER_NAME);
+            MouthAnchor = CreateHelperObject(head, MOUTH_HEAD_OFFSET, MOUTH_HELPER_NAME);         
         }
 
         if (GetComponent<OvrAvatarLocalDriver>() != null)
@@ -1224,6 +1227,8 @@ public class OvrAvatar : MonoBehaviour
             lipsyncContext.skipAudioSource = !CanOwnMicrophone;
 
             StartCoroutine(WaitForMouthAudioSource());
+
+            LocalAvatarInstantiated();
         }
 
         if (GetComponent<OvrAvatarRemoteDriver>() != null)
@@ -1256,6 +1261,9 @@ public class OvrAvatar : MonoBehaviour
                 AvatarLogger.Log("Added right hand as gaze target");
             }
         }
+
+        
+
     }
 
     private IEnumerator WaitForMouthAudioSource()

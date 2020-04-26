@@ -3,10 +3,16 @@ using Photon.Realtime;
 using UnityEngine;
 using ExitGames.Client.Photon;
 using Photon.Voice.PUN;
+using Photon.Voice.Unity;
+using System.Collections;
+using Oculus.Avatar;
+using System;
 
 public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
-   
+    private GameObject localAvatar;
+
+    public bool voiceDebug = true;
     void Start()
     {
         Resources.LoadAll("ScriptableObjects");
@@ -38,7 +44,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Debug.Log("[PUN] instantiate LocalAvatar" );
         //GameObject localAvatar = Instantiate(Resources.Load("LocalAvatar")) as GameObject;
         GameObject TrackingSpace = GameObject.Find("TrackingSpace");
-        GameObject localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;
+        localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;
         PhotonView photonView = localAvatar.GetComponent<PhotonView>();
 
         if (PhotonNetwork.AllocateViewID(photonView))
@@ -51,19 +57,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
                         
             PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
 
-            //
             OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
             ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
 
-            Debug.Log("[PUN] LocalAvatar instantiated");
+            Debug.Log("[PUN] LocalAvatar instantiatiation triggered now waiting for OVRAvatar to initialize");
 
-            // voice set up https://doc.photonengine.com/en-US/voice/current/getting-started/voice-for-pun#scene_setup__photonvoicenetwork_
-            PhotonVoiceView voiceView = localAvatar.GetComponent<PhotonVoiceView>();
-            voiceView.AutoCreateRecorderIfNotFound = true;
-            voiceView.RecorderInUse.TransmitEnabled = true;
-            //voiceView.RecorderInUse.DebugEchoMode = true;
-
-            Debug.Log("[PUN] photon view instantiated");
+            OvrAvatar.LocalAvatarInstantiated += LocalAvatarInstantiated;
         }
         else
         {
@@ -99,4 +98,49 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Debug.Log("[PUN] disconnected from server because of " + cause.ToString());
     }
 
+    private void LocalAvatarInstantiated() {
+
+        StartCoroutine(PhotonVoiceInstantiation());
+    }
+    private IEnumerator PhotonVoiceInstantiation()
+    {
+       
+        Debug.Log("[PUN] OVRAvatar completed instantiation of LocalAvatar now we setup voice by adding Speaker,Recorder,VoiceView ");
+
+        //get audiosource from the localavatar       
+        while (localAvatar.GetComponentInChildren<AudioSource>() == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        AudioSource audioSource = localAvatar.GetComponentInChildren<AudioSource>();
+
+        //////get the ovr 
+        while (audioSource.gameObject.GetComponent<OVRLipSyncContext>() == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        OVRLipSyncContext LipSyncContext = audioSource.gameObject.GetComponent<OVRLipSyncContext>();
+        LipSyncContext.audioSource = audioSource;
+        if (voiceDebug) LipSyncContext.audioLoopback = true; // Don't use mic.
+        else LipSyncContext.audioLoopback = false;
+        LipSyncContext.skipAudioSource = false;
+
+        ////add speaker to the element which holds the audio source 
+        Speaker speaker = audioSource.gameObject.AddComponent<Speaker>();
+
+        ////add recorder to the local avatar 
+        Recorder recorder = localAvatar.AddComponent<Recorder>();
+        recorder.DebugEchoMode = true;
+
+        ////add Photonvoice view to the local avatar
+        PhotonVoiceView voiceView = localAvatar.AddComponent<PhotonVoiceView>();
+        voiceView.RecorderInUse = recorder;
+        voiceView.SpeakerInUse = speaker;
+        voiceView.SetupDebugSpeaker = true;
+
+        ////start transmission 
+        voiceView.RecorderInUse.TransmitEnabled = true;
+        voiceView.RecorderInUse.StartRecording();
+
+    }
 }

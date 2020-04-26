@@ -730,3 +730,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeda83d87a2e463498618499e831999c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voiceDebug: 0
