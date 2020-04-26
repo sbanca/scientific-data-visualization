@@ -1,8 +1,6 @@
 PUN 2 Change Log
 
 
-v2.17.1 (28. March 2020)
-Fixed: PunVersion to "2.17". Was still "2.16". Of course you can edit this instead of re-downloading.
 v2.17 (26. March 2020)
 Added: New "Dev Region" feature. With this setting, all development builds will use the same region, avoiding initial matchmaking problems with best region selection. Development builds are turned on automatically, when the PhotonServerSettings get created initially and the "Dev Region" is set on first run in Editor.
 Changed: PhotonServerSettings inspector to accomodate the new values and reorganize existing ones.
@@ -11,6 +9,7 @@ Added: New animations for the Basics Tutorial. The previous ones were causing wa
 Added: New callback OnErrorInfo when the client receives an ErrorInfo event from the server. Implemented in MonoBehaviourPunCallbacks and SupportLogger.
 Changed: PhotonNetwork.SetPlayerCustomProperties return bool instead of void.
 Internal: ObjectsInOneUpdate will now initialize the capacity of a SerializeViewBatch.
+Removed: Metro folder and dlls. Unity deprecated builds for Windows 8.x Store, which means PUN can't support this anymore. Windows 10 UWP builds are supported using IL2CPP and the regular managed Photon dlls.
 Fixed: Unity Cloud Builds. A check prevents creation of ServerSettings when using Cloud Build.
 Internal: The PhotonEditor can now define a "customToken" for the AccountService registrations.
 Changed: Utility script OnJoinedInstantiate. It is now more versatile.

@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using UnityEngine;
 using ExitGames.Client.Photon;
+using Photon.Voice.PUN;
 
 public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
@@ -52,9 +53,17 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
             //
             OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
-            //ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
+            ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
 
             Debug.Log("[PUN] LocalAvatar instantiated");
+
+            // voice set up https://doc.photonengine.com/en-US/voice/current/getting-started/voice-for-pun#scene_setup__photonvoicenetwork_
+            PhotonVoiceView voiceView = localAvatar.GetComponent<PhotonVoiceView>();
+            voiceView.AutoCreateRecorderIfNotFound = true;
+            voiceView.RecorderInUse.TransmitEnabled = true;
+            voiceView.RecorderInUse.DebugEchoMode = true;
+
+            Debug.Log("[PUN] photon view instantiated");
         }
         else
         {
@@ -72,15 +81,15 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
             Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
             
-
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
 
             OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
-            //ovrAvatar.oculusUserID = player.UserId;
+            ovrAvatar.oculusUserID = player.UserId;
 
             Debug.Log("[PUN] RemoteAvatar instantiated" );
+
         }
     }
 
@@ -88,4 +97,5 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         Debug.Log("[PUN] disconnected from server because of " + cause.ToString());
     }
+
 }
