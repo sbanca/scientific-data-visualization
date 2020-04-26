@@ -61,7 +61,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             PhotonVoiceView voiceView = localAvatar.GetComponent<PhotonVoiceView>();
             voiceView.AutoCreateRecorderIfNotFound = true;
             voiceView.RecorderInUse.TransmitEnabled = true;
-            voiceView.RecorderInUse.DebugEchoMode = true;
+            //voiceView.RecorderInUse.DebugEchoMode = true;
 
             Debug.Log("[PUN] photon view instantiated");
         }
@@ -89,6 +89,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             ovrAvatar.oculusUserID = player.UserId;
 
             Debug.Log("[PUN] RemoteAvatar instantiated" );
+
 
         }
     }
