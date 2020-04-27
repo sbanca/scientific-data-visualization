@@ -88,9 +88,9 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             //sender 
             Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
             Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
-            
+
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
-            ActivateAndPositionRig(remoteAvatar);
+            ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
 
@@ -157,18 +157,17 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         loading.SetActive(false);
         data.SetActive(true);
 
-
-
     }
-    private void ActivateAndPositionRig(GameObject go) {
+    private void ActivateAndPositionRig(GameObject go, int sender = 1000) {
 
         Vector3 position1 = new Vector3(0f, 0f, 0f);
         Vector3 position2 = new Vector3(0f, 0f, 2.5f);
         Vector3 position3 = new Vector3(2.5f, 0f, 2.5f);
         Vector3 position4 = new Vector3(2.5f, 0f, 0f);
 
-
-        switch (PhotonNetwork.CountOfPlayers) {
+        if (sender == 1000) sender = PhotonNetwork.CountOfPlayers;
+        
+        switch (sender) {
 
             case(1):
                 go.transform.position = position1;
