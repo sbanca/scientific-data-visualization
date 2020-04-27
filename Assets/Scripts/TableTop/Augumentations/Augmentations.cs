@@ -32,7 +32,10 @@ namespace TableTop {
 
         private Vector3? PointOnMap;
 
+        private Vector3? RemotePointOnMap;
+
         private RayOnMap rayOnMap;
+
 
         //methods
 
@@ -62,6 +65,7 @@ namespace TableTop {
 
                         PointOnMap = rayOnMap.HeadRay();
 
+                        RemotePointOnMap = rayOnMap.RemoteHeadRay();
 
                         break;
 
@@ -74,17 +78,23 @@ namespace TableTop {
 
                         SphereAugmentation(PointOnMap);
 
+                        SphereAugmentation(RemotePointOnMap);
+
                         break;
 
                     case AUGMENTOPTIONS.circle:
 
                         CircleAugmentation(PointOnMap);
 
+                        CircleAugmentation(RemotePointOnMap);
+
                         break;
 
                     case AUGMENTOPTIONS.lightProjector:
 
                         LightProjectorAugmentation(PointOnMap);
+
+                        LightProjectorAugmentation(RemotePointOnMap);
 
                         break;
 

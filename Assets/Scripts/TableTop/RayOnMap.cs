@@ -17,7 +17,9 @@ namespace TableTop
         private RaycastHit hit;
 
         private Ray ray;
-        
+
+        private Transform RemoteAvatar;
+
 
         private void Start()
         {
@@ -72,11 +74,17 @@ namespace TableTop
 
         }
 
- 
+        public void AddRemoteHeadRay(GameObject remoteAvatar) {
+
+            RemoteAvatar = remoteAvatar.GetComponent<GazeTarget>().gameObject.transform;
+        }
+
         public Nullable<Vector3> RemoteHeadRay()
         {
 
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            if (RemoteAvatar == null) return null;
+
+            Ray ray = new Ray(RemoteAvatar.position, RemoteAvatar.forward);
 
             if (MapCollider.Raycast(ray, out hit, 200f))
             {

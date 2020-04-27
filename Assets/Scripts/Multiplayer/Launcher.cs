@@ -91,6 +91,9 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
             ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);
+
+            TableTop.RayOnMap.Instance.AddRemoteHeadRay(remoteAvatar);
+
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
 
