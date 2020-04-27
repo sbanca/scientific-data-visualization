@@ -1228,7 +1228,7 @@ public class OvrAvatar : MonoBehaviour
 
             StartCoroutine(WaitForMouthAudioSource());
 
-            LocalAvatarInstantiated();
+            if (LocalAvatarInstantiated!=null) LocalAvatarInstantiated();
         }
 
         if (GetComponent<OvrAvatarRemoteDriver>() != null)

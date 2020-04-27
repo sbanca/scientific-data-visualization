@@ -63,7 +63,7 @@ MonoBehaviour:
     layerIndex: 0
   ShowFirstPerson: 1
   ShowThirdPerson: 1
-  LevelOfDetail: 5
+  LevelOfDetail: 3
   UseTransparentRenderQueue: 1
   Monochrome_SurfaceShader: {fileID: 4800000, guid: 73f67c4e7bf718b4385aa6b1f8a06591,
     type: 3}

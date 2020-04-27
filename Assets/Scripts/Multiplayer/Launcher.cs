@@ -12,6 +12,13 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 {
     private GameObject localAvatar;
 
+    public GameObject rig;
+
+    public GameObject loading;
+
+    public GameObject data;
+
+
     public bool voiceDebug = true;
     void Start()
     {
@@ -42,7 +49,9 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
 
         Debug.Log("[PUN] instantiate LocalAvatar" );
-        //GameObject localAvatar = Instantiate(Resources.Load("LocalAvatar")) as GameObject;
+
+        ActivateAndPositionRig(rig);
+
         GameObject TrackingSpace = GameObject.Find("TrackingSpace");
         localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;
         PhotonView photonView = localAvatar.GetComponent<PhotonView>();
@@ -81,6 +90,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
             
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
+            ActivateAndPositionRig(remoteAvatar);
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
 
@@ -89,7 +99,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
             Debug.Log("[PUN] RemoteAvatar instantiated" );
 
-
+            
         }
     }
 
@@ -139,8 +149,46 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         voiceView.SetupDebugSpeaker = true;
 
         ////start transmission 
-        voiceView.RecorderInUse.TransmitEnabled = true;
+        yield return voiceView.RecorderInUse.TransmitEnabled = true;
         voiceView.RecorderInUse.StartRecording();
 
+        //activate 
+        rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
+        loading.SetActive(false);
+        data.SetActive(true);
+
+
+
+    }
+    private void ActivateAndPositionRig(GameObject go) {
+
+        Vector3 position1 = new Vector3(0f, 0f, 0f);
+        Vector3 position2 = new Vector3(0f, 0f, 2.5f);
+        Vector3 position3 = new Vector3(2.5f, 0f, 2.5f);
+        Vector3 position4 = new Vector3(2.5f, 0f, 0f);
+
+
+        switch (PhotonNetwork.CountOfPlayers) {
+
+            case(1):
+                go.transform.position = position1;
+                go.transform.eulerAngles = new Vector3(0f, 45f, 0f);
+                break;
+            case (2):
+                go.transform.position = position2;
+                go.transform.eulerAngles = new Vector3(0f, 90f+45f, 0f);
+                break;
+            case (3):
+                go.transform.position = position3;
+                go.transform.eulerAngles = new Vector3(0f, 180f + 45f, 0f);
+                break;
+            case (4):
+                go.transform.position = position4;
+                go.transform.eulerAngles = new Vector3(0f, 270f + 45f, 0f);
+                break;
+
+        }
+
+       
     }
 }

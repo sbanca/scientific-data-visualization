@@ -315,6 +315,34 @@ PrefabInstance:
       propertyPath: StartWithControllers
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11437430, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
+      propertyPath: RecordPackets
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437430, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
+      propertyPath: UseSDKPackets
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437430, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
+      propertyPath: EnableExpressive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437430, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
+      propertyPath: EnableBody
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437430, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
+      propertyPath: LevelOfDetail
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437430, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
+      propertyPath: CanOwnMicrophone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437430, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
+      propertyPath: EnableLaughter
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 3}
 --- !u!1 &170076733
@@ -2128,7 +2156,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Riccardo3372
+  m_Text: Riccardo4985
 --- !u!114 &114138950309526684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2660,7 +2688,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: Riccardo3372
+  m_Text: Riccardo4985
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
