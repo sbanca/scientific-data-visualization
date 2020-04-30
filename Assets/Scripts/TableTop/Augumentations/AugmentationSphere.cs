@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace TableTop { 
-    public class AugmentationSphere : Singleton<AugmentationSphere>
+    public class AugmentationSphere : MonoBehaviour
     {
         private GameObject Sphere;
         void Start()
@@ -19,12 +19,12 @@ namespace TableTop {
 
             //scale
             Vector3 scale = Sphere.transform.localScale;
-            scale.Set(0.1f, 0.1f, 0.1f);
+            scale.Set(0.02f, 0.02f, 0.02f);
             Sphere.transform.localScale = scale;
 
             //material
             var r = Sphere.GetComponent<Renderer>();
-            Material m = Resources.Load("Materials/Red", typeof(Material)) as Material;
+            Material m = Resources.Load("Materials/agumentation_white", typeof(Material)) as Material;
             r.material = m;
         }
         

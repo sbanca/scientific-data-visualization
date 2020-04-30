@@ -29,6 +29,15 @@ public class OvrAvatarRemoteDriver : OvrAvatarDriver
         }
     }
 
+    public void QueuePacketLoop(int sequence, OvrAvatarPacket packet)
+    {
+        
+            CurrentSequence = sequence;
+            packetQueue.Enqueue(packet);
+       
+    }
+
+
     public override void UpdateTransforms(IntPtr sdkAvatar)
     {
         switch(Mode)

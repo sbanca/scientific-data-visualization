@@ -20,6 +20,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
 
     public bool voiceDebug = true;
+
+    public bool remoteAvatarAnimationDebug = true;
+
+    [SerializeField]
+    public string animationfilename;
+
     void Start()
     {
         Resources.LoadAll("ScriptableObjects");
@@ -29,7 +35,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         PhotonNetwork.AuthValues.UserId = MasterManager.GameSettings.UserID;
         PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;
         PhotonNetwork.ConnectUsingSettings();
-  
+
     }
 
     public override void OnConnectedToMaster() {
@@ -92,7 +98,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
             ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);
 
-            TableTop.RayOnMap.Instance.AddRemoteHeadRay(remoteAvatar);
+            TableTop.RayOnMap.Instance.RemoteHead = remoteAvatar.transform;
 
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
@@ -159,6 +165,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
         loading.SetActive(false);
         data.SetActive(true);
+        if (remoteAvatarAnimationDebug) remoteAvatarAnimationDebugInstantiation();
 
     }
     private void ActivateAndPositionRig(GameObject go, int sender = 1000) {
@@ -193,4 +200,94 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
        
     }
-}
+
+    private void remoteAvatarAnimationDebugInstantiation() {
+      
+        Debug.Log("[PUN] RemoteAvatar anaimation instantiation started");
+
+        GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
+
+        remoteAvatar.SetActive(false);
+
+        //set position and rotation to second place
+
+        remoteAvatar.transform.position = new Vector3(0f, 0f, 2.5f);
+
+        remoteAvatar.transform.eulerAngles = new Vector3(0f, 90f , 0f);
+
+       
+        //remove components unneded from the prefab
+
+        PhotonAvatarView pav = remoteAvatar.GetComponent<PhotonAvatarView>();
+        if (pav != null) 
+            Destroy(pav);
+
+        PhotonVoiceView pvv = remoteAvatar.GetComponent<PhotonVoiceView>();
+        if (pvv != null) 
+            Destroy(pvv);
+
+        Speaker spk = remoteAvatar.GetComponentInChildren<Speaker>();
+        if (spk != null) 
+            Destroy(spk.gameObject);
+
+        PhotonView pv = remoteAvatar.GetComponent<PhotonView>();
+        if (pv != null)
+            Destroy(pv);
+
+
+        //turn on sdk packets and remotedriver
+        remoteAvatar.GetComponent<OvrAvatar>().UseSDKPackets = true;
+        remoteAvatar.GetComponent<OvrAvatarRemoteDriver>().enabled = true;
+
+        //add playback 
+        Playback plbk = gameObject.AddComponent<Playback>();
+        plbk.playback = true;
+        plbk.fileName = animationfilename;
+        plbk.LoopbackAvatar = remoteAvatar.GetComponent<OvrAvatar>();
+
+        //set remote avatar active
+        remoteAvatar.SetActive(true);
+
+        //add reote avatar head to rayonmap augmentatoin 
+        StartCoroutine(AddRemoteAvatarHeadToAugmentation(remoteAvatar));
+
+        Debug.Log("[PUN] RemoteAvatar anaimation instantiation completed");
+    }
+
+    private IEnumerator AddRemoteAvatarHeadToAugmentation(GameObject remoteAvatar)
+    {
+
+        while (!data.active)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        
+        
+        GazeTarget thisgt = null;
+
+
+        while (thisgt == null)
+        {
+
+            GazeTarget[] list = remoteAvatar.GetComponentsInChildren<GazeTarget>();
+
+            foreach (GazeTarget gt in list) {
+
+                if (gt.gameObject.name == "head_JNT") thisgt = gt;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+
+        }
+
+
+        while (TableTop.RayOnMap.Instance ==null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        TableTop.RayOnMap.Instance.AddRemoteHead(thisgt.transform);
+    }
+
+ }

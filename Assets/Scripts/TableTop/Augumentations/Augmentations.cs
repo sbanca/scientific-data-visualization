@@ -21,12 +21,24 @@ namespace TableTop {
     public class Augmentations : Singleton<Augmentations>
     {
         //public 
+        [SerializeField]
+        public bool manualInitialize = false;
 
+        [SerializeField]
         public bool AugmentMouseLocationOnMap = true;
 
+        [SerializeField]
         public AUGMENTOPTIONS option = AUGMENTOPTIONS.sphere;
 
+        [SerializeField]
         public AUGMENTINPUT optionInput = AUGMENTINPUT.mouse;
+
+   
+        public RayOnMap RayOnMap
+        {
+            get { return _rayOnMap; }
+            set { _rayOnMap = value; }
+        }
 
         //private
 
@@ -34,14 +46,20 @@ namespace TableTop {
 
         private Vector3? RemotePointOnMap;
 
-        private RayOnMap rayOnMap;
+        [SerializeField]
+        private RayOnMap _rayOnMap;
 
 
         //methods
 
         void Start()
         {
-            rayOnMap = RayOnMap.Instance;
+            if (!manualInitialize)
+            {
+
+                _rayOnMap = RayOnMap.Instance;
+
+            }  
           
         }
 
@@ -56,16 +74,16 @@ namespace TableTop {
 
                     case AUGMENTINPUT.mouse:
 
-                        PointOnMap = rayOnMap.MouseRay();
-
+                        PointOnMap = _rayOnMap.MouseRay();
 
                         break;
 
+
                     case AUGMENTINPUT.head:
 
-                        PointOnMap = rayOnMap.HeadRay();
+                        PointOnMap = _rayOnMap.HeadRay();
 
-                        RemotePointOnMap = rayOnMap.RemoteHeadRay();
+                        RemotePointOnMap = _rayOnMap.RemoteHeadRay();
 
                         break;
 
@@ -76,11 +94,12 @@ namespace TableTop {
 
                     case AUGMENTOPTIONS.sphere:
 
-                        SphereAugmentation(PointOnMap);
+                        SphereAugmentation(Sphere,PointOnMap);
 
-                        SphereAugmentation(RemotePointOnMap);
+                        SphereAugmentation(RemoteSphere,RemotePointOnMap);
 
                         break;
+
 
                     case AUGMENTOPTIONS.circle:
 
@@ -89,6 +108,7 @@ namespace TableTop {
                         CircleAugmentation(RemotePointOnMap);
 
                         break;
+
 
                     case AUGMENTOPTIONS.lightProjector:
 
@@ -105,16 +125,22 @@ namespace TableTop {
 
 
         //Agumentation Sphere
-        private AugmentationSphere ASphere;
-        
-        private void SphereAugmentation(Vector3? pointOnMap) {
+        private AugmentationSphere Sphere;
+        private AugmentationSphere RemoteSphere;
 
-            if (ASphere == null) GetAugmentationSphere();
+        private void SphereAugmentation(AugmentationSphere sphere, Vector3? pointOnMap) {
 
-            if (pointOnMap == null) {
+            if (sphere == null)
+            {
 
+                CreateAugmentationSpheres();
 
-                ASphere.HideSphere();
+                return;
+
+            }
+            else if (pointOnMap == null) {
+
+                sphere.HideSphere();
 
                 return;
 
@@ -124,7 +150,7 @@ namespace TableTop {
 
                 Vector3 pointOnMapsafe = (Vector3)pointOnMap;
 
-                ASphere.UpdateSphereLocation(pointOnMapsafe);
+                sphere.UpdateSphereLocation(pointOnMapsafe);
 
                 return;
 
@@ -132,10 +158,12 @@ namespace TableTop {
 
         }
 
-        private void GetAugmentationSphere()
+        private void CreateAugmentationSpheres()
         {
 
-            ASphere = AugmentationSphere.Instance;
+            Sphere = gameObject.AddComponent<AugmentationSphere>();
+            RemoteSphere = gameObject.AddComponent<AugmentationSphere>();
+
         }
 
         //Agumentation Sphere
