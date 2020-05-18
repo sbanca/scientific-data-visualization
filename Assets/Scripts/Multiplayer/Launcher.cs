@@ -104,7 +104,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
-            ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);
+            //ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);
 
             //TableTop.RayOnMap.Instance.AddRemoteHeadRay(remoteAvatar);
 
