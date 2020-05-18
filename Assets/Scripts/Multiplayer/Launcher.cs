@@ -168,7 +168,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //activate 
         rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
         loading.SetActive(false);
-        data.SetActive(true);
+        if(data!=null) data.SetActive(true);
 
     }
     private void ActivateAndPositionRig(GameObject go, int sender = 1000) {
