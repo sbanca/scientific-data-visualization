@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class PhotonAvatarView : MonoBehaviour, IPunObservable
 {
-    private PhotonView photonView;
+    public PhotonView photonView;
     private OvrAvatar ovrAvatar;
     private OvrAvatarRemoteDriver remoteDriver;
-    private List<byte[]> packetData;
+	private List<byte[]> packetData;
+	
 
 	public void Start()
 	{
-		photonView.GetComponentInParent<PhotonView>();
-		//photonView = GetComponent<PhotonView>();
+		if(photonView ==null) photonView = GetComponent<PhotonView>();
 
 		if (photonView.IsMine)
 		{
