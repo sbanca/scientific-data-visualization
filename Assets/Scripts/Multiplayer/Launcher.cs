@@ -7,6 +7,7 @@ using Photon.Voice.Unity;
 using System.Collections;
 using Oculus.Avatar;
 using System;
+using System.Collections.Generic;
 
 public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
@@ -50,11 +51,19 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         Debug.Log("[PUN] instantiate LocalAvatar" );
 
-        ActivateAndPositionRig(rig);
+        
+        GameObject OVRPlayerController = GameObject.Find("OVRPlayerController");
+        PhotonView photonView = OVRPlayerController.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
+        PhotonTransformView photonTransformView = OVRPlayerController.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
+        photonView.ObservedComponents = new List<Component>();
+        photonView.ObservedComponents.Add(photonTransformView);
 
+        //instantiate the local avatr
         GameObject TrackingSpace = GameObject.Find("TrackingSpace");
         localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;
-        PhotonView photonView = localAvatar.GetComponent<PhotonView>();
+        PhotonAvatarView photonAvatrView = localAvatar.GetComponent<PhotonAvatarView>();
+        photonView.ObservedComponents.Add(photonAvatrView);
+
 
         if (PhotonNetwork.AllocateViewID(photonView))
         {
@@ -87,7 +96,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         {
             //sender 
             Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
-            Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
+            Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
             ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);

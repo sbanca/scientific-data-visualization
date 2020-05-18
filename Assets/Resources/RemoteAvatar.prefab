@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 114514890521682058}
   - component: {fileID: 114111323619864140}
   - component: {fileID: 114730040972961466}
+  - component: {fileID: 114755292104712196}
   m_Layer: 0
   m_Name: RemoteAvatar
   m_TagString: Untagged
@@ -127,6 +128,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
+  - {fileID: 114755292104712196}
   - {fileID: 114111323619864140}
   viewIdField: 0
   InstantiationId: 0
@@ -161,6 +163,21 @@ MonoBehaviour:
   AutoCreateRecorderIfNotFound: 0
   UsePrimaryRecorder: 0
   SetupDebugSpeaker: 0
+--- !u!114 &114755292104712196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &1847214126697133449
 GameObject:
   m_ObjectHideFlags: 0
