@@ -13,7 +13,8 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 
 	public void Start()
 	{
-		photonView = GetComponent<PhotonView>();
+		photonView.GetComponentInParent<PhotonView>();
+		//photonView = GetComponent<PhotonView>();
 
 		if (photonView.IsMine)
 		{
