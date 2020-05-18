@@ -13,6 +13,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 {
     private GameObject localAvatar;
 
+    private PhotonView photonView;
+
     public GameObject rig;
 
     public GameObject loading;
@@ -53,10 +55,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         
         GameObject OVRPlayerController = GameObject.Find("OVRPlayerController");
-        PhotonView photonView = OVRPlayerController.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
+        photonView = OVRPlayerController.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
         PhotonTransformView photonTransformView = OVRPlayerController.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
         photonView.ObservedComponents = new List<Component>();
         photonView.ObservedComponents.Add(photonTransformView);
+        photonView.Synchronization = ViewSynchronization.UnreliableOnChange; // set observeoption to unreliableonchange
 
         //instantiate the local avatr
         GameObject TrackingSpace = GameObject.Find("TrackingSpace");
@@ -152,12 +155,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         ////add speaker to the element which holds the audio source 
         Speaker speaker = audioSource.gameObject.AddComponent<Speaker>();
 
-        ////add recorder to the local avatar 
-        Recorder recorder = localAvatar.AddComponent<Recorder>();
+        ////add recorder to the element that has the photonView
+        Recorder recorder = photonView.gameObject.AddComponent<Recorder>();
         recorder.DebugEchoMode = true;
 
         ////add Photonvoice view to the local avatar
-        PhotonVoiceView voiceView = localAvatar.AddComponent<PhotonVoiceView>();
+        PhotonVoiceView voiceView = photonView.gameObject.AddComponent<PhotonVoiceView>();
         voiceView.RecorderInUse = recorder;
         voiceView.SpeakerInUse = speaker;
         voiceView.SetupDebugSpeaker = true;

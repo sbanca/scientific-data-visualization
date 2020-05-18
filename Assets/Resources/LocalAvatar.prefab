@@ -118,3 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f10e7e1fb74289f468fd27d67b7a7dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
+  ovrAvatar: {fileID: 0}

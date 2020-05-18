@@ -1254,7 +1254,7 @@ MonoBehaviour:
   rig: {fileID: 439045119}
   loading: {fileID: 3174787647473633987}
   data: {fileID: 0}
-  voiceDebug: 0
+  voiceDebug: 1
 --- !u!1 &1054112417953525
 GameObject:
   m_ObjectHideFlags: 0
