@@ -63,6 +63,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;    
         PhotonAvatarView photonAvatrView = localAvatar.GetComponent<PhotonAvatarView>();
         photonAvatrView.photonView = photonView;
+        photonAvatrView.ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
         photonView.ObservedComponents.Add(photonAvatrView);
 
 

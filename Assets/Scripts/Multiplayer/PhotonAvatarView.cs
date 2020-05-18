@@ -7,7 +7,7 @@ using UnityEngine;
 public class PhotonAvatarView : MonoBehaviour, IPunObservable
 {
     public PhotonView photonView;
-    private OvrAvatar ovrAvatar;
+	public OvrAvatar ovrAvatar;
     private OvrAvatarRemoteDriver remoteDriver;
 	private List<byte[]> packetData;
 	
@@ -18,7 +18,8 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 
 		if (photonView.IsMine)
 		{
-			ovrAvatar = GetComponent<OvrAvatar>();
+
+			if (ovrAvatar == null) ovrAvatar = GetComponent<OvrAvatar>();
 			ovrAvatar.RecordPackets = true;
 			ovrAvatar.PacketRecorded += OnLocalAvatarPacketRecorded;
 
