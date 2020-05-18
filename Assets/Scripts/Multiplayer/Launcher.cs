@@ -93,12 +93,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         {
             //sender 
             Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
-            Debug.LogError("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
+            Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
             ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);
 
-            TableTop.RayOnMap.Instance.RemoteHead = remoteAvatar.transform;
+            //TableTop.RayOnMap.Instance.RemoteHead = remoteAvatar.transform;
 
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
@@ -162,7 +162,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         voiceView.RecorderInUse.StartRecording();
 
         //activate 
-        rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
+        if(rig.GetComponentInChildren<Menu>()!=null) rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
         loading.SetActive(false);
         data.SetActive(true);
         if (remoteAvatarAnimationDebug) remoteAvatarAnimationDebugInstantiation();

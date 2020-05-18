@@ -31,10 +31,16 @@ public class OvrAvatarRemoteDriver : OvrAvatarDriver
 
     public void QueuePacketLoop(int sequence, OvrAvatarPacket packet)
     {
-        
+        //when using dbug avatar change this
+        //CurrentSequence = sequence;
+        //packetQueue.Enqueue(packet);
+
+        if (sequence > CurrentSequence)
+        {
             CurrentSequence = sequence;
             packetQueue.Enqueue(packet);
-       
+        }
+
     }
 
 
