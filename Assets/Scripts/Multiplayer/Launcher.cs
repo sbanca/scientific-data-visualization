@@ -169,10 +169,22 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         yield return voiceView.RecorderInUse.TransmitEnabled = true;
         voiceView.RecorderInUse.StartRecording();
 
-        //activate 
-        rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
+        //activate Menu
+        if(rig.GetComponentInChildren<Menu>()!=null) rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
         loading.SetActive(false);
-        if(data!=null) data.SetActive(true);
+
+        //activate Data
+        if (data != null) {
+
+            CharacterController charCon = FindObjectOfType<CharacterController>();
+
+            Collider[] colliders = data.GetComponentsInChildren<Collider>();
+
+            foreach (Collider c in colliders) Physics.IgnoreCollision(charCon,c);
+
+            data.SetActive(true); 
+
+        }
 
     }
     private void ActivateAndPositionRig(GameObject go, int sender = 1000) {

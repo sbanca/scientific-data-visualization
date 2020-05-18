@@ -112,6 +112,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &163709041 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 40cdd67bb111811419acbfc67f2fc863,
+    type: 3}
+  m_PrefabInstance: {fileID: 1502168850}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &300502057
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +305,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &570934604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: ce816f2e6abb0504092c23ed9b970dfd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894949203}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &575514698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 40cdd67bb111811419acbfc67f2fc863,
+    type: 3}
+  m_PrefabInstance: {fileID: 1502168850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &575514702
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575514698}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
 --- !u!1 &697945772
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +704,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: terrain1
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -718,20 +754,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.01
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.01
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.01
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 28f0d379462bbfe40a91c6524ebdb926, type: 2}
+    - target: {fileID: 2300000, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cdd67bb111811419acbfc67f2fc863, type: 3}
 --- !u!1 &1718438804
@@ -871,6 +915,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: _trackingOriginType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: resetTrackerOnLoad
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
 --- !u!1 &2066200291
@@ -916,9 +968,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeda83d87a2e463498618499e831999c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rig: {fileID: 0}
+  rig: {fileID: 570934604}
   loading: {fileID: 3174787647473633987}
-  data: {fileID: 0}
+  data: {fileID: 163709041}
   voiceDebug: 0
 --- !u!224 &3174787645888835632
 RectTransform:
