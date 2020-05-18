@@ -52,7 +52,7 @@ public class MeshCombiner : Singleton<MeshCombiner>
         while (i < meshFilters.Length)
         {
 
-            materialArray[i] = meshFilters[i].gameObject.GetComponent<MeshRenderer>().material;
+            materialArray[i] = meshFilters[i].gameObject.GetComponent<MeshRenderer>().sharedMaterial;
 
             if (materialCache.ContainsKey(materialArray[i].name)) {
 
@@ -147,6 +147,129 @@ public class MeshCombiner : Singleton<MeshCombiner>
         meshFilter.sharedMesh.RecalculateNormals();
 
         
+
+    }
+
+    public void CombineMeshSimple(GameObject go) {
+
+        MeshFilter[] meshFilters = go.GetComponentsInChildren<MeshFilter>();
+        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+        List<Material> meshMats = new List<Material>();
+
+        int i = 0;
+        while (i < meshFilters.Length)
+        {
+            combine[i].mesh = meshFilters[i].sharedMesh;
+            combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+            meshMats.Add(meshFilters[i].transform.GetComponent<MeshRenderer>().sharedMaterial);
+            meshFilters[i].gameObject.SetActive(false);
+
+            i++;
+        }
+
+        MeshFilter filter = go.AddComponent<MeshFilter>();
+        MeshRenderer r = go.AddComponent<MeshRenderer>();
+
+        filter.sharedMesh = new Mesh();
+        filter.sharedMesh.CombineMeshes(combine,false);
+
+        r.sharedMaterials = meshMats.ToArray();
+
+
+    }
+
+    public void CheckSubMeshCount(GameObject go)
+    {
+
+        MeshFilter meshFilter = go.GetComponent<MeshFilter>();
+
+        Debug.Log(meshFilter.sharedMesh.subMeshCount);
+    }
+
+    public void AddSubMesh(GameObject go)
+    {
+
+        MeshFilter meshFilter = go.GetComponent<MeshFilter>();
+
+        meshFilter.sharedMesh = new Mesh();
+
+        meshFilter.sharedMesh.subMeshCount = 10;
+
+        Debug.Log(meshFilter.sharedMesh.subMeshCount);
+    }
+
+    public void RemoveOffset(GameObject go) {
+
+ 
+            MeshFilter[] filters = go.GetComponentsInChildren<MeshFilter>();
+
+           
+
+            int i = 0;
+
+            foreach (MeshFilter g in filters)
+            {
+
+                Vector3 center = Vector3.zero;
+                Vector3[] vertices = g.sharedMesh.vertices;
+
+                center = g.GetComponent<Renderer>().bounds.center;
+
+
+                for (int j = 0; j < g.sharedMesh.vertices.Length; j++)
+                {
+                    vertices[j] -= center;
+                }
+
+                g.sharedMesh.vertices = vertices;
+
+                g.sharedMesh.RecalculateBounds();
+                g.sharedMesh.RecalculateNormals();
+
+                g.gameObject.transform.position = center;
+
+
+            }
+
+
+
+        
+    }
+
+    public void MoveMeshForward(GameObject go)
+    {
+
+
+        MeshFilter[] filters = go.GetComponentsInChildren<MeshFilter>();
+
+
+
+        int i = 0;
+
+        foreach (MeshFilter g in filters)
+        {
+
+            Vector3[] vertices = g.sharedMesh.vertices;
+
+            Vector3 v = new Vector3(0f,0f,-1f);
+
+            for (int j = 0; j < g.sharedMesh.vertices.Length; j++)
+            {
+                vertices[j] -= v;
+            }
+
+            g.sharedMesh.vertices = vertices;
+
+            g.sharedMesh.RecalculateBounds();
+            g.sharedMesh.RecalculateNormals();
+
+
+
+
+        }
+
+
+
 
     }
 }

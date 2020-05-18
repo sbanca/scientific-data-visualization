@@ -29,9 +29,39 @@ public class RiccardoCustomTools : EditorWindow
 
         }
 
-        if (GUILayout.Button("Export to GLB"))
+        if (GUILayout.Button("CombineMeshSimple"))
         {
-           
+            GameObject SelectedObject = Selection.activeObject as GameObject;
+
+            MeshCombiner.Instance.CombineMeshSimple(SelectedObject);
+        }
+
+        if (GUILayout.Button("AddSubMesh"))
+        {
+            GameObject SelectedObject = Selection.activeObject as GameObject;
+
+            MeshCombiner.Instance.AddSubMesh(SelectedObject);
+        }
+
+        if (GUILayout.Button("CountSubMesh"))
+        {
+            GameObject SelectedObject = Selection.activeObject as GameObject;
+
+            MeshCombiner.Instance.CheckSubMeshCount(SelectedObject);
+        }
+
+        if (GUILayout.Button("RemoveOffset"))
+        {
+            GameObject SelectedObject = Selection.activeObject as GameObject;
+
+            MeshCombiner.Instance.RemoveOffset(SelectedObject);
+        }
+
+        if (GUILayout.Button("Move"))
+        {
+            GameObject SelectedObject = Selection.activeObject as GameObject;
+
+            MeshCombiner.Instance.MoveMeshForward(SelectedObject);
         }
     }
 } 

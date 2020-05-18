@@ -6,6 +6,10 @@ namespace TableTop {
     public class AugmentationSphere : MonoBehaviour
     {
         private GameObject Sphere;
+
+        private Renderer r;
+
+        private Material m;
         void Start()
         {
             CreateSphere();
@@ -23,9 +27,11 @@ namespace TableTop {
             Sphere.transform.localScale = scale;
 
             //material
-            var r = Sphere.GetComponent<Renderer>();
-            Material m = Resources.Load("Materials/agumentation_white", typeof(Material)) as Material;
+            r = Sphere.GetComponent<Renderer>();
+            m = Resources.Load("Materials/agumentation_white", typeof(Material)) as Material;
             r.material = m;
+
+
         }
         
         public void UpdateSphereLocation(Vector3 newPosition)
@@ -52,6 +58,28 @@ namespace TableTop {
             if (Sphere != null) Sphere.SetActive(true);
 
         }
+
+        public Vector3? Position() {
+
+            if (Sphere != null & Sphere.activeSelf ) return Sphere.transform.position;
+
+            return null;
+
+        }
+        public void ResetMaterialColor()
+        {
+
+            r.material = m;
+
+        }
+
+        public void ChanegMaterialColor(Color c)
+        {
+
+            r.material.color = c;
+
+        }
+
     }
 
 }

@@ -33,7 +33,16 @@ namespace TableTop {
         [SerializeField]
         public AUGMENTINPUT optionInput = AUGMENTINPUT.mouse;
 
-   
+        [SerializeField]
+        public bool sphereAugmentation = true;
+
+        [SerializeField]
+        public bool coneAugmentation = true;
+
+        [SerializeField]
+        public bool circleAugmentation = true;
+
+
         public RayOnMap RayOnMap
         {
             get { return _rayOnMap; }
@@ -89,48 +98,46 @@ namespace TableTop {
 
                 }
 
-                
-                switch (option) {
 
-                    case AUGMENTOPTIONS.sphere:
+                if (sphereAugmentation)
+                {
+                    SphereAugmentation(Sphere,PointOnMap);
 
-                        SphereAugmentation(Sphere,PointOnMap);
-
-                        SphereAugmentation(RemoteSphere,RemotePointOnMap);
-
-                        break;
-
-
-                    case AUGMENTOPTIONS.circle:
-
-                        CircleAugmentation(PointOnMap);
-
-                        CircleAugmentation(RemotePointOnMap);
-
-                        break;
-
-
-                    case AUGMENTOPTIONS.lightProjector:
-
-                        LightProjectorAugmentation(PointOnMap);
-
-                        LightProjectorAugmentation(RemotePointOnMap);
-
-                        break;
+                    SphereAugmentation(RemoteSphere,RemotePointOnMap);
 
                 }
+
+                if (circleAugmentation)
+                {
+                    CircleAugmentation(Circle,PointOnMap);
+
+                    CircleAugmentation(RemoteCircle,RemotePointOnMap);
+
+                }
+
+                if (coneAugmentation)
+                {
+                    LightProjectorAugmentation(LightProjector,PointOnMap);
+
+                    LightProjectorAugmentation(RemoteLightProjector,RemotePointOnMap);
+
+                }
+    
+                
             }
         }
 
 
 
         //Agumentation Sphere
-        private AugmentationSphere Sphere;
-        private AugmentationSphere RemoteSphere;
+        [SerializeField]
+        public AugmentationSphere Sphere;
+        [SerializeField]
+        public AugmentationSphere RemoteSphere;
 
-        private void SphereAugmentation(AugmentationSphere sphere, Vector3? pointOnMap) {
+        private void SphereAugmentation(AugmentationSphere asphere, Vector3? pointOnMap) {
 
-            if (sphere == null)
+            if (asphere == null)
             {
 
                 CreateAugmentationSpheres();
@@ -140,7 +147,7 @@ namespace TableTop {
             }
             else if (pointOnMap == null) {
 
-                sphere.HideSphere();
+                asphere.HideSphere();
 
                 return;
 
@@ -150,7 +157,7 @@ namespace TableTop {
 
                 Vector3 pointOnMapsafe = (Vector3)pointOnMap;
 
-                sphere.UpdateSphereLocation(pointOnMapsafe);
+                asphere.UpdateSphereLocation(pointOnMapsafe);
 
                 return;
 
@@ -167,18 +174,27 @@ namespace TableTop {
         }
 
         //Agumentation Sphere
-        private AugmentationCircle ACircle;
+        [SerializeField]
+        private AugmentationCircle Circle;
+        [SerializeField]
+        private AugmentationCircle RemoteCircle;
 
-        private void CircleAugmentation(Vector3? pointOnMap)
+        private void CircleAugmentation(AugmentationCircle acircle, Vector3? pointOnMap)
         {
 
-            if (ACircle == null) GetAugmentationCircle();
+            if (acircle == null) {
+                
+                GreateAugmentationCircle();
+
+                return;
+
+            }
 
             if (pointOnMap == null)
             {
 
 
-                ACircle.HideCircle();
+                acircle.HideCircle();
 
                 return;
 
@@ -188,7 +204,7 @@ namespace TableTop {
 
                 Vector3 pointOnMapsafe = (Vector3)pointOnMap;
 
-                ACircle.UpdateCircleLocation(pointOnMapsafe);
+                acircle.UpdateCircleLocation(pointOnMapsafe);
 
                 return;
 
@@ -196,23 +212,39 @@ namespace TableTop {
 
         }
 
-        private void GetAugmentationCircle()
+        private void GreateAugmentationCircle()
         {
 
-            ACircle = AugmentationCircle.Instance;
+            Circle = gameObject.AddComponent<AugmentationCircle>();
+            RemoteCircle = gameObject.AddComponent<AugmentationCircle>();
         }
 
         //Agumentation Sphere
-        private AugmentationLightProjector ALightProjector;
+        [SerializeField]
+        public AugmentationLightProjector LightProjector;
+        [SerializeField]
+        public AugmentationLightProjector RemoteLightProjector;
 
-        private void LightProjectorAugmentation(Vector3? pointOnMap)
+        private void LightProjectorAugmentation(AugmentationLightProjector ALightProjector, Vector3? pointOnMap)
         {
 
-            if (ALightProjector == null) GetLightProjector();
+            if (ALightProjector == null) { 
+            
+                GetLightProjector();
+
+                return;
+            
+            }
+
+            if (ALightProjector.Parent == null) {
+
+                SetLightProjectorParents();
+
+                return;
+            }
 
             if (pointOnMap == null)
             {
-
 
                 ALightProjector.HideLightProjector();
 
@@ -222,9 +254,7 @@ namespace TableTop {
             else
             {
 
-                Vector3 pointOnMapsafe = (Vector3)pointOnMap;
-
-                ALightProjector.UpdateLightProjectorLocation(pointOnMapsafe);
+                ALightProjector.UpdateLightProjectorLocation();
 
                 return;
 
@@ -235,7 +265,20 @@ namespace TableTop {
         private void GetLightProjector()
         {
 
-            ALightProjector = AugmentationLightProjector.Instance;
+            LightProjector = gameObject.AddComponent<AugmentationLightProjector>();
+         
+            RemoteLightProjector = gameObject.AddComponent<AugmentationLightProjector>();
+
+            SetLightProjectorParents();
+
+
+        }
+
+        private void SetLightProjectorParents() {
+
+            LightProjector.Parent = _rayOnMap.MainCam.transform;
+
+            RemoteLightProjector.Parent = _rayOnMap.RemoteHead;
         }
 
     }

@@ -8,15 +8,22 @@ namespace TableTop
 {
     public class RayOnMap : Singleton<RayOnMap>
     {
+        public delegate void OnMeshHit(int i);
+        public static event OnMeshHit MeshHit;
 
         [SerializeField]
-        public bool staticSurface = false;
+        public bool staticData = false;
 
         private Vector4 _tableTopSize;
 
         [SerializeField]
+        public MeshFilter Mesh;
+        private Mesh mesh;
+     
+
+        [SerializeField]
         private Camera _mainCam;
-        private Camera MainCam
+        public Camera MainCam
         {
             get { return _mainCam; }
             set { _mainCam = value; }
@@ -51,9 +58,12 @@ namespace TableTop
 
         private void Start()
         {
-            if (staticSurface)
+
+            if (Mesh) { mesh = GetMesh(Mesh);  }
+
+            if (staticData)
             {
-                _mapCollider = gameObject.GetComponent<Collider>();
+                if (_mapCollider==null) _mapCollider = gameObject.GetComponent<Collider>();
             }
             else
             {
@@ -107,6 +117,7 @@ namespace TableTop
                     return null;
                 }
 
+                if (mesh!= null && MeshHit!=null) SubMesh(hit);
                 return hit.point;
 
             }
@@ -139,10 +150,55 @@ namespace TableTop
 
         }
 
+        public Nullable<int> SubMesh(RaycastHit hit)
+        {
+            
+            int[] hittedTriangle = new int[]
+            {
+                mesh.triangles[hit.triangleIndex * 3],
+                mesh.triangles[hit.triangleIndex * 3 + 1],
+                mesh.triangles[hit.triangleIndex * 3 + 2]
+            };
+            for (int i = 0; i < mesh.subMeshCount; i++)
+            {
+                int[] subMeshTris = mesh.GetTriangles(i);
+                for (int j = 0; j < subMeshTris.Length; j += 3)
+                {
+                    if (subMeshTris[j] == hittedTriangle[0] &&
+                        subMeshTris[j + 1] == hittedTriangle[1] &&
+                        subMeshTris[j + 2] == hittedTriangle[2])
+                    {
+                        //Debug.Log(string.Format("triangle index:{0} submesh index:{1} submesh triangle index:{2}", hit.triangleIndex, i, j / 3));
+
+                        if (MeshHit != null) MeshHit(i);
+                    }
+                }
+            }
+
+            return null;
+
+        }
+
         public void AddRemoteHead(Transform t)
         {
             _remoteHead = t;
 
+        }
+
+        static Mesh GetMesh(MeshFilter mf)
+        {
+   
+                if (mf)
+                {
+                    Mesh m = mf.sharedMesh;
+                    if (!m) { m = mf.mesh; }
+                    if (m)
+                    {
+                        return m;
+                    }
+                }
+
+            return (Mesh)null;
         }
     }
 }
