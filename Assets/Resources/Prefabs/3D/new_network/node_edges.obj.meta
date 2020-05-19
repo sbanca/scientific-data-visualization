@@ -27,7 +27,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: edge_grey
-    second: {fileID: 2100000, guid: e86ec41f64e352e40bbbf57a1ecad578, type: 2}
+    second: {fileID: 2100000, guid: fd04cae510e40af4c83d5e9307b4acfd, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

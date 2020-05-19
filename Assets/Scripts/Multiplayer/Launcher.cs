@@ -19,8 +19,9 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public GameObject loading;
 
-    public GameObject data;
+    public data_loader loader;
 
+    public bool observer = false;
 
     public bool voiceDebug = true;
     void Start()
@@ -51,9 +52,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
 
+        if (observer) return;
+
         Debug.Log("[PUN] instantiate LocalAvatar" );
 
-        
+       
         GameObject OVRPlayerController = GameObject.Find("OVRPlayerController");
         photonView = OVRPlayerController.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
         PhotonTransformView photonTransformView = OVRPlayerController.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
@@ -104,9 +107,9 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
-            //ActivateAndPositionRig(remoteAvatar, photonEvent.Sender);
 
-            //TableTop.RayOnMap.Instance.AddRemoteHeadRay(remoteAvatar);
+            inputsManager.Instance.RemoteHead = remoteAvatar.transform.Find("head_JNT");
+            inputsManager.Instance.RemoteController = remoteAvatar.transform.Find("hand_right");
 
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
@@ -128,7 +131,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     private void LocalAvatarInstantiated() {
 
         StartCoroutine(PhotonVoiceInstantiation());
+
+        inputsManager.Instance.LocalHead = Camera.main.transform;
+        inputsManager.Instance.RemoteController = localAvatar.transform.Find("hand_right");
     }
+   
     private IEnumerator PhotonVoiceInstantiation()
     {
        
@@ -173,20 +180,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         if(rig.GetComponentInChildren<Menu>()!=null) rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
         loading.SetActive(false);
 
-        //activate Data
-        if (data != null) {
-
-            CharacterController charCon = FindObjectOfType<CharacterController>();
-
-            Collider[] colliders = data.GetComponentsInChildren<Collider>();
-
-            foreach (Collider c in colliders) Physics.IgnoreCollision(charCon,c);
-
-            data.SetActive(true); 
-
-        }
+        //load Data
+        if (loader != null) loader.LoadNext();
 
     }
+    
     private void ActivateAndPositionRig(GameObject go, int sender = 1000) {
 
         Vector3 position1 = new Vector3(0f, 0f, 0f);

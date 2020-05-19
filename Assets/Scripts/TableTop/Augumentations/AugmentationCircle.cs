@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TableTop
 {
-    public class AugmentationCircle : Singleton<AugmentationCircle>
+    public class AugmentationCircle : MonoBehaviour
     {
         private GameObject Circle;
 

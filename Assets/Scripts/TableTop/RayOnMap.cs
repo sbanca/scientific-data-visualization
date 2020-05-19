@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,97 +8,75 @@ namespace TableTop
 {
     public class RayOnMap : Singleton<RayOnMap>
     {
+        public delegate void OnMeshHit(int i);
+        public static event OnMeshHit MeshHit;
 
-        private Vector4 TableTopSize;
+        [SerializeField]
+        public bool staticData = false;
 
-        private Camera MainCam;
+        [SerializeField]
+        public MeshFilter Mesh;
 
-        private BoxCollider MapCollider;
+ 
+        [SerializeField]
+        private Collider _mapCollider;
+        private Collider MapCollider
+        {
+            get { return _mapCollider; }
+            set { _mapCollider = value; }
+        }
 
         private RaycastHit hit;
 
         private Ray ray;
 
-        private Transform RemoteAvatar;
-
-
-        private void Start()
-        {
-
-            MapCollider = Map.Instance.gameObject.GetComponent<BoxCollider>();
-
-            MainCam = Camera.main;
-
-            TableTopSize = Boundaries.Instance.slippyMapSize;
-
-        }
 
         public Nullable<Vector3> MouseRay()
         {
-            ray = MainCam.ScreenPointToRay(Input.mousePosition);
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (MapCollider.Raycast(ray, out hit, 200f))
-            {
-
-                if (hit.point.x < TableTopSize.x || hit.point.x > TableTopSize.z || hit.point.z < TableTopSize.y || hit.point.z > TableTopSize.w)
-                {
-
-                    return null;
-                }
-
-                return hit.point;
-
-            }
+            if (_mapCollider.Raycast(ray, out hit, 200f))  return hit.point;
 
             return null;
         }
 
-        public Nullable<Vector3> HeadRay() 
+        public Nullable<Vector3> HeadRay()
         {
+            if (inputsManager.Instance.LocalHead == null) return null;
 
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            return RayCollision(inputsManager.Instance.LocalHead);
 
-            if (MapCollider.Raycast(ray, out hit, 200f))
-            {
-
-                if (hit.point.x < TableTopSize.x || hit.point.x > TableTopSize.z || hit.point.z < TableTopSize.y || hit.point.z > TableTopSize.w)
-                {
-
-                    return null;
-                }
-
-                return hit.point;
-
-            }
-
-            return null;
-
-        }
-
-        public void AddRemoteHeadRay(GameObject remoteAvatar) {
-
-            RemoteAvatar = remoteAvatar.GetComponent<GazeTarget>().gameObject.transform;
         }
 
         public Nullable<Vector3> RemoteHeadRay()
         {
+            if (inputsManager.Instance.RemoteHead == null) return null;
 
-            if (RemoteAvatar == null) return null;
+            return RayCollision(inputsManager.Instance.RemoteHead);
 
-            Ray ray = new Ray(RemoteAvatar.position, RemoteAvatar.forward);
+        }
 
-            if (MapCollider.Raycast(ray, out hit, 200f))
-            {
+        public Nullable<Vector3> ControllerRay()
+        {
+            if (inputsManager.Instance.Controller == null) return null;
 
-                if (hit.point.x < TableTopSize.x || hit.point.x > TableTopSize.z || hit.point.z < TableTopSize.y || hit.point.z > TableTopSize.w)
-                {
+            return RayCollision(inputsManager.Instance.Controller);
 
-                    return null;
-                }
+        }
 
-                return hit.point;
+        public Nullable<Vector3> RemoteControllerRay()
+        {
+            if (inputsManager.Instance.RemoteController == null) return null;
 
-            }
+            return RayCollision(inputsManager.Instance.RemoteController);
+
+        }
+
+        private Nullable<Vector3> RayCollision(Transform t) {
+
+            Ray ray = new Ray(t.position, t.forward);
+
+            if (_mapCollider.Raycast(ray, out hit, 200f))  return hit.point;
 
             return null;
 
