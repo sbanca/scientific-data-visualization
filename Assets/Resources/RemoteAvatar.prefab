@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 114514890521682058}
   - component: {fileID: 114111323619864140}
   - component: {fileID: 114730040972961466}
-  - component: {fileID: 114755292104712196}
+  - component: {fileID: 114296640112679660}
   m_Layer: 0
   m_Name: RemoteAvatar
   m_TagString: Untagged
@@ -128,7 +128,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114755292104712196}
+  - {fileID: 114296640112679660}
   - {fileID: 114111323619864140}
   viewIdField: 0
   InstantiationId: 0
@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f10e7e1fb74289f468fd27d67b7a7dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 114514890521682058}
+  ovrAvatar: {fileID: 11464902}
 --- !u!114 &114730040972961466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +165,7 @@ MonoBehaviour:
   AutoCreateRecorderIfNotFound: 0
   UsePrimaryRecorder: 0
   SetupDebugSpeaker: 0
---- !u!114 &114755292104712196
+--- !u!114 &114296640112679660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
