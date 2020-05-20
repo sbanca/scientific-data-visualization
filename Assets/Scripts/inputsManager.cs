@@ -5,17 +5,27 @@ using UnityEngine;
 public class inputsManager : Singleton<inputsManager>
 {
 
+        public GameObject localAvatar = null;
+        public GameObject remoteAvatar = null;
+
+
+        //controllers
 
         [SerializeField]
-        private Transform _controller;
+        private Transform _controller = null;
         public Transform Controller
         {
-            get { 
+            get 
+            {
+
+                if (_controller == null && localAvatar!=null) 
+                {
+                    _controller =localAvatar.transform.Find("hand_right");
+                }
 
                 return _controller; 
             }
-            
-        set { _controller = value; }
+                 
         }
 
         [SerializeField]
@@ -24,20 +34,33 @@ public class inputsManager : Singleton<inputsManager>
         {
             get
             {
+                if (_remoteController == null && remoteAvatar != null)
+                {
+                    _remoteController = remoteAvatar.transform.Find("hand_right");
+                }
+
                 return _remoteController;
             }
-            set
-            {
-                _remoteController = value;
-            }
+          
         }
 
+
+        //heads
+        
         [SerializeField]
         private Transform _localHead;
         public Transform LocalHead
-    {
-            get { return _localHead; }
-            set { _localHead = value; }
+        {
+            get
+            {
+                if (_localHead == null && remoteAvatar != null)
+                {
+                    _localHead = remoteAvatar.transform.Find("head_JNT");
+                }
+
+                return _localHead;
+            }
+
         }
 
         [SerializeField]
@@ -46,12 +69,14 @@ public class inputsManager : Singleton<inputsManager>
         {
             get
             {
+                if (_remoteHead == null && remoteAvatar != null)
+                {
+                    _remoteHead = remoteAvatar.transform.Find("head_JNT");
+                }
+
                 return _remoteHead;
             }
-            set
-            {
-                _remoteHead = value;
-            }
+
         }
 
 

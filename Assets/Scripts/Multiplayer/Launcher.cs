@@ -165,13 +165,10 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject remoteAvatar)
     {
-        if (inputsManager.Instance.RemoteHead == null) inputsManager.Instance.RemoteHead = remoteAvatar.transform.Find("head_JNT");
-        else if (inputsManager.Instance.LocalHead == null) inputsManager.Instance.LocalHead = remoteAvatar.transform.Find("head_JNT");
-        else Debug.LogError("inputs manager cannot register any new transform");
+        if (inputsManager.Instance.remoteAvatar == null) inputsManager.Instance.remoteAvatar = remoteAvatar;
+        else if (inputsManager.Instance.localAvatar == null) inputsManager.Instance.localAvatar = remoteAvatar;
+        else Debug.LogError("inputs manager cannot register any avatar");
 
-        if (inputsManager.Instance.RemoteController == null) inputsManager.Instance.RemoteController = remoteAvatar.transform.Find("hand_right");
-        else if (inputsManager.Instance.Controller == null) inputsManager.Instance.Controller = remoteAvatar.transform.Find("hand_right");
-        else Debug.LogError("inputs manager cannot register any new transform");
 
         return remoteAvatar;
     }
@@ -185,8 +182,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         StartCoroutine(PhotonVoiceInstantiation());
 
-        inputsManager.Instance.LocalHead = Camera.main.transform;
-        inputsManager.Instance.RemoteController = localAvatar.transform.Find("hand_right");
+        inputsManager.Instance.localAvatar= localAvatar;
     }
    
     private IEnumerator PhotonVoiceInstantiation()
