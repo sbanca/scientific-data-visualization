@@ -14,12 +14,12 @@ GameObject:
   - component: {fileID: 4990278319169305431}
   - component: {fileID: 4990278319169305424}
   m_Layer: 0
-  m_Name: terrain1
+  m_Name: terrain1_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4990278320128929900
 Transform:
   m_ObjectHideFlags: 0
@@ -47,9 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af725e587d2238a4b9d480f777ffedcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualInitialize: 0
-  AugmentMouseLocationOnMap: 1
-  option: 0
   optionInput: 0
   sphereAugmentation: 1
   coneAugmentation: 0
@@ -58,10 +55,6 @@ MonoBehaviour:
   _rayOnMap: {fileID: 4990278319169305424}
   Sphere: {fileID: 4990278319169305431}
   RemoteSphere: {fileID: 4990278319169305430}
-  Circle: {fileID: 0}
-  RemoteCircle: {fileID: 0}
-  LightProjector: {fileID: 0}
-  RemoteLightProjector: {fileID: 0}
 --- !u!114 &4990278319169305430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,8 +93,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staticData: 1
   Mesh: {fileID: 4990278320129732686}
-  _mainCam: {fileID: 0}
-  _remoteHead: {fileID: 0}
   _mapCollider: {fileID: 4990278319738766770}
 --- !u!1 &4990278320128633934
 GameObject:

@@ -20,8 +20,8 @@ public class inputsManager : Singleton<inputsManager>
 
                 if (_controller == null && localAvatar!=null) 
                 {
-                    _controller =localAvatar.transform.Find("hand_right");
-                }
+                    _controller = DeepChildSearch(localAvatar, "hand_right");
+            }
 
                 return _controller; 
             }
@@ -36,8 +36,8 @@ public class inputsManager : Singleton<inputsManager>
             {
                 if (_remoteController == null && remoteAvatar != null)
                 {
-                    _remoteController = remoteAvatar.transform.Find("hand_right");
-                }
+                    _remoteController = DeepChildSearch(remoteAvatar, "hand_right");
+            }
 
                 return _remoteController;
             }
@@ -53,10 +53,10 @@ public class inputsManager : Singleton<inputsManager>
         {
             get
             {
-                if (_localHead == null && remoteAvatar != null)
+                if (_localHead == null && localAvatar != null)
                 {
-                    _localHead = remoteAvatar.transform.Find("head_JNT");
-                }
+                    _localHead = DeepChildSearch(localAvatar, "head_JNT");
+            }
 
                 return _localHead;
             }
@@ -71,7 +71,7 @@ public class inputsManager : Singleton<inputsManager>
             {
                 if (_remoteHead == null && remoteAvatar != null)
                 {
-                    _remoteHead = remoteAvatar.transform.Find("head_JNT");
+                    _remoteHead = DeepChildSearch(remoteAvatar,"head_JNT");
                 }
 
                 return _remoteHead;
@@ -79,5 +79,28 @@ public class inputsManager : Singleton<inputsManager>
 
         }
 
+    public Transform DeepChildSearch(GameObject g, string childName) {
 
+        Transform child = null;
+
+        for (int i = 0; i< g.transform.childCount; i++) {
+
+            Transform currentchild = g.transform.GetChild(i);
+
+            if (currentchild.gameObject.name == childName)
+            {
+
+                return currentchild;
+            }
+            else {
+
+                child = DeepChildSearch(currentchild.gameObject, childName);
+
+                if (child != null) return child;
+            }
+
+        }
+
+        return null;
+    }
 }

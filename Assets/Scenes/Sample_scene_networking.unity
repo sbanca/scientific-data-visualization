@@ -852,7 +852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -3.3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalRotation.x
@@ -955,7 +955,7 @@ MonoBehaviour:
   rig: {fileID: 570934604}
   loading: {fileID: 3174787647473633987}
   loader: {fileID: 2066200294}
-  observer: 1
+  observer: 0
   voiceDebug: 0
   ObserverCamera: {fileID: 33458918}
 --- !u!114 &2066200294
