@@ -5,8 +5,6 @@ using ExitGames.Client.Photon;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using System.Collections;
-using Oculus.Avatar;
-using System;
 using System.Collections.Generic;
 
 public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
@@ -24,6 +22,10 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     public bool observer = false;
 
     public bool voiceDebug = true;
+
+    [serializable]
+    public Camera ObserverCamera;
+    
     void Start()
     {
         Resources.LoadAll("ScriptableObjects");
@@ -64,7 +66,28 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
 
-        if (!observer) InstantiateLocalAvatar();
+        if (observer) ObserverSetup();
+        else  InstantiateLocalAvatar();
+    }
+
+    void ObserverSetup() {
+
+        //enable observer camera
+        ObserverCamera.gameObject.SetActive(true);
+        ObserverCamera.enabled = true;
+
+        //enable observer camera
+        ObserverCamera.gameObject.tag = "MainCamera";
+
+        //destroy the player controller 
+        Destroy(GameObject.Find("OVRPlayerController"));
+
+        //remove loading 
+        loading.SetActive(false);
+
+        //load Data
+        if (loader != null) loader.LoadNext();
+
 
     }
 
@@ -153,7 +176,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         return remoteAvatar;
     }
 
-
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log("[PUN] disconnected from server because of " + cause.ToString());
@@ -215,37 +237,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         if (loader != null) loader.LoadNext();
 
     }
-    
-    private void ActivateAndPositionRig(GameObject go, int sender = 1000) {
-
-        Vector3 position1 = new Vector3(0f, 0f, 0f);
-        Vector3 position2 = new Vector3(0f, 0f, 2.5f);
-        Vector3 position3 = new Vector3(2.5f, 0f, 2.5f);
-        Vector3 position4 = new Vector3(2.5f, 0f, 0f);
-
-        if (sender == 1000) sender = PhotonNetwork.CountOfPlayers;
-        
-        switch (sender) {
-
-            case(1):
-                go.transform.position = position1;
-                go.transform.eulerAngles = new Vector3(0f, 45f, 0f);
-                break;
-            case (2):
-                go.transform.position = position2;
-                go.transform.eulerAngles = new Vector3(0f, 90f+45f, 0f);
-                break;
-            case (3):
-                go.transform.position = position3;
-                go.transform.eulerAngles = new Vector3(0f, 180f + 45f, 0f);
-                break;
-            case (4):
-                go.transform.position = position4;
-                go.transform.eulerAngles = new Vector3(0f, 270f + 45f, 0f);
-                break;
-
-        }
-
        
-    }
+    
 }
