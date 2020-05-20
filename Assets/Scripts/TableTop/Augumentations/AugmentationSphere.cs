@@ -83,7 +83,10 @@ namespace TableTop {
 
         }
 
-     
+        public void OnDisable()
+        {
+            if (Sphere != null) Destroy(Sphere);
+        }
 
     }
 

@@ -46,6 +46,9 @@ public class OvrAvatar : MonoBehaviour
     public delegate void OnLocalAvatarInstantiated();
     public static event OnLocalAvatarInstantiated LocalAvatarInstantiated;
 
+    public delegate GameObject OnRemoteAvatarInstantiated(GameObject g);
+    public static event OnRemoteAvatarInstantiated RemoteAvatarInstantiated;
+
     [Header("Avatar")]
     public IntPtr sdkAvatar = IntPtr.Zero;
     public string oculusUserID;
@@ -1260,6 +1263,8 @@ public class OvrAvatar : MonoBehaviour
                 handTarget.Type = ovrAvatarGazeTargetType.AvatarHand;
                 AvatarLogger.Log("Added right hand as gaze target");
             }
+
+            if (RemoteAvatarInstantiated != null) RemoteAvatarInstantiated(gameObject);
         }
 
         

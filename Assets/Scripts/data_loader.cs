@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class data_loader : MonoBehaviour
+public class data_loader : MonoBehaviourPun
 {
 
     [SerializeField]
@@ -12,6 +15,7 @@ public class data_loader : MonoBehaviour
 
     private Queue<GameObject> dataPrefabsQueue;
 
+    private const byte LOAD_NEXT_DATA = 0;
 
     private void Start()
     {
@@ -49,6 +53,46 @@ public class data_loader : MonoBehaviour
 
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q)) {
+
+            LoadNext();
+
+            RaiseNetworkEvent();
+
+        }
+    }
+
+    public void RaiseNetworkEvent() {
+
+        object[] data = new object[] { };
+
+        PhotonNetwork.RaiseEvent(LOAD_NEXT_DATA, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+
+    }
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
+
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
+
+    }
+
+    private void NetworkingClientEventReceived(EventData obj)
+    {
+        if (obj.Code == LOAD_NEXT_DATA) {
+
+            LoadNext();
+
+            object[] datas = (object[])obj.CustomData;
+
+        }
+    }
 }      
 
 

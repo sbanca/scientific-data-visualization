@@ -109,9 +109,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
 
-            inputsManager.Instance.RemoteHead = remoteAvatar.transform.Find("head_JNT");
-            inputsManager.Instance.RemoteController = remoteAvatar.transform.Find("hand_right");
-
+           
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
 
@@ -120,9 +118,18 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
             Debug.Log("[PUN] RemoteAvatar instantiated" );
 
-            
+            OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
         }
     }
+
+    private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject remoteAvatar)
+    {
+        inputsManager.Instance.RemoteHead = remoteAvatar.transform.Find("head_JNT");
+        inputsManager.Instance.RemoteController = remoteAvatar.transform.Find("hand_right");
+
+        return remoteAvatar;
+    }
+
 
     public override void OnDisconnected(DisconnectCause cause)
     {
