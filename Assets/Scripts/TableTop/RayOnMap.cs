@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TableTop
 {
-    public class RayOnMap : Singleton<RayOnMap>
+    public class RayOnMap : MonoBehaviour
     {
         public delegate void OnMeshHit(int i);
         public static event OnMeshHit MeshHit;

@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 9070310138414687206}
   - component: {fileID: 1408293974857084663}
   m_Layer: 0
-  m_Name: Network
+  m_Name: Network_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,21 +62,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af725e587d2238a4b9d480f777ffedcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualInitialize: 0
-  AugmentMouseLocationOnMap: 1
-  option: 0
   optionInput: 0
   sphereAugmentation: 1
   coneAugmentation: 0
   circleAugmentation: 0
   AugmentationAlwaysVisible: 1
-  _rayOnMap: {fileID: 0}
+  _rayOnMap: {fileID: 1408293974857084663}
   Sphere: {fileID: 9070310138414687207}
   RemoteSphere: {fileID: 9070310138414687206}
-  Circle: {fileID: 0}
-  RemoteCircle: {fileID: 0}
-  LightProjector: {fileID: 0}
-  RemoteLightProjector: {fileID: 0}
 --- !u!114 &9070310138414687207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,8 +108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staticData: 1
   Mesh: {fileID: 9070310138202038790}
-  _mainCam: {fileID: 0}
-  _remoteHead: {fileID: 0}
   _mapCollider: {fileID: 9070310138130933111}
 --- !u!1 &9070310139671619240
 GameObject:

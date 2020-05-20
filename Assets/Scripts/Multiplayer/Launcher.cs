@@ -28,9 +28,20 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         Resources.LoadAll("ScriptableObjects");
         Debug.Log("[PUN] connecting to server");
-        PhotonNetwork.NickName = MasterManager.GameSettings.Nickname;
+
         PhotonNetwork.AuthValues = new AuthenticationValues();
-        PhotonNetwork.AuthValues.UserId = MasterManager.GameSettings.UserID;
+
+        if (observer) {
+
+            PhotonNetwork.NickName ="Observer";
+            PhotonNetwork.AuthValues.UserId = "1";
+        }
+        else
+        {
+            PhotonNetwork.NickName = MasterManager.GameSettings.Nickname;           
+            PhotonNetwork.AuthValues.UserId = MasterManager.GameSettings.UserID;           
+        }
+     
         PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;
         PhotonNetwork.ConnectUsingSettings();
   
@@ -39,6 +50,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     public override void OnConnectedToMaster() {
 
         Debug.Log("[PUN] connected to server");
+
         Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName + "\n UserID: " + PhotonNetwork.LocalPlayer.UserId);
 
         Debug.Log("[PUN] joining room " + MasterManager.GameSettings.RoomName);
@@ -52,11 +64,14 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
 
-        if (observer) return;
+        if (!observer) InstantiateLocalAvatar();
 
-        Debug.Log("[PUN] instantiate LocalAvatar" );
+    }
 
-       
+    void InstantiateLocalAvatar() {
+
+        Debug.Log("[PUN] instantiate LocalAvatar");
+
         GameObject OVRPlayerController = GameObject.Find("OVRPlayerController");
         photonView = OVRPlayerController.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
         PhotonTransformView photonTransformView = OVRPlayerController.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
@@ -67,7 +82,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         //instantiate the local avatr
         GameObject TrackingSpace = GameObject.Find("TrackingSpace");
-        localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;    
+        localAvatar = Instantiate(Resources.Load("LocalAvatar"), TrackingSpace.transform.position, TrackingSpace.transform.rotation, TrackingSpace.transform) as GameObject;
         PhotonAvatarView photonAvatrView = localAvatar.GetComponent<PhotonAvatarView>();
         photonAvatrView.photonView = photonView;
         photonAvatrView.ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
@@ -81,7 +96,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
                 CachingOption = EventCaching.AddToRoomCache,
                 Receivers = ReceiverGroup.Others
             };
-                        
+
             PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
 
             OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
@@ -105,11 +120,14 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         {
             //sender 
             Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
+
+            //if the player is an observer exit
+            if (player.NickName == "Observer") return;
+
             Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
-
-           
+          
             PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
             photonView.ViewID = (int)photonEvent.CustomData;
 
@@ -124,8 +142,13 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject remoteAvatar)
     {
-        inputsManager.Instance.RemoteHead = remoteAvatar.transform.Find("head_JNT");
-        inputsManager.Instance.RemoteController = remoteAvatar.transform.Find("hand_right");
+        if (inputsManager.Instance.RemoteHead == null) inputsManager.Instance.RemoteHead = remoteAvatar.transform.Find("head_JNT");
+        else if (inputsManager.Instance.LocalHead == null) inputsManager.Instance.LocalHead = remoteAvatar.transform.Find("head_JNT");
+        else Debug.LogError("inputs manager cannot register any new transform");
+
+        if (inputsManager.Instance.RemoteController == null) inputsManager.Instance.RemoteController = remoteAvatar.transform.Find("hand_right");
+        else if (inputsManager.Instance.Controller == null) inputsManager.Instance.Controller = remoteAvatar.transform.Find("hand_right");
+        else Debug.LogError("inputs manager cannot register any new transform");
 
         return remoteAvatar;
     }
