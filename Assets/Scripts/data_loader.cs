@@ -2,6 +2,7 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class data_loader : MonoBehaviourPun
     private Queue<GameObject> dataPrefabsQueue;
 
     private const byte LOAD_NEXT_DATA = 0;
+
+    public AvatarBehaviourRecorder avatarRecorder;
 
     private void Start()
     {
@@ -57,13 +60,40 @@ public class data_loader : MonoBehaviourPun
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (Input.GetKeyDown(KeyCode.Q)) Next();
+    }
+
+    public void Next() {
+
+        if (dataPrefabsQueue.Count > 0)
+        {
 
             LoadNext();
 
             RaiseNetworkEvent();
 
+            RecordEvent();
+
         }
+        else {
+
+            LoadNext();
+
+            StopRecorder();
+
+        }
+    
+    }
+
+    public void RecordEvent() {
+
+        avatarRecorder.NewData(currentData);
+    }
+
+    public void StopRecorder()
+    {
+
+        avatarRecorder.enabled=false;
     }
 
     public void RaiseNetworkEvent() {
@@ -89,7 +119,7 @@ public class data_loader : MonoBehaviourPun
     {
         if (obj.Code == LOAD_NEXT_DATA) {
 
-            LoadNext();
+            Next();
 
             object[] datas = (object[])obj.CustomData;
 

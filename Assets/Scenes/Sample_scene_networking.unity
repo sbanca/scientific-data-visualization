@@ -927,6 +927,7 @@ GameObject:
   - component: {fileID: 2066200292}
   - component: {fileID: 2066200293}
   - component: {fileID: 2066200294}
+  - component: {fileID: 2066200295}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -963,9 +964,10 @@ MonoBehaviour:
   rig: {fileID: 570934604}
   loading: {fileID: 3174787647473633987}
   loader: {fileID: 2066200294}
-  observer: 0
+  observer: 1
   voiceDebug: 0
   ObserverCamera: {fileID: 33458918}
+  avatarRecorder: {fileID: 2066200295}
 --- !u!114 &2066200294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -982,6 +984,20 @@ MonoBehaviour:
   - {fileID: 4990278320128633932, guid: 67ee4114732430f4c9f00a923455f867, type: 3}
   - {fileID: 8880028997469395668, guid: f074ea58d1af2dd48ac672557ce36bc7, type: 3}
   - {fileID: 9070310138414687193, guid: e16c1f451fee0c04693d7dbe0523ab2e, type: 3}
+  avatarRecorder: {fileID: 2066200295}
+--- !u!114 &2066200295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066200291}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3caf2eb46a6a84b4aa57ccfaa18749b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  folderName: Data
 --- !u!224 &3174787645888835632
 RectTransform:
   m_ObjectHideFlags: 0

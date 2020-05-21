@@ -44,11 +44,13 @@ namespace TableTop {
             set { _rayOnMap = value; }
         }
 
+        
+
+        public Vector3? PointOnMap;
+
+        public Vector3? RemotePointOnMap;
+
         //private
-
-        private Vector3? PointOnMap;
-
-        private Vector3? RemotePointOnMap;
 
         [SerializeField]
         private RayOnMap _rayOnMap;

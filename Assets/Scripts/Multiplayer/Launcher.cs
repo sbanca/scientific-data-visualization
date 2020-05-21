@@ -25,7 +25,10 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     [serializable]
     public Camera ObserverCamera;
-    
+
+    [serializable]
+    public AvatarBehaviourRecorder avatarRecorder;
+
     void Start()
     {
         Resources.LoadAll("ScriptableObjects");
@@ -85,9 +88,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //remove loading 
         loading.SetActive(false);
 
-        //load Data
-        if (loader != null) loader.LoadNext();
-
+        //enable observer recorder
+        avatarRecorder.enabled = true;
 
     }
 
@@ -147,6 +149,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             //if the player is an observer exit
             if (player.NickName == "Observer") return;
 
+            avatarRecorder.folderName = avatarRecorder.folderName +"_"+player.NickName;
+
             Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
 
             GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
@@ -169,6 +173,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         else if (inputsManager.Instance.localAvatar == null) inputsManager.Instance.localAvatar = remoteAvatar;
         else Debug.LogError("inputs manager cannot register any avatar");
 
+        
 
         return remoteAvatar;
     }
@@ -229,8 +234,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         if(rig.GetComponentInChildren<Menu>()!=null) rig.GetComponentInChildren<Menu>().enabled = true; //rig menu  
         loading.SetActive(false);
 
-        //load Data
-        if (loader != null) loader.LoadNext();
 
     }
        
