@@ -10,9 +10,6 @@ public class LobbySceneManager : MonoBehaviour
     public InputField nickname;
 
     [serializable]
-    public InputField userId;
-
-    [serializable]
     public Dropdown dropdown;
 
     [serializable]
@@ -26,13 +23,9 @@ public class LobbySceneManager : MonoBehaviour
         nickname.text = MasterManager.GameSettings.Nickname;
         nickname.onEndEdit.AddListener(SetNickName);
 
-        //User ID
-        userId.text = MasterManager.GameSettings.UserID;
-        userId.onEndEdit.AddListener(SetUserId);
-
-        //RoomName
-        dropdown.value = MasterManager.GameSettings.RoomName == RoomType.CollaborativeRoom.ToString() ? 0 : 1;        
-        dropdown.onValueChanged.AddListener(SetRoomName);
+        //UserId
+        dropdown.value = 1;        
+        dropdown.onValueChanged.AddListener(SetUserId);
 
         //switch
         btn.onClick.AddListener(delegate { SwitchScene(); });
@@ -40,11 +33,12 @@ public class LobbySceneManager : MonoBehaviour
     }
 
 
-    public void SetUserId(string arg0) {
+    public void SetUserId(int i) {
 
-        MasterManager.GameSettings.UserID = arg0;
+        MasterManager.GameSettings.UserID = dropdown.options[i].text; 
 
         Debug.Log("[UI] update UserID to: " + MasterManager.GameSettings.UserID);
+
 
     }
 
@@ -56,14 +50,6 @@ public class LobbySceneManager : MonoBehaviour
 
     }
 
-    public void SetRoomName(int i) {
-
-        MasterManager.GameSettings.RoomName = i == (int)RoomType.CollaborativeRoom ? RoomType.CollaborativeRoom.ToString() : RoomType.PersonalRoom.ToString();
-
-        Debug.Log("[UI] update room name to: " + MasterManager.GameSettings.RoomName);
-
-      
-    }
 
 
     public void SwitchScene() {

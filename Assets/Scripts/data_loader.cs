@@ -44,11 +44,13 @@ public class data_loader : MonoBehaviourPun
 
     public void IgnoreCollistion() { 
 
-            CharacterController charCon = FindObjectOfType<CharacterController>();
+        CharacterController charCon = FindObjectOfType<CharacterController>();
 
-            Collider[] colliders = currentData.GetComponentsInChildren<Collider>();
+        if (charCon == null) return;
 
-            foreach (Collider c in colliders) Physics.IgnoreCollision(charCon, c);
+        Collider[] colliders = currentData.GetComponentsInChildren<Collider>();
+
+        foreach (Collider c in colliders) Physics.IgnoreCollision(charCon, c);
 
 
     }

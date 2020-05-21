@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   _gameversion: 0.0.1
-  _nickname: Riccardo
-  _userID: 2671308206268206
+  _nickname: YourNameHere
   _roomName: CollaborativeRoom
   InstantiateVrAvatarEventCode: 1

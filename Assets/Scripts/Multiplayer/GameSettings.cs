@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Manager/GameSettings")]
 public class GameSettings : ScriptableObject
@@ -10,12 +11,12 @@ public class GameSettings : ScriptableObject
 
     [SerializeField]
 
-    private string _nickname = "PunFish";
+    private string _nickname = "YourNameHere";
 
     public string Nickname {
         get {
 
-            int value = Random.Range(0, 9999);
+            int value = UnityEngine.Random.Range(0, 9999);
 
             return _nickname + value.ToString();
 
@@ -27,11 +28,19 @@ public class GameSettings : ScriptableObject
 
     [SerializeField]
 
-    private string _userID = "2671308206268206";
+    private string _userID ;
 
     public string UserID { 
-        get {return _userID; }
-        set { _userID = value; }
+        get {
+            return _userID; 
+        }
+        set {
+
+            if (value == "Partecipant_0") _userID = "0";
+            else if (value == "Partecipant_1") _userID = "2671308206268206";
+            else if (value == "Partecipant_2") _userID = "2911531572263440";
+
+        }
     }
 
 
@@ -56,3 +65,4 @@ public enum RoomType {
     CollaborativeRoom =0 ,
     PersonalRoom =1
 }
+
