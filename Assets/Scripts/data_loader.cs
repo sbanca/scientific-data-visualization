@@ -119,7 +119,7 @@ public class data_loader : MonoBehaviourPun
     {
         if (obj.Code == LOAD_NEXT_DATA) {
 
-            Next();
+            LoadNext();
 
             object[] datas = (object[])obj.CustomData;
 
