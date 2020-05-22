@@ -63,6 +63,8 @@ public class GameSettings : ScriptableObject
     [SerializeField]
     public byte NextDataDisplay = 3; // example code, change to any value between 1 and 199
 
+    [SerializeField]
+    public string DataFolder = "Data";
 }
 
 

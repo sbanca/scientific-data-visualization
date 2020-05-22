@@ -200,7 +200,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //sender 
         Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
 
-        avatarRecorder.folderName = avatarRecorder.folderName + "_" + player.NickName;
+        MasterManager.GameSettings.DataFolder = MasterManager.GameSettings.DataFolder + "_" + player.NickName;
 
         Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID " + player.UserId);
 
@@ -216,7 +216,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
 
-
+        PhotonVoiceView pvv = remoteAvatar.GetComponent<PhotonVoiceView>();
+      
     }
 
     private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject remoteAvatar)
@@ -320,7 +321,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
 
-
+       
     }
 
 }

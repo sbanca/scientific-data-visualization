@@ -42,8 +42,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     Char[] remove = new Char[] { ' ', '(', ')' };
 
-    [SerializeField]
-    public string folderName = "Data";
+
 
     private void OnEnable()
     {
@@ -103,13 +102,13 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     public IEnumerator NewDataCorutine(GameObject g) {
 
-        yield return Directory.CreateDirectory(Application.dataPath + "\\" + folderName + "\\");
+        yield return Directory.CreateDirectory(Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\");
 
         if (writer != null) writer.Close();
 
-        inputsmanagerinstance = inputsManager.Instance;
+        if (inputsmanagerinstance == null) inputsmanagerinstance = inputsManager.Instance;
 
-        string path = Application.dataPath + "\\" + folderName + "\\" + g.name + ".csv";
+        string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\" + g.name + ".csv";
         writer = new StreamWriter(path, true);
 
         writer.WriteLine("time in s, LocalHeadX, LocalHeadY, LocalHeadZ,LocalHeadEulerX, LocalHeadEulerY, LocalHeadEulerZ, ControllerX, ControllerY, ControllerZ,ControllerEulerX, ControllerEulerY, ControllerEulerZ,Pointer1X,Pointer1Y,Pointer1Z," +
