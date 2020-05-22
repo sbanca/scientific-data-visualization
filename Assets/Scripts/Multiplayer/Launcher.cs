@@ -73,27 +73,28 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         else  InstantiateLocalAvatar();
     }
 
-    void ObserverSetup() {
+    void IOnEventCallback.OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == MasterManager.GameSettings.InstantiateVrAvatarEventCode)
+        {
+            InstantiateRemoteAvatar(photonEvent);
+        }
+        else if (photonEvent.Code == MasterManager.GameSettings.InstantiateObserverEventCode) {
 
-        //enable observer camera
-        ObserverCamera.gameObject.SetActive(true);
-        ObserverCamera.enabled = true;
-
-        //enable observer camera
-        ObserverCamera.gameObject.tag = "MainCamera";
-
-        //destroy the player controller 
-        Destroy(GameObject.Find("OVRPlayerController"));
-
-        //remove loading 
-        loading.SetActive(false);
-
-        //enable observer recorder
-        avatarRecorder.enabled = true;
-
+            InstantiateRemoteObserver(photonEvent);
+        }
     }
 
-    void InstantiateLocalAvatar() {
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("[PUN] disconnected from server because of " + cause.ToString());
+    }
+
+
+    //AVATAR
+    //local avatar
+    void InstantiateLocalAvatar()
+    {
 
         Debug.Log("[PUN] instantiate LocalAvatar");
 
@@ -139,58 +140,14 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         }
     }
 
-    void IOnEventCallback.OnEvent(EventData photonEvent)
-    {
-        if (photonEvent.Code == MasterManager.GameSettings.InstantiateVrAvatarEventCode)
-        {
-            //sender 
-            Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
-
-            //if the player is an observer exit
-            if (player.NickName == "Observer") return;
-
-            avatarRecorder.folderName = avatarRecorder.folderName +"_"+player.NickName;
-
-            Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID "+ player.UserId);
-
-            GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
-          
-            PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
-            photonView.ViewID = (int)photonEvent.CustomData;
-
-            OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
-            ovrAvatar.oculusUserID = player.UserId;
-
-            Debug.Log("[PUN] RemoteAvatar instantiated" );
-
-            OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
-        }
-    }
-
-    private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject remoteAvatar)
-    {
-        if (inputsManager.Instance.remoteAvatar == null) inputsManager.Instance.remoteAvatar = remoteAvatar;
-        else if (inputsManager.Instance.localAvatar == null) inputsManager.Instance.localAvatar = remoteAvatar;
-        else Debug.LogError("inputs manager cannot register any avatar");
-
-        
-
-        return remoteAvatar;
-    }
-
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        Debug.Log("[PUN] disconnected from server because of " + cause.ToString());
-    }
-
     private void LocalAvatarInstantiated() {
 
-        StartCoroutine(PhotonVoiceInstantiation());
+        StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
 
         inputsManager.Instance.localAvatar= localAvatar;
     }
    
-    private IEnumerator PhotonVoiceInstantiation()
+    private IEnumerator PhotonVoiceInstantiationForLocalAvatar()
     {
        
         Debug.Log("[PUN] OVRAvatar completed instantiation of LocalAvatar now we setup voice by adding Speaker,Recorder,VoiceView ");
@@ -236,6 +193,147 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
 
     }
-       
-    
+
+    //remote Avatar
+    private void InstantiateRemoteAvatar(EventData photonEvent)
+    {
+
+        //sender 
+        Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
+
+        avatarRecorder.folderName = avatarRecorder.folderName + "_" + player.NickName;
+
+        Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID " + player.UserId);
+
+        GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
+
+        PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
+        photonView.ViewID = (int)photonEvent.CustomData;
+
+        OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
+        ovrAvatar.oculusUserID = player.UserId;
+
+        Debug.Log("[PUN] RemoteAvatar instantiated");
+
+        OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
+
+
+    }
+
+    private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject remoteAvatar)
+    {
+        if (inputsManager.Instance.remoteAvatar == null) inputsManager.Instance.remoteAvatar = remoteAvatar;
+        else if (inputsManager.Instance.localAvatar == null) inputsManager.Instance.localAvatar = remoteAvatar;
+        else Debug.LogError("inputs manager cannot register any avatar");
+
+        return remoteAvatar;
+    }
+
+
+    //OBSERVER
+    //local Observer
+    void ObserverSetup()
+    {
+
+        //enable observer camera
+        ObserverCamera.gameObject.SetActive(true);
+        ObserverCamera.enabled = true;
+
+        //enable observer camera
+        ObserverCamera.gameObject.tag = "MainCamera";
+
+        //destroy the player controller 
+        Destroy(GameObject.Find("OVRPlayerController"));
+
+        //remove loading 
+        loading.SetActive(false);
+
+        //enable observer recorder
+        avatarRecorder.enabled = true;
+
+        //enablePhotonVoice()
+        StartCoroutine(PhotonVoiceInstantiationForLocalObserver());
+
+
+        if (PhotonNetwork.AllocateViewID(photonView))
+        {
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions
+            {
+                CachingOption = EventCaching.AddToRoomCache,
+                Receivers = ReceiverGroup.Others
+            };
+
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
+
+            OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
+            ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
+
+            Debug.Log("[PUN] LocalAvatar instantiatiation triggered now waiting for OVRAvatar to initialize");
+
+            OvrAvatar.LocalAvatarInstantiated += LocalAvatarInstantiated;
+        }
+        else
+        {
+            Debug.LogError("[PUN] Failed instantiate LocalAvatar, Failed to allocate a ViewId.");
+
+            Destroy(localAvatar);
+        }
+
+    }
+
+    private IEnumerator PhotonVoiceInstantiationForLocalObserver()
+    {
+        
+
+        Debug.Log("[PUN] setup voice for observer by adding Speaker,Recorder,VoiceView ");
+
+        //add photon view to the observer camera
+        photonView = ObserverCamera.gameObject.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
+
+        //add audio source
+        AudioSource audioSource = ObserverCamera.gameObject.GetComponentInChildren<AudioSource>();
+
+        ////add speaker to the element which holds the audio source 
+        Speaker speaker = audioSource.gameObject.AddComponent<Speaker>();
+
+        ////add recorder to the element that has the photonView
+        Recorder recorder = ObserverCamera.gameObject.AddComponent<Recorder>();
+        recorder.DebugEchoMode = true;
+
+        ////add Photonvoice view to the local avatar
+        PhotonVoiceView voiceView = ObserverCamera.gameObject.AddComponent<PhotonVoiceView>();
+        voiceView.RecorderInUse = recorder;
+        voiceView.SpeakerInUse = speaker;
+        voiceView.SetupDebugSpeaker = true;
+
+        ////start transmission 
+        yield return voiceView.RecorderInUse.TransmitEnabled = true;
+        voiceView.RecorderInUse.StartRecording();
+
+
+
+
+    }
+
+    //Remote observer 
+    private void InstantiateRemoteObserver(EventData photonEvent)
+    {
+
+        //sender 
+        Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
+
+        Debug.Log("[PUN] Instantiatate Observer for user " + player.NickName + "\n with user ID " + player.UserId);
+
+        GameObject remoteObserver = Instantiate(Resources.Load("RemoteObserver")) as GameObject;
+
+        PhotonView photonView = remoteObserver.GetComponent<PhotonView>();
+        photonView.ViewID = (int)photonEvent.CustomData;
+
+        Debug.Log("[PUN] RemoteAvatar instantiated");
+
+        OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
+
+
+    }
+
 }

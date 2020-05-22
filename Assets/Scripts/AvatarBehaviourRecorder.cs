@@ -82,13 +82,13 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
         currentTime = Time.time - startTime;
 
-        line = currentTime.ToString() + ","+
-        LocalHeadAbsolutePosition.ToString().Trim(remove) + "," + LocalHead.eulerAngles.ToString().Trim(remove) + "," +
-        ControllerAbsolutePosition.ToString().Trim(remove) + "," + Controller.eulerAngles.ToString().Trim(remove) + "," +
-        Pointer1.ToString().Trim(remove) + "," +
-        RemoteHeadAbsolutePosition.ToString().Trim(remove) + "," + RemoteHead.eulerAngles.ToString().Trim(remove) + "," +
-        RemoteControllerAbsolutePosition.ToString().Trim(remove) + "," + RemoteController.eulerAngles.ToString().Trim(remove) + "," +
-        Pointer2.ToString().Trim(remove);
+        line = currentTime.ToString("F3") + ","+
+        LocalHeadAbsolutePosition.ToString("F3").Trim(remove) + "," + LocalHead.eulerAngles.ToString("F3").Trim(remove) + "," +
+        ControllerAbsolutePosition.ToString("F3").Trim(remove) + "," + Controller.eulerAngles.ToString("F3").Trim(remove) + "," +
+        Pointer1.ToString("F3").Trim(remove) + "," +
+        RemoteHeadAbsolutePosition.ToString("F3").Trim(remove) + "," + RemoteHead.eulerAngles.ToString("F3").Trim(remove) + "," +
+        RemoteControllerAbsolutePosition.ToString("F3").Trim(remove) + "," + RemoteController.eulerAngles.ToString("F3").Trim(remove) + "," +
+        Pointer2.ToString("F3").Trim(remove);
 
         writer.WriteLine(line);
     }
@@ -111,6 +111,9 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
         string path = Application.dataPath + "\\" + folderName + "\\" + g.name + ".csv";
         writer = new StreamWriter(path, true);
+
+        writer.WriteLine("time in s, LocalHeadX, LocalHeadY, LocalHeadZ,LocalHeadEulerX, LocalHeadEulerY, LocalHeadEulerZ, ControllerX, ControllerY, ControllerZ,ControllerEulerX, ControllerEulerY, ControllerEulerZ,Pointer1X,Pointer1Y,Pointer1Z," +
+           "RemoteHeadX, RemoteHeadY, RemoteHeadZ,RemoteHeadEulerX, RemoteHeadEulerY, RemoteHeadEulerZ, RemoteControllerX, RemoteontrollerY, RemoteControllerZ,ControllerEulerX, RemoteControllerEulerY, RemoteControllerEulerZ,Pointer2X,Pointer2Y,Pointer2Z,");
 
         startTime = Time.time;
     }

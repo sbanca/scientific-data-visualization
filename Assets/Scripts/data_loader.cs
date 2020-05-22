@@ -1,12 +1,13 @@
 ﻿
 using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class data_loader : MonoBehaviourPun
+public class data_loader : MonoBehaviourPun, IOnEventCallback
 {
 
     [SerializeField]
@@ -16,7 +17,7 @@ public class data_loader : MonoBehaviourPun
 
     private Queue<GameObject> dataPrefabsQueue;
 
-    private const byte LOAD_NEXT_DATA = 0;
+    private const byte LOAD_NEXT_DATA = 10;
 
     public AvatarBehaviourRecorder avatarRecorder;
 
@@ -100,29 +101,38 @@ public class data_loader : MonoBehaviourPun
 
         object[] data = new object[] { };
 
-        PhotonNetwork.RaiseEvent(LOAD_NEXT_DATA, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.NextDataDisplay, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
 
     }
-    private void OnEnable()
+    //private void OnEnable()
+    //{
+    //    PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
+
+    //}
+
+    //private void OnDisable()
+    //{
+    //    PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
+
+    //}
+
+    //private void NetworkingClientEventReceived(EventData obj)
+    //{
+    //    if (obj.Code == LOAD_NEXT_DATA) {
+
+    //        LoadNext();
+
+    //        object[] datas = (object[])obj.CustomData;
+
+    //    }
+    //}
+
+
+    void IOnEventCallback.OnEvent(EventData photonEvent)
     {
-        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
-
-    }
-
-    private void OnDisable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
-
-    }
-
-    private void NetworkingClientEventReceived(EventData obj)
-    {
-        if (obj.Code == LOAD_NEXT_DATA) {
-
+        if (photonEvent.Code == MasterManager.GameSettings.NextDataDisplay)
+        {
             LoadNext();
-
-            object[] datas = (object[])obj.CustomData;
-
         }
     }
 }      
