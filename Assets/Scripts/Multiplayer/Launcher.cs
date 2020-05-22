@@ -11,6 +11,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 {
     private GameObject localAvatar;
 
+    private GameObject localObserver;
+
     private PhotonView photonView;
 
     public GameObject rig;
@@ -22,9 +24,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     public bool observer = false;
 
     public bool voiceDebug = true;
-
-    [serializable]
-    public Camera ObserverCamera;
 
     [serializable]
     public AvatarBehaviourRecorder avatarRecorder;
@@ -69,7 +68,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
 
-        if (observer) ObserverSetup();
+        if (observer) ObserverInstantiation();
         else  InstantiateLocalAvatar();
     }
 
@@ -232,27 +231,16 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     //OBSERVER
     //local Observer
-    void ObserverSetup()
+    void ObserverInstantiation()
     {
+        Debug.Log("[PUN] instantiate Local Observer");
+     
+        //instantiate the local avatar      
+        localObserver = Instantiate(Resources.Load("ObserverCamera")) as GameObject;
+        photonView = localObserver.GetComponent<PhotonView>();
 
         //enable observer camera
-        ObserverCamera.gameObject.SetActive(true);
-        ObserverCamera.enabled = true;
-
-        //enable observer camera
-        ObserverCamera.gameObject.tag = "MainCamera";
-
-        //destroy the player controller 
-        Destroy(GameObject.Find("OVRPlayerController"));
-
-        //remove loading 
-        loading.SetActive(false);
-
-        //enable observer recorder
-        avatarRecorder.enabled = true;
-
-        //enablePhotonVoice()
-        StartCoroutine(PhotonVoiceInstantiationForLocalObserver());
+        localObserver.tag = "MainCamera";
 
 
         if (PhotonNetwork.AllocateViewID(photonView))
@@ -263,45 +251,46 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
                 Receivers = ReceiverGroup.Others
             };
 
-            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateObserverEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
 
-            OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
-            ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
+            Debug.Log("[PUN] Local Observer instantiated");
 
-            Debug.Log("[PUN] LocalAvatar instantiatiation triggered now waiting for OVRAvatar to initialize");
+            //enablePhotonVoice()
+            StartCoroutine(PhotonVoiceInstantiationForLocalObserver());
 
-            OvrAvatar.LocalAvatarInstantiated += LocalAvatarInstantiated;
         }
         else
         {
-            Debug.LogError("[PUN] Failed instantiate LocalAvatar, Failed to allocate a ViewId.");
+            Debug.LogError("[PUN] Failed instantiate Local Observer, Failed to allocate a ViewId.");
 
-            Destroy(localAvatar);
+            Destroy(localObserver);
         }
+
+        //destroy the player controller 
+        Destroy(GameObject.Find("OVRPlayerController"));
+
+        //enable observer recorder
+        avatarRecorder.enabled = true;
 
     }
 
     private IEnumerator PhotonVoiceInstantiationForLocalObserver()
     {
         
-
         Debug.Log("[PUN] setup voice for observer by adding Speaker,Recorder,VoiceView ");
 
-        //add photon view to the observer camera
-        photonView = ObserverCamera.gameObject.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
-
         //add audio source
-        AudioSource audioSource = ObserverCamera.gameObject.GetComponentInChildren<AudioSource>();
+        AudioSource audioSource = localObserver.GetComponent<AudioSource>();
 
         ////add speaker to the element which holds the audio source 
         Speaker speaker = audioSource.gameObject.AddComponent<Speaker>();
 
         ////add recorder to the element that has the photonView
-        Recorder recorder = ObserverCamera.gameObject.AddComponent<Recorder>();
-        recorder.DebugEchoMode = true;
+        Recorder recorder = localObserver.gameObject.AddComponent<Recorder>();
+        recorder.DebugEchoMode = false;
 
         ////add Photonvoice view to the local avatar
-        PhotonVoiceView voiceView = ObserverCamera.gameObject.AddComponent<PhotonVoiceView>();
+        PhotonVoiceView voiceView = localObserver.gameObject.AddComponent<PhotonVoiceView>();
         voiceView.RecorderInUse = recorder;
         voiceView.SpeakerInUse = speaker;
         voiceView.SetupDebugSpeaker = true;
@@ -309,8 +298,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         ////start transmission 
         yield return voiceView.RecorderInUse.TransmitEnabled = true;
         voiceView.RecorderInUse.StartRecording();
-
-
 
 
     }
