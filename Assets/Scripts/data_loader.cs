@@ -21,6 +21,8 @@ public class data_loader : MonoBehaviourPun
 
     public AvatarBehaviourRecorder avatarRecorder;
 
+    public PartecipantsVoiceRecorder partecipantsVoiceRecorder;
+
     private void Start()
     {
         dataPrefabsQueue = new Queue<GameObject>();
@@ -65,6 +67,8 @@ public class data_loader : MonoBehaviourPun
     }
 
     public void Next() {
+
+        partecipantsVoiceRecorder.StartRecording();
 
         if (dataPrefabsQueue.Count > 0)
         {

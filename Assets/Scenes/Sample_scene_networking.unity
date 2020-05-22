@@ -846,6 +846,7 @@ GameObject:
   - component: {fileID: 2066200293}
   - component: {fileID: 2066200294}
   - component: {fileID: 2066200295}
+  - component: {fileID: 2066200296}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -902,6 +903,7 @@ MonoBehaviour:
   - {fileID: 8880028997469395668, guid: f074ea58d1af2dd48ac672557ce36bc7, type: 3}
   - {fileID: 9070310138414687193, guid: e16c1f451fee0c04693d7dbe0523ab2e, type: 3}
   avatarRecorder: {fileID: 2066200295}
+  partecipantsVoiceRecorder: {fileID: 2066200296}
 --- !u!114 &2066200295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,7 +917,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 25
-  folderName: Data
+--- !u!114 &2066200296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066200291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee026c96d3369a4da6ef8a7378df76e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3174787645888835632
 RectTransform:
   m_ObjectHideFlags: 0

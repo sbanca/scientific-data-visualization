@@ -6,6 +6,7 @@ using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
@@ -48,7 +49,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
      
         PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;
         PhotonNetwork.ConnectUsingSettings();
-  
+
+
     }
 
     public override void OnConnectedToMaster() {
@@ -200,8 +202,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //sender 
         Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
 
-        MasterManager.GameSettings.DataFolder = MasterManager.GameSettings.DataFolder + "_" + player.NickName;
-
         Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID " + player.UserId);
 
         GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
@@ -273,6 +273,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //enable observer recorder
         avatarRecorder.enabled = true;
 
+        //create a folder for saving the data
+        DataFolderCreation();
     }
 
     private IEnumerator PhotonVoiceInstantiationForLocalObserver()
@@ -324,4 +326,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
        
     }
 
+    private void DataFolderCreation() {
+
+        string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\";
+
+        if(!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+    }
 }

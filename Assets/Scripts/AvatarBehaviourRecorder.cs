@@ -94,16 +94,6 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     public void NewData(GameObject g) {
 
-        StartCoroutine(NewDataCorutine(g));
-
-        
-
-    }
-
-    public IEnumerator NewDataCorutine(GameObject g) {
-
-        yield return Directory.CreateDirectory(Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\");
-
         if (writer != null) writer.Close();
 
         if (inputsmanagerinstance == null) inputsmanagerinstance = inputsManager.Instance;
