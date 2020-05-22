@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class data_loader : MonoBehaviourPun, IOnEventCallback
+public class data_loader : MonoBehaviourPun, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
 
     [SerializeField]
