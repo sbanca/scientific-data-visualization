@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class data_loader : MonoBehaviourPun, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
+public class data_loader : MonoBehaviourPun
 {
 
     [SerializeField]
@@ -104,37 +104,32 @@ public class data_loader : MonoBehaviourPun, IConnectionCallbacks, IMatchmakingC
         PhotonNetwork.RaiseEvent(MasterManager.GameSettings.NextDataDisplay, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
 
     }
-    //private void OnEnable()
-    //{
-    //    PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
-
-    //}
-
-    //private void OnDisable()
-    //{
-    //    PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
-
-    //}
-
-    //private void NetworkingClientEventReceived(EventData obj)
-    //{
-    //    if (obj.Code == LOAD_NEXT_DATA) {
-
-    //        LoadNext();
-
-    //        object[] datas = (object[])obj.CustomData;
-
-    //    }
-    //}
-
-
-    void IOnEventCallback.OnEvent(EventData photonEvent)
+    private void OnEnable()
     {
-        if (photonEvent.Code == MasterManager.GameSettings.NextDataDisplay)
+        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
+
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
+
+    }
+
+    private void NetworkingClientEventReceived(EventData obj)
+    {
+        if (obj.Code == MasterManager.GameSettings.NextDataDisplay)
         {
+
             LoadNext();
+
+            object[] datas = (object[])obj.CustomData;
+
         }
     }
+
+
+
 }      
 
 
