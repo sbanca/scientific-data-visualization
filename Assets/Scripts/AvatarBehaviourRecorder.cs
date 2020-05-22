@@ -42,8 +42,6 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     Char[] remove = new Char[] { ' ', '(', ')' };
 
-
-
     private void OnEnable()
     {
         GameObject g = new GameObject();
@@ -58,7 +56,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     void Update()
     {
-        if (writer == null) return;
+        if (writer == null ) return;
 
         if (inputsmanagerinstance.LocalHead != null) LocalHead = inputsmanagerinstance.LocalHead;
         if (inputsmanagerinstance.RemoteHead != null) RemoteHead = inputsmanagerinstance.RemoteHead;
@@ -70,7 +68,10 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         ControllerAbsolutePosition = Controller.localToWorldMatrix * Controller.position;
         RemoteControllerAbsolutePosition = RemoteController.localToWorldMatrix * RemoteController.position;
 
-        if (ainst == null && Augmentations.Instance != null) ainst = Augmentations.Instance;
+        if (ainst == null)
+        {
+            ainst = FindObjectOfType<Augmentations>();
+        }
 
         if (ainst != null)
         {
@@ -94,7 +95,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     public void NewData(GameObject g) {
 
-        if (writer != null) writer.Close();
+        closeWriter();
 
         if (inputsmanagerinstance == null) inputsmanagerinstance = inputsManager.Instance;
 
@@ -105,15 +106,25 @@ public class AvatarBehaviourRecorder : MonoBehaviour
            "RemoteHeadX, RemoteHeadY, RemoteHeadZ,RemoteHeadEulerX, RemoteHeadEulerY, RemoteHeadEulerZ, RemoteControllerX, RemoteontrollerY, RemoteControllerZ,ControllerEulerX, RemoteControllerEulerY, RemoteControllerEulerZ,Pointer2X,Pointer2Y,Pointer2Z,");
 
         startTime = Time.time;
+
     }
 
     void OnDisable()
     {
-        if (writer != null) writer.Close();
+        closeWriter();
     }
 
     void OnApplicationQuit()
     {
-        if (writer != null) writer.Close();
+        closeWriter(); 
     }
+
+    void closeWriter() {
+
+        if (writer != null) writer.Close();
+
+        writer = null;
+
+    }
+
 }

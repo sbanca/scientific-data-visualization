@@ -17,10 +17,9 @@ namespace TableTop {
         head = 0,
         mouse = 1,
         controller = 2
-
     }
 
-    public class Augmentations : Singleton<Augmentations>
+    public class Augmentations : MonoBehaviour
     {
 
         [SerializeField]

@@ -19,6 +19,7 @@ public class PartecipantsVoiceRecorder : MonoBehaviour
     void Start()
     {
         PhotonVoiceNetwork.Instance.RemoteVoiceAdded += HandleRemoteVoicAdded;
+     
     }
 
     private void HandleRemoteVoicAdded(RemoteVoiceLink obj)
@@ -41,12 +42,13 @@ public class PartecipantsVoiceRecorder : MonoBehaviour
         foreach (RecorderObject r in list) 
             r.StartRecording();
 
+        
         recording = true;
+
+
     }
 
 }
-
-
 
 public class RecorderObject 
 {

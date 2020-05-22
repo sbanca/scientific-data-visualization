@@ -23,6 +23,8 @@ public class data_loader : MonoBehaviourPun
 
     public PartecipantsVoiceRecorder partecipantsVoiceRecorder;
 
+    //public RecorderAll recorderAll;
+
     private void Start()
     {
         dataPrefabsQueue = new Queue<GameObject>();
@@ -30,11 +32,14 @@ public class data_loader : MonoBehaviourPun
         foreach(GameObject g in dataprefabs) dataPrefabsQueue.Enqueue(g);
     }
 
-    public void LoadNext() {
+    IEnumerator LoadNext() {
 
-        if (!this.enabled) return;
+        if (!this.enabled) yield break;
 
-        if(currentData!=null) Destroy(currentData);
+        if(currentData!=null)  Destroy(currentData);
+
+
+
 
         if (dataPrefabsQueue.Count > 0) {
             
@@ -63,17 +68,19 @@ public class data_loader : MonoBehaviourPun
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) Next();
+        if (Input.GetKeyDown(KeyCode.Q))
+            Next();
     }
 
     public void Next() {
 
         partecipantsVoiceRecorder.StartRecording();
+        //if (!recorderAll.recOutput) recorderAll.StartRecording();
 
         if (dataPrefabsQueue.Count > 0)
         {
 
-            LoadNext();
+            StartCoroutine(LoadNext());
 
             RaiseNetworkEvent();
 
@@ -82,7 +89,7 @@ public class data_loader : MonoBehaviourPun
         }
         else {
 
-            LoadNext();
+            StartCoroutine(LoadNext());
 
             StopRecorder();
 
@@ -125,7 +132,7 @@ public class data_loader : MonoBehaviourPun
         if (obj.Code == MasterManager.GameSettings.NextDataDisplay)
         {
 
-            LoadNext();
+            StartCoroutine(LoadNext());
 
             object[] datas = (object[])obj.CustomData;
 
