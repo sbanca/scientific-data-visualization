@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameversion: 0.0.1
   _nickname: YourNameHere
+  _userID: 1
   _roomName: CollaborativeRoom
   InstantiateVrAvatarEventCode: 1
+  InstantiateObserverEventCode: 2
+  NextDataDisplay: 3
+  HideUnhideLayer: 4
+  DataFolder: Data

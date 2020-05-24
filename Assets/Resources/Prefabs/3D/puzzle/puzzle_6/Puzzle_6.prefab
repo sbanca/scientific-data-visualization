@@ -353,6 +353,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1627285077652884141}
     m_Modifications:
+    - target: {fileID: 100000, guid: 0a4c6da8eb9765a499341b493ab0a27e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 0a4c6da8eb9765a499341b493ab0a27e, type: 3}
       propertyPath: m_Name
       value: puzzle_stage_1
@@ -401,14 +405,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 0a4c6da8eb9765a499341b493ab0a27e, type: 3}
-      propertyPath: m_CastShadows
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 0a4c6da8eb9765a499341b493ab0a27e, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a4c6da8eb9765a499341b493ab0a27e, type: 3}
 --- !u!1 &555767926808067454 stripped
@@ -442,6 +438,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1627285077652884141}
     m_Modifications:
+    - target: {fileID: 100000, guid: e2392935d61b2224daf73800f0734a1d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: e2392935d61b2224daf73800f0734a1d, type: 3}
       propertyPath: m_Name
       value: puzzle_stage_4
@@ -527,6 +527,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1627285077652884141}
     m_Modifications:
+    - target: {fileID: 100000, guid: 76ee25b2a42f0fb4eb5a17fde5aeb623, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 76ee25b2a42f0fb4eb5a17fde5aeb623, type: 3}
       propertyPath: m_Name
       value: puzzle_stage_2
@@ -675,6 +679,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1627285077652884141}
     m_Modifications:
+    - target: {fileID: 100000, guid: 008e47e1a01592948968917b31e12789, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 008e47e1a01592948968917b31e12789, type: 3}
       propertyPath: m_Name
       value: puzzle_stage_3

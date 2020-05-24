@@ -48,6 +48,12 @@ public class PartecipantsVoiceRecorder : MonoBehaviour
 
     }
 
+    public void OnApplicationQuit()
+    {
+        foreach (RecorderObject r in list)
+            r.SaveAndCloseFile();
+    }
+
 }
 
 public class RecorderObject 
@@ -78,7 +84,7 @@ public class RecorderObject
 
     }
 
-    private void SaveAndCloseFile()
+    public void SaveAndCloseFile()
     {
         //Save and close the file in RemoteVoiceRemoved handler.
         stream.Close();
@@ -88,7 +94,7 @@ public class RecorderObject
 
     private void WriteFrameAudioData(float[] obj)
     {
-        stream.AppendWaveData(obj);
+        if ( stream != null) stream.AppendWaveData(obj);
 
     }
 
@@ -104,7 +110,7 @@ public static class BinaryWriterToWavExtensions
 
     private const int HeaderSize = 44;
 
-    private const int Hz = 16000; //frequency or sampling rate
+    private const int Hz = 12000; //frequency or sampling rate
 
     private const float RescaleFactor = 32767; //to convert float to Int16
 

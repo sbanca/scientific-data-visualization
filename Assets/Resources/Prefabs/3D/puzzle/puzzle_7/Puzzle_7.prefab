@@ -416,6 +416,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7102090857216707153}
     m_Modifications:
+    - target: {fileID: 100000, guid: 58516a7b32a9dea44bb220b474edc8d2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 58516a7b32a9dea44bb220b474edc8d2, type: 3}
       propertyPath: m_Name
       value: puzle_first_stage
@@ -464,10 +468,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 58516a7b32a9dea44bb220b474edc8d2, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58516a7b32a9dea44bb220b474edc8d2, type: 3}
 --- !u!33 &7102090857425872016 stripped
@@ -501,6 +501,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7102090857216707153}
     m_Modifications:
+    - target: {fileID: 100000, guid: b4f7184a159b3864d9c3d560f7fc9a91, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: b4f7184a159b3864d9c3d560f7fc9a91, type: 3}
       propertyPath: m_Name
       value: puzle_second_stage
@@ -586,6 +590,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7102090857216707153}
     m_Modifications:
+    - target: {fileID: 100000, guid: 2c2c589807cc6b34cb6f64c00a362a45, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 2c2c589807cc6b34cb6f64c00a362a45, type: 3}
       propertyPath: m_Name
       value: puzle_fourth_stage
@@ -671,6 +679,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7102090857216707153}
     m_Modifications:
+    - target: {fileID: 100000, guid: 147d76b60b68bae4a9e7f46c007b3fb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 147d76b60b68bae4a9e7f46c007b3fb6, type: 3}
       propertyPath: m_Name
       value: puzle_third_stage
