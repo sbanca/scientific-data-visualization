@@ -14,7 +14,9 @@ ModelImporter:
     2000000: 0
     2100000: Material.001
     2300000: map.005
+    2300002: //RootNode
     3300000: map.005
+    3300002: //RootNode
     4300000: map.005
     10800000: Sun
   externalObjects: {}

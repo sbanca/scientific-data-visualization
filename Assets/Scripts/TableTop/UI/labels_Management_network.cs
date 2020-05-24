@@ -9,6 +9,10 @@ public class labels_Management_network : MonoBehaviour
 
     public bool UseMesh;
 
+    [serializable]
+    public GameObject  labelmeshprefab ;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,8 +83,7 @@ public class labels_Management_network : MonoBehaviour
 
     void usemesh() {
 
-        GameObject labelmeshprefab = Resources.Load<GameObject>("Prefabs/3D/new_network/labels");
-
+        
         GameObject g = Instantiate(labelmeshprefab);
 
         MeshCombiner.Instance.RemoveOffset(g);

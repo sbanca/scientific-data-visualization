@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8880028997469395668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 3.08}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_Children:
   - {fileID: 8880028998674805258}
   - {fileID: 8880028997608252658}
@@ -50,8 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staticData: 1
   Mesh: {fileID: 8880028998673478184}
-  _mainCam: {fileID: 0}
-  _remoteHead: {fileID: 0}
   _mapCollider: {fileID: 8880028998676660360}
 --- !u!114 &8880028997469395656
 MonoBehaviour:
@@ -89,9 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af725e587d2238a4b9d480f777ffedcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualInitialize: 0
-  AugmentMouseLocationOnMap: 1
-  option: 0
   optionInput: 0
   sphereAugmentation: 1
   coneAugmentation: 0
@@ -100,10 +95,6 @@ MonoBehaviour:
   _rayOnMap: {fileID: 8880028997469395657}
   Sphere: {fileID: 8880028997469395656}
   RemoteSphere: {fileID: 8880028997469395659}
-  Circle: {fileID: 0}
-  RemoteCircle: {fileID: 0}
-  LightProjector: {fileID: 0}
-  RemoteLightProjector: {fileID: 0}
 --- !u!1001 &8880028997608390256
 PrefabInstance:
   m_ObjectHideFlags: 0

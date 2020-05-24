@@ -160,10 +160,10 @@ PlayerSettings:
     Android: com.riccardo.oculusQuest
     Facebook: com.oculus.UnitySample
     Standalone: com.oculus.UnitySample
-    iOS: com.Company.ProductName
+    iOS: com.oculus.UnitySample
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 19
+  AndroidMinSdkVersion: 25
   AndroidTargetSdkVersion: 27
   AndroidPreferredInstallLocation: 0
   aotOptions: 
@@ -399,7 +399,7 @@ PlayerSettings:
     m_Devices:
     - Oculus
   - m_BuildTarget: iOS
-    m_Enabled: 0
+    m_Enabled: 1
     m_Devices: []
   - m_BuildTarget: 
     m_Enabled: 1

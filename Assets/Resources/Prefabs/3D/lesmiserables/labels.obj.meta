@@ -395,7 +395,27 @@ ModelImporter:
     4300150: object_8
     4300152: object_9
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: edge_grey
+    second: {fileID: 2100000, guid: 22c675edb1fec0a469c8517a5abf24c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: orange
+    second: {fileID: 2100000, guid: 73fb04e6d01afe644a8ba5be8b9d5968, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: red
+    second: {fileID: 2100000, guid: 6cb69173884726048afe71ae1502a5f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yellow
+    second: {fileID: 2100000, guid: 33f66c20b406f154c95ccaac9ed9f87e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -427,7 +447,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 2
     addColliders: 0
     useSRGBMaterialColor: 1
     importVisibility: 1
