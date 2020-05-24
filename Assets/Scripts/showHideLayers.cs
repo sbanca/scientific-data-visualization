@@ -15,26 +15,32 @@ public class showHideLayers : MonoBehaviourPun
         if (Input.GetKeyDown("1"))
         {
             hideUnhideLayer(0);
+            RaiseNetworkEvent(0);
         }
         else if (Input.GetKeyDown("2"))
         {
             hideUnhideLayer(1);
+            RaiseNetworkEvent(1);
         }
         else if (Input.GetKeyDown("3"))
         {
             hideUnhideLayer(2);
+            RaiseNetworkEvent(2);
         }
         else if (Input.GetKeyDown("4"))
         {
             hideUnhideLayer(3);
+            RaiseNetworkEvent(3);
         }
         else if (Input.GetKeyDown("5"))
         {
             hideUnhideLayer(4);
+            RaiseNetworkEvent(4);
         }
         else if (Input.GetKeyDown("6"))
         {
             hideUnhideLayer(5);
+            RaiseNetworkEvent(5);
         }
     }
 
@@ -53,7 +59,7 @@ public class showHideLayers : MonoBehaviourPun
         if (layer.activeSelf) layer.SetActive(false);
         else layer.SetActive(true);
 
-        RaiseNetworkEvent(i);
+       
     }
     public void RaiseNetworkEvent(int i)
     {
