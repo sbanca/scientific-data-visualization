@@ -53,7 +53,7 @@ public class showHideLayers : MonoBehaviourPun
         if (layer.activeSelf) layer.SetActive(false);
         else layer.SetActive(true);
 
-
+        RaiseNetworkEvent(i);
     }
     public void RaiseNetworkEvent(int i)
     {
