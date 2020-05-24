@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 1627285077652884141}
   - component: {fileID: 8586214111534556914}
   m_Layer: 0
-  m_Name: puzzle_6
+  m_Name: Puzzle_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -244,7 +244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4487848711358535239}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.361, y: 0.497, z: 0.262}
+  m_LocalPosition: {x: 0.361, y: 0.28, z: 0.262}
   m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_Children:
   - {fileID: 555767926808158558}
