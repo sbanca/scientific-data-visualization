@@ -54,14 +54,31 @@ public class placeholderManager : MonoBehaviourPun
 
         GameObject placeholder = Instantiate(placeholderPrefab);
 
-        RaiseNetworkEvent(placeholder.GetComponent<PhotonView>().ViewID);
+        PhotonView photonView = placeholder.GetComponent<PhotonView>();
+
+        if (PhotonNetwork.AllocateViewID(photonView))
+        {
+            RaiseNetworkEvent(photonView.ViewID);
+        }
+        else
+        {
+            Debug.LogError("[PUN] Failed instantiate LocalAvatar, Failed to allocate a ViewId.");
+
+            Destroy(placeholder);
+        }
+
+       
     }
 
     private void spawnRemotePlaceholder(int id) {
 
         GameObject placeholder = Instantiate(placeholderPrefab);
 
-        placeholder.GetComponent<PhotonView>().ViewID = id;
+        PhotonView pv = placeholder.GetComponent<PhotonView>();
+            
+        pv.ViewID = id;
+
+       
 
     }
 
