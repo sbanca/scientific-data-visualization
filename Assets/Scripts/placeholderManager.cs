@@ -10,7 +10,7 @@ public class placeholderManager : MonoBehaviourPun
 
     void Update()
     {
-        if (Input.GetKeyDown("P"))
+        if (Input.GetKeyDown("p"))
         {
             spawnLocalPlaceholder();         
         }
