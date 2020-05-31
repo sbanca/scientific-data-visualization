@@ -18,7 +18,7 @@ public class placeholderManager : MonoBehaviourPun
         {
             spawnLocalPlaceholder();
         }
-        else if (Input.GetKeyDown("p")) {
+        else if (Input.GetKeyDown("d")) {
 
             object[] data = new object[] { 0 };
 
