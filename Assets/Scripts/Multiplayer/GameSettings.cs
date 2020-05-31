@@ -28,7 +28,7 @@ public class GameSettings : ScriptableObject
 
     [SerializeField]
 
-    private string _userID ;
+    private string _userID = "0";
 
     public string UserID { 
         get {
@@ -65,6 +65,9 @@ public class GameSettings : ScriptableObject
 
     [SerializeField]
     public byte HideUnhideLayer = 4; // example code, change to any value between 1 and 199
+
+    [SerializeField]
+    public byte SpawnPlaceholder = 5; // example code, change to any value between 1 and 199
 
     public string DataFolder = "Data";
 }

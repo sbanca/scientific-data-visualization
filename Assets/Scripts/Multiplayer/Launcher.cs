@@ -44,7 +44,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         else
         {
             PhotonNetwork.NickName = MasterManager.GameSettings.Nickname;           
-            PhotonNetwork.AuthValues.UserId = MasterManager.GameSettings.UserID;           
+            //PhotonNetwork.AuthValues.UserId = MasterManager.GameSettings.UserID;           
         }
      
         PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;

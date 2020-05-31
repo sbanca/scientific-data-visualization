@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ExperimentLobby.unity
     guid: 62a834b07bfe1f649b9120b1ab633adc
   - enabled: 1

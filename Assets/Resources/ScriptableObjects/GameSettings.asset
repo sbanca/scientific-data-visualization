@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameversion: 0.0.1
   _nickname: YourNameHere
-  _userID: 1
+  _userID: 10
   _roomName: CollaborativeRoom
   InstantiateVrAvatarEventCode: 1
   InstantiateObserverEventCode: 2

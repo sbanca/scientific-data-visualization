@@ -55,36 +55,36 @@ namespace TableTop {
         private RayOnMap _rayOnMap;
 
 
-        private Transform localTransform;
+        //private Transform localTransform;
 
-        private Transform remoteTransform;
+        //private Transform remoteTransform;
 
-        private void Start()
-        {
+        //private void Start()
+        //{
 
-            switch (optionInput)
-            {
+        //    switch (optionInput)
+        //    {
 
-                case AUGMENTINPUT.head:
+        //        case AUGMENTINPUT.head:
 
-                    localTransform = inputsManager.Instance.LocalHead;
+        //            localTransform = inputsManager.Instance.LocalHead;
 
-                    remoteTransform = inputsManager.Instance.RemoteHead;
+        //            remoteTransform = inputsManager.Instance.RemoteHead;
 
-                    break;
+        //            break;
 
-                case AUGMENTINPUT.controller:
+        //        case AUGMENTINPUT.controller:
 
-                    localTransform = inputsManager.Instance.Controller;
+        //            localTransform = inputsManager.Instance.Controller;
 
-                    remoteTransform = inputsManager.Instance.RemoteController;
+        //            remoteTransform = inputsManager.Instance.RemoteController;
 
-                    break;
+        //            break;
 
 
-            }
+        //    }
 
-        }
+        //}
 
         void Update()
         {

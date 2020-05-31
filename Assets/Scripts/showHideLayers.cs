@@ -43,7 +43,7 @@ public class showHideLayers : MonoBehaviourPun
             RaiseNetworkEvent(5);
         }
     }
-
+    
     public void hideUnhideLayer(int i) {
 
         GameObject layer = Layers[i];
@@ -61,6 +61,7 @@ public class showHideLayers : MonoBehaviourPun
 
        
     }
+    
     public void RaiseNetworkEvent(int i)
     {
 
@@ -69,12 +70,13 @@ public class showHideLayers : MonoBehaviourPun
         PhotonNetwork.RaiseEvent(MasterManager.GameSettings.HideUnhideLayer, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
 
     }
+    
     private void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
 
     }
-
+    
     private void OnDisable()
     {
         PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
