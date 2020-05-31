@@ -53,22 +53,24 @@ public class GameSettings : ScriptableObject
     }
 
   
+    [SerializeField]
+    public byte InstantiateVrAvatarEventCode = 1; 
 
     [SerializeField]
-    public byte InstantiateVrAvatarEventCode = 1; // example code, change to any value between 1 and 199
+    public byte InstantiateObserverEventCode = 2; 
 
     [SerializeField]
-    public byte InstantiateObserverEventCode = 2; // example code, change to any value between 1 and 199
+    public byte NextDataDisplay = 3; 
 
     [SerializeField]
-    public byte NextDataDisplay = 3; // example code, change to any value between 1 and 199
+    public byte HideUnhideLayer = 4; 
 
     [SerializeField]
-    public byte HideUnhideLayer = 4; // example code, change to any value between 1 and 199
+    public byte SpawnPlaceholder = 5; 
 
     [SerializeField]
-    public byte SpawnPlaceholder = 5; // example code, change to any value between 1 and 199
-
+    public byte DeletePlaceHolders = 6; 
+    
     public string DataFolder = "Data";
 }
 

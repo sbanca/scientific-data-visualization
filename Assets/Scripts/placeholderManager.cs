@@ -8,13 +8,26 @@ public class placeholderManager : MonoBehaviourPun
 {
     public GameObject placeholderPrefab;
 
+    public List<GameObject> placeholderList = new List<GameObject>();
+
+
+
     void Update()
     {
         if (Input.GetKeyDown("p"))
         {
-            spawnLocalPlaceholder();         
+            spawnLocalPlaceholder();
         }
-    
+        else if (Input.GetKeyDown("p")) {
+
+            object[] data = new object[] { 0 };
+
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.DeletePlaceHolders,data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+
+            DeleteAllPlaceholders();
+        }
+
+
     }
 
     public void RaiseNetworkEvent(int i)
@@ -46,6 +59,11 @@ public class placeholderManager : MonoBehaviourPun
             object[] datas = (object[])obj.CustomData;
 
             spawnRemotePlaceholder((int)datas[0]);
+
+        } else if (obj.Code == MasterManager.GameSettings.DeletePlaceHolders)
+        {
+
+            DeleteAllPlaceholders();
         }
     }
 
@@ -59,6 +77,8 @@ public class placeholderManager : MonoBehaviourPun
         if (PhotonNetwork.AllocateViewID(photonView))
         {
             RaiseNetworkEvent(photonView.ViewID);
+
+            placeholderList.Add(placeholder);
         }
         else
         {
@@ -78,8 +98,13 @@ public class placeholderManager : MonoBehaviourPun
             
         pv.ViewID = id;
 
-       
+        placeholderList.Add(placeholder);
 
     }
 
+    private void DeleteAllPlaceholders() {
+
+        foreach (GameObject g in placeholderList)   Destroy(g);
+        
+    }
 }
