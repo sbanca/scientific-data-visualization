@@ -13,11 +13,16 @@ public class data_loader : MonoBehaviourPun
     [SerializeField]
     public GameObject[] dataprefabs;
 
+    [SerializeField]
+    public bool[] record;
+
     GameObject currentData;
+
+    bool recordCurrentdata;
 
     private Queue<GameObject> dataPrefabsQueue;
 
-    private const byte LOAD_NEXT_DATA = 10;
+    private Queue<bool> databoolQueue;
 
     public AvatarBehaviourRecorder avatarRecorder;
 
@@ -28,8 +33,11 @@ public class data_loader : MonoBehaviourPun
     private void Start()
     {
         dataPrefabsQueue = new Queue<GameObject>();
+        databoolQueue = new Queue<bool>();
 
-        foreach(GameObject g in dataprefabs) dataPrefabsQueue.Enqueue(g);
+        foreach (GameObject g in dataprefabs) dataPrefabsQueue.Enqueue(g);
+
+        foreach (bool g in record) databoolQueue.Enqueue(g);
     }
 
     IEnumerator LoadNext() {
@@ -38,12 +46,11 @@ public class data_loader : MonoBehaviourPun
 
         if(currentData!=null)  Destroy(currentData);
 
-
-
-
         if (dataPrefabsQueue.Count > 0) {
             
             currentData = Instantiate(dataPrefabsQueue.Dequeue());
+
+            recordCurrentdata = databoolQueue.Dequeue();
 
             if (!currentData.activeSelf) currentData.SetActive(true);
 
@@ -63,7 +70,6 @@ public class data_loader : MonoBehaviourPun
 
         foreach (Collider c in colliders) Physics.IgnoreCollision(charCon, c);
 
-
     }
 
     public void Update()
@@ -75,7 +81,6 @@ public class data_loader : MonoBehaviourPun
     public void Next() {
 
         partecipantsVoiceRecorder.StartRecording();
-        //if (!recorderAll.recOutput) recorderAll.StartRecording();
 
         if (dataPrefabsQueue.Count > 0)
         {
@@ -99,7 +104,10 @@ public class data_loader : MonoBehaviourPun
 
     public void RecordEvent() {
 
-        avatarRecorder.NewData(currentData);
+        if (recordCurrentdata) avatarRecorder.NewData(currentData);
+
+        else avatarRecorder.closeWriter();
+
     }
 
     public void StopRecorder()
@@ -118,13 +126,11 @@ public class data_loader : MonoBehaviourPun
     private void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
-
     }
 
     private void OnDisable()
     {
         PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
-
     }
 
     private void NetworkingClientEventReceived(EventData obj)
@@ -141,6 +147,6 @@ public class data_loader : MonoBehaviourPun
 
 
 
-}      
+}
 
 

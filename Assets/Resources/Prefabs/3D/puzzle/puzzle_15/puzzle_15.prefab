@@ -16,7 +16,7 @@ MonoBehaviour:
   sphereAugmentation: 1
   coneAugmentation: 0
   circleAugmentation: 0
-  AugmentationAlwaysVisible: 0
+  AugmentationAlwaysVisible: 1
   _rayOnMap: {fileID: 2857410585479986575}
   Sphere: {fileID: 6194746986573143559}
   RemoteSphere: {fileID: 5824576525943180081}

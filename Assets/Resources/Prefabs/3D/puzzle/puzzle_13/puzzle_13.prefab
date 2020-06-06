@@ -232,7 +232,7 @@ MonoBehaviour:
   sphereAugmentation: 1
   coneAugmentation: 0
   circleAugmentation: 0
-  AugmentationAlwaysVisible: 0
+  AugmentationAlwaysVisible: 1
   _rayOnMap: {fileID: 4501926824862180565}
   Sphere: {fileID: 4831757987249602444}
   RemoteSphere: {fileID: 453437190729561762}
@@ -1213,6 +1213,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Clock
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250970, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a5b3da0bece5c94bb6c567fe586e86c, type: 3}

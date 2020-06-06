@@ -88,7 +88,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
             PointerHand2string = PointerHand2 == Vector3.zero ? "null,null,null" : PointerHand2.ToString("F3");
         }
 
-        currentTime = Time.time - startTime;
+        currentTime = Time.unscaledTime - startTime;
 
         line = currentTime.ToString("F3") + ","+
         LocalHeadPos.Trim(remove) + "," + LocalHeadEAng.Trim(remove) + "," +
@@ -114,7 +114,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         writer.WriteLine("time in s, LocalHeadX, LocalHeadY, LocalHeadZ,LocalHeadEulerX, LocalHeadEulerY, LocalHeadEulerZ, ControllerX, ControllerY, ControllerZ,ControllerEulerX, ControllerEulerY, ControllerEulerZ,PointerHead1X,PointerHead1Y,PointerHead1Z,PointerHand1X,PointerHand1Y,PointerHand1Z," +
            "RemoteHeadX, RemoteHeadY, RemoteHeadZ,RemoteHeadEulerX, RemoteHeadEulerY, RemoteHeadEulerZ, RemoteControllerX, RemoteontrollerY, RemoteControllerZ,ControllerEulerX, RemoteControllerEulerY, RemoteControllerEulerZ,PointerHead2X,PointerHead2Y,PointerHead2Z,PointerHand2X,PointerHand2Y,PointerHand2Z");
 
-        startTime = Time.time;
+        startTime = Time.unscaledTime;
 
     }
 
@@ -128,7 +128,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         closeWriter(); 
     }
 
-    void closeWriter() {
+    public void closeWriter() {
 
         if (writer != null) writer.Close();
 

@@ -9,29 +9,39 @@ ModelImporter:
     100006: object_3.001
     100008: object_4.001
     100010: Point
+    100012: Light
+    100014: object_6.006
     400000: //RootNode
     400002: object_1.001
     400004: object_2.001
     400006: object_3.001
     400008: object_4.001
     400010: Point
+    400012: Light
+    400014: object_6.006
     2100000: verde.001
     2100002: blue.001
     2100004: rosso.001
     2100006: giallo.001
+    2100008: diffuse_Black
+    2100010: stage_2
     2300000: object_1.001
     2300002: object_2.001
     2300004: object_3.001
     2300006: object_4.001
+    2300008: object_6.006
     3300000: object_1.001
     3300002: object_2.001
     3300004: object_3.001
     3300006: object_4.001
+    3300008: object_6.006
     4300000: object_1.001
     4300002: object_2.001
     4300004: object_3.001
     4300006: object_4.001
+    4300008: object_6.006
     10800000: Point
+    10800002: Light
   externalObjects: {}
   materials:
     importMaterials: 1
