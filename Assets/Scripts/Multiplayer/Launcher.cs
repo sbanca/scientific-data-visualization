@@ -206,6 +206,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
 
+        remoteAvatar.name = player.NickName;
+
         PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
         photonView.ViewID = (int)photonEvent.CustomData;
 
@@ -220,13 +222,25 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
       
     }
 
-    private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject remoteAvatar)
+    private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject rA)
     {
-        if (inputsManager.Instance.remoteAvatar == null) inputsManager.Instance.remoteAvatar = remoteAvatar;
-        else if (inputsManager.Instance.localAvatar == null) inputsManager.Instance.localAvatar = remoteAvatar;
-        else Debug.LogError("inputs manager cannot register any avatar");
 
-        return remoteAvatar;
+        if(inputsManager.Instance.remoteAvatar == rA || inputsManager.Instance.localAvatar == rA)
+            return rA;
+
+        if (inputsManager.Instance.remoteAvatar == null) { 
+            inputsManager.Instance.remoteAvatar = rA;
+            Debug.Log("[PUN] inputsManager associate avatar" + rA.name+" to remoteAvatar");
+        }else if (inputsManager.Instance.localAvatar == null) { 
+            inputsManager.Instance.localAvatar = rA;
+            Debug.Log("[PUN] inputsManager associate avatar" + rA.name + " to localAvatar");
+            Debug.Log("[PUN] RemoteAvatar instantiated");
+        }
+            
+        else 
+            Debug.LogError("inputs manager cannot register any avatar");
+
+        return rA;
     }
 
 
@@ -319,11 +333,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         PhotonView photonView = remoteObserver.GetComponent<PhotonView>();
         photonView.ViewID = (int)photonEvent.CustomData;
 
-        Debug.Log("[PUN] RemoteAvatar instantiated");
+        Debug.Log("[PUN] Remote Observer Instantiated");
 
-        OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
-
-       
     }
 
     private void DataFolderCreation() {

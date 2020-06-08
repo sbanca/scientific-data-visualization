@@ -18,8 +18,9 @@ public class PartecipantsVoiceRecorder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_EDITOR
         PhotonVoiceNetwork.Instance.RemoteVoiceAdded += HandleRemoteVoicAdded;
-     
+#endif       
     }
 
     private void HandleRemoteVoicAdded(RemoteVoiceLink obj)

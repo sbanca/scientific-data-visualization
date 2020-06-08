@@ -70,9 +70,11 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         ControllerEAng = inputsmanagerinstance.Controller == null ? "null,null,null" : inputsmanagerinstance.Controller.eulerAngles.ToString("F3");
         RemoteControllerEAng = inputsmanagerinstance.RemoteController == null ? "null,null,null" : inputsmanagerinstance.RemoteController.eulerAngles.ToString("F3");
 
-        if (rayOnMap == null)
+        if (rayOnMap == null ) rayOnMap = GetRayOnMap();
+        
+        if (rayOnMap != null)
         {
-            rayOnMap = FindObjectOfType<RayOnMap>();
+            if(!rayOnMap.gameObject.activeSelf) rayOnMap = GetRayOnMap();
         }
 
         if (rayOnMap != null)
@@ -136,5 +138,22 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     }
 
+    RayOnMap GetRayOnMap() {
 
+        RayOnMap[] list = FindObjectsOfType<RayOnMap>();
+
+        foreach (RayOnMap r in list)
+        {
+
+            if (r.gameObject.activeSelf)
+            {
+
+                rayOnMap = r;
+
+                return r;
+            }
+        }
+
+        return null;
+    }
 }

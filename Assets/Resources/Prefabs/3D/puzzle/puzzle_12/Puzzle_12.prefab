@@ -302,7 +302,7 @@ PrefabInstance:
     - target: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
         type: 3}
@@ -312,7 +312,7 @@ PrefabInstance:
     - target: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
         type: 3}
@@ -327,7 +327,7 @@ PrefabInstance:
     - target: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
         type: 3}
@@ -354,10 +354,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clock
       objectReference: {fileID: 0}
+    - target: {fileID: 1373979954449531577, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1373979954529250970, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250972, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_text
+      value: example
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250972, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250972, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250972, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250972, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250972, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373979954529250972, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a5b3da0bece5c94bb6c567fe586e86c, type: 3}

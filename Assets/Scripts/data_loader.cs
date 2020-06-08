@@ -80,8 +80,9 @@ public class data_loader : MonoBehaviourPun
 
     public void Next() {
 
+#if UNITY_EDITOR
         partecipantsVoiceRecorder.StartRecording();
-
+#endif  
         if (dataPrefabsQueue.Count > 0)
         {
 
@@ -89,17 +90,22 @@ public class data_loader : MonoBehaviourPun
 
             RaiseNetworkEvent();
 
+#if UNITY_EDITOR
             RecordEvent();
+#endif  
+            
 
         }
         else {
 
             StartCoroutine(LoadNext());
 
+#if UNITY_EDITOR
             StopRecorder();
+#endif  
 
         }
-    
+
     }
 
     public void RecordEvent() {
