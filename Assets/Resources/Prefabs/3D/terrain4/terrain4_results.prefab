@@ -12,6 +12,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2908946503927940974, guid: c6b0aead31f468a449b753aaa0861684,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594491319063210768, guid: c6b0aead31f468a449b753aaa0861684,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.39
+      objectReference: {fileID: 0}
     - target: {fileID: 4646181468155078380, guid: c6b0aead31f468a449b753aaa0861684,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -72,10 +82,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: terrain4_results
       objectReference: {fileID: 0}
+    - target: {fileID: 5152645303409946238, guid: c6b0aead31f468a449b753aaa0861684,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6045724215368812871, guid: c6b0aead31f468a449b753aaa0861684,
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6171105054673913324, guid: c6b0aead31f468a449b753aaa0861684,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.08
       objectReference: {fileID: 0}
     - target: {fileID: 6245700366040906741, guid: c6b0aead31f468a449b753aaa0861684,
         type: 3}

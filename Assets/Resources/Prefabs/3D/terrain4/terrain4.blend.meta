@@ -17,7 +17,12 @@ ModelImporter:
     3300000: map
     4300000: map
     10800000: Sun
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 15d27fe10dfcb9e4da81bd7bc0d37fae, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
