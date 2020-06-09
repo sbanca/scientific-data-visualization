@@ -823,7 +823,7 @@ MonoBehaviour:
   rig: {fileID: 570934604}
   loading: {fileID: 3174787647473633987}
   loader: {fileID: 2066200294}
-  observer: 1
+  observer: 0
   voiceDebug: 0
   avatarRecorder: {fileID: 2066200295}
 --- !u!114 &2066200294
@@ -841,14 +841,14 @@ MonoBehaviour:
   dataprefabs:
   - {fileID: 8732110112134490594, guid: 422cf96442c733b4a8e612f7719f64c9, type: 3}
   - {fileID: 4455598838264047060, guid: 12e166f5c69b5ee4d86bbb4d67ee6e89, type: 3}
-  - {fileID: 1826578354919723092, guid: 618a062fcf5231c4baec3e8b6bfcc3a4, type: 3}
-  - {fileID: 8988321087482268903, guid: 3a7cff285da21e44bb9b5f1b04ef3212, type: 3}
+  - {fileID: 4646181468155247308, guid: c6b0aead31f468a449b753aaa0861684, type: 3}
+  - {fileID: 8059627699863008627, guid: c0fe5218a5ac116468a4b984975f138e, type: 3}
   - {fileID: 4544412116913180512, guid: d813580a354479540a38f2295cef3d00, type: 3}
   - {fileID: 3195329889598143367, guid: aee0d749e25b53a47869e69aab9b5b14, type: 3}
   - {fileID: 2067845105509301920, guid: 2ad2f4ac9ef44244e80f334e004f055a, type: 3}
   - {fileID: 8893025937586743141, guid: daead0463b1f6c644be464de661b9fe4, type: 3}
-  - {fileID: 6746715834639501287, guid: 9338bd0fa5eaba842b98181401a5ca97, type: 3}
-  - {fileID: 4857113726893276146, guid: 4f1ec41b59892e940bac5fd503bf10a8, type: 3}
+  - {fileID: 3761891701150345280, guid: 34ce6e4d920996740847696ac7eb9d64, type: 3}
+  - {fileID: 3500976833964039308, guid: f1675b50ced56df4aadf9a730ed612ed, type: 3}
   - {fileID: 3916722878059450611, guid: b9b191312c7c3124eb6df5191fd7cdef, type: 3}
   - {fileID: 6330842721704040384, guid: f52ea184affe6d44f9d2044aaeefa78d, type: 3}
   - {fileID: 2562898622286200753, guid: 56c08b285d83b24429cb12a6b5de7fa5, type: 3}
