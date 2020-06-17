@@ -98,7 +98,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         PointerHead1string.Trim(remove) + "," + PointerHand1string.Trim(remove) + "," +
         RemoteHeadPos.Trim(remove) + "," + RemoteHeadEAng.Trim(remove) + "," +
         RemoteControllerPos.Trim(remove) + "," + RemoteControllerEAng.Trim(remove) + "," +
-        PointerHead2string.Trim(remove) + "," + PointerHand1string.Trim(remove);
+        PointerHead2string.Trim(remove) + "," + PointerHand2string.Trim(remove);
 
         writer.WriteLine(line);
 

@@ -56,8 +56,16 @@ public class showHideLayers : MonoBehaviourPun
             }
         }
 
-        if (layer.activeSelf) layer.SetActive(false);
-        else layer.SetActive(true);
+        if (layer.activeSelf)
+        {
+            layer.SetActive(false);
+
+        }
+        else
+        {
+            layer.SetActive(true);
+            IgnoreCollistion(layer);
+        }
 
        
     }
@@ -93,4 +101,18 @@ public class showHideLayers : MonoBehaviourPun
             hideUnhideLayer((int)datas[0]);
         }
     }
+
+    public void IgnoreCollistion(GameObject obj)
+    {
+
+        CharacterController charCon = FindObjectOfType<CharacterController>();
+
+        if (charCon == null) return;
+
+        Collider[] colliders = obj.GetComponentsInChildren<Collider>();
+
+        foreach (Collider c in colliders) Physics.IgnoreCollision(charCon, c);
+
+    }
+
 }

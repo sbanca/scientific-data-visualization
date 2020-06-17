@@ -49,12 +49,15 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 			return;
 		}
 
+		if (OvrAvatarSDKManager.Instance == null) return;
+
 		using (MemoryStream outputStream = new MemoryStream())
 		{
 			BinaryWriter writer = new BinaryWriter(outputStream);
 
 			var size = Oculus.Avatar.CAPI.ovrAvatarPacket_GetSize(args.Packet.ovrNativePacket);
 			byte[] data = new byte[size];
+			
 			Oculus.Avatar.CAPI.ovrAvatarPacket_Write(args.Packet.ovrNativePacket, size, data);
 
 			writer.Write(localSequence++);

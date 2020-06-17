@@ -802,7 +802,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066200291}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.021645486, y: 0.9772874, z: 0.27606952}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -823,7 +823,7 @@ MonoBehaviour:
   rig: {fileID: 570934604}
   loading: {fileID: 3174787647473633987}
   loader: {fileID: 2066200294}
-  observer: 0
+  observer: 1
   voiceDebug: 0
   avatarRecorder: {fileID: 2066200295}
 --- !u!114 &2066200294

@@ -43,7 +43,10 @@ public class PacketRecordSettings
 
 public class OvrAvatar : MonoBehaviour
 {
-    public delegate void OnLocalAvatarInstantiated();
+ 
+    /// inizio ---- aggiunti per avere una conferma l'avatar e' stato creato con sucesso 
+    
+    public delegate void OnLocalAvatarInstantiated(); 
     public static event OnLocalAvatarInstantiated LocalAvatarInstantiated;
 
     public delegate GameObject OnRemoteAvatarInstantiated(GameObject g);
@@ -53,6 +56,8 @@ public class OvrAvatar : MonoBehaviour
     public IntPtr sdkAvatar = IntPtr.Zero;
     public string oculusUserID;
     public OvrAvatarDriver Driver;
+
+    /// fine -----
 
     [Header("Capabilities")]
     public bool EnableBody = true;
