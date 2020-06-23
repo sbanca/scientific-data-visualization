@@ -556,8 +556,15 @@ public class OvrAvatar : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        
+    }
+
     void Start()
     {
+      
+
         if (OvrAvatarSDKManager.Instance == null)
         {
             return;

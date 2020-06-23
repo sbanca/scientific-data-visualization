@@ -14,7 +14,9 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 
 	public void Start()
 	{
-		if(photonView ==null) photonView = GetComponent<PhotonView>();
+		Debug.Log("Here1 ");
+
+		if (photonView ==null) photonView = GetComponent<PhotonView>();
 
 		if (photonView.IsMine)
 		{
@@ -29,6 +31,8 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 		{
 			remoteDriver = GetComponent<OvrAvatarRemoteDriver>();
 		}
+
+		Debug.Log("Here2 ");
 	}
 
 	public void OnDisable()
@@ -49,7 +53,11 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 			return;
 		}
 
-		if (OvrAvatarSDKManager.Instance == null) return;
+		
+
+		if (OvrAvatarSDKManager.Instance == null && !Oculus.Platform.Core.IsInitialized()) return;
+
+		
 
 		using (MemoryStream outputStream = new MemoryStream())
 		{

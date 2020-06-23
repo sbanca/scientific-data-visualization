@@ -79,6 +79,74 @@ public class inputsManager : Singleton<inputsManager>
 
         }
 
+        //heads tilted
+
+        [SerializeField]
+        private Transform _localHeadtilt;
+        public Transform LocalHeadTilt
+        {
+            get
+            {
+                if (_localHeadtilt == null && localAvatar != null)
+                {
+
+                Transform t = DeepChildSearch(localAvatar, "head_JNT");
+
+                var headTilt = new GameObject();
+
+                headTilt.transform.rotation = t.rotation;
+
+                //headTilt.transform.eulerAngles = new Vector3 (headTilt.transform.eulerAngles.x+ 18f, headTilt.transform.eulerAngles.y, headTilt.transform.eulerAngles.z);
+
+                headTilt.transform.position = t.position;
+
+                headTilt.transform.parent = t;
+
+                headTilt.AddComponent<anglePointer>();
+
+                _localHeadtilt = headTilt.transform;
+
+                }
+
+                return _localHeadtilt;
+            }
+
+        }
+
+        [SerializeField]
+        private Transform _remoteHeadTilt = null;
+        public Transform RemoteHeadTilt
+        {
+            get
+            {
+                if (_remoteHeadTilt == null && remoteAvatar != null)
+                {
+
+                Transform t = DeepChildSearch(remoteAvatar, "head_JNT");
+
+                var headTiltPrefab = new GameObject();
+
+                var headTilt = new GameObject();
+
+                headTilt.transform.rotation = t.rotation;
+
+                //headTilt.transform.eulerAngles = new Vector3(headTilt.transform.eulerAngles.x + 18f, headTilt.transform.eulerAngles.y, headTilt.transform.eulerAngles.z);
+
+                headTilt.transform.position = t.position;
+
+                headTilt.transform.parent = t;
+
+                headTilt.AddComponent<anglePointer>();
+
+                _remoteHeadTilt = headTilt.transform;
+
+            }
+
+                return _remoteHeadTilt;
+            }
+
+        }
+
     public Transform DeepChildSearch(GameObject g, string childName) {
 
         Transform child = null;

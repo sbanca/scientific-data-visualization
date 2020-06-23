@@ -16,7 +16,8 @@ namespace TableTop {
     {
         head = 0,
         mouse = 1,
-        controller = 2
+        controller = 2,
+        headTilt =3
     }
 
     public class Augmentations : MonoBehaviour
@@ -116,6 +117,13 @@ namespace TableTop {
 
                     break;
 
+                case AUGMENTINPUT.headTilt:
+
+                    PointOnMap = _rayOnMap.HeadRayTilt();
+
+                    RemotePointOnMap = _rayOnMap.RemoteHeadRayTilt();
+
+                    break;
 
             }
 
@@ -132,6 +140,14 @@ namespace TableTop {
                         SphereAugmentation(Sphere, PointOnMap, inputsManager.Instance.LocalHead);
 
                         SphereAugmentation(RemoteSphere, RemotePointOnMap, inputsManager.Instance.RemoteHead);
+
+                        break;
+
+                    case AUGMENTINPUT.headTilt:
+
+                        SphereAugmentation(Sphere, PointOnMap, inputsManager.Instance.LocalHeadTilt);
+
+                        SphereAugmentation(RemoteSphere, RemotePointOnMap, inputsManager.Instance.RemoteHeadTilt);
 
                         break;
 

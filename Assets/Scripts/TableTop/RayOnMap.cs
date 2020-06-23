@@ -56,6 +56,22 @@ namespace TableTop
 
         }
 
+        public Nullable<Vector3> HeadRayTilt()
+        {
+            if (inputsManager.Instance.LocalHeadTilt == null) return null;
+
+            return RayCollision(inputsManager.Instance.LocalHeadTilt);
+
+        }
+
+        public Nullable<Vector3> RemoteHeadRayTilt()
+        {
+            if (inputsManager.Instance.RemoteHeadTilt == null) return null;
+
+            return RayCollision(inputsManager.Instance.RemoteHeadTilt);
+
+        }
+
         public Nullable<Vector3> ControllerRay()
         {
             if (inputsManager.Instance.Controller == null) return null;

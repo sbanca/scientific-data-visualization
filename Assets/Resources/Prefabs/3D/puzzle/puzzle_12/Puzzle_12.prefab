@@ -220,6 +220,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: labels
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 98d33353de88c6442871c5aca5cd65a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 98d33353de88c6442871c5aca5cd65a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5461426

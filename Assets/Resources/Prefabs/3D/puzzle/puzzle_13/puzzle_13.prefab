@@ -310,7 +310,7 @@ Transform:
   - {fileID: 8506372351979906697}
   - {fileID: 7628741230463013120}
   - {fileID: 2159486687213810198}
-  - {fileID: 8111194261003465292}
+  - {fileID: 7170182822776582383}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -809,7 +809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2159486687213810198
 Transform:
   m_ObjectHideFlags: 0
@@ -1221,7 +1221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a5b3da0bece5c94bb6c567fe586e86c, type: 3}
---- !u!4 &8111194261003465292 stripped
+--- !u!4 &7170182822776582383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
     type: 3}

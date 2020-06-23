@@ -31,6 +31,15 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     void Start()
     {
+
+#if UNITY_EDITOR
+
+#else
+        observer = false;
+#endif 
+
+
+
         Resources.LoadAll("ScriptableObjects");
         Debug.Log("[PUN] connecting to server");
 
@@ -49,7 +58,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
      
         PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;
         PhotonNetwork.ConnectUsingSettings();
-
+       
 
     }
 
@@ -70,8 +79,19 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     {
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
 
+        StartCoroutine(waitForSdkManagerInstantiated());
+    }
+
+    private IEnumerator waitForSdkManagerInstantiated() {
+
+        //get audiosource from the localavatar       
+        while (OvrAvatarSDKManager.Instance == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
         if (observer) ObserverInstantiation();
-        else  InstantiateLocalAvatar();
+        else InstantiateLocalAvatar();
     }
 
     void IOnEventCallback.OnEvent(EventData photonEvent)
@@ -127,7 +147,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
 
             OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
-            ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
+            //ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
 
             Debug.Log("[PUN] LocalAvatar instantiatiation triggered now waiting for OVRAvatar to initialize");
 
@@ -211,15 +231,18 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
         photonView.ViewID = (int)photonEvent.CustomData;
 
-        OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
-        ovrAvatar.oculusUserID = player.UserId;
+        //OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
+        //ovrAvatar.oculusUserID = player.UserId;
 
-        Debug.Log("[PUN] RemoteAvatar instantiated");
+#if UNITY_EDITOR
 
         OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
 
-        PhotonVoiceView pvv = remoteAvatar.GetComponent<PhotonVoiceView>();
-      
+#endif
+
+        Debug.Log("[PUN] RemoteAvatar instantiation started");
+
+        
     }
 
     private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject rA)
@@ -268,7 +291,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
             PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateObserverEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
 
-            Debug.Log("[PUN] Local Observer instantiated");
+            Debug.Log("[PUN] Local Observer instantiation started");
 
             //enablePhotonVoice()
             StartCoroutine(PhotonVoiceInstantiationForLocalObserver());
@@ -288,7 +311,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         avatarRecorder.enabled = true;
 
         //create a folder for saving the data
+#if UNITY_EDITOR
+
         DataFolderCreation();
+
+#endif
     }
 
     private IEnumerator PhotonVoiceInstantiationForLocalObserver()
@@ -339,9 +366,13 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private void DataFolderCreation() {
 
+        Debug.Log("[PUN] Create Data folder");
+
         string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\";
 
         if(!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+        Debug.Log("[PUN] Data folder created");
 
     }
 }
