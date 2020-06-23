@@ -104,10 +104,11 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         line = currentTime.ToString("F3") + "," +
         LocalHeadPos.Trim(remove) + "," + LocalHeadEAng.Trim(remove) + "," +
         ControllerPos.Trim(remove) + "," + ControllerEAng.Trim(remove) + "," +
-        PointerHead1string.Trim(remove) + "," + PointerHand1string.Trim(remove) + "," + PointerHeadTilt1String.Trim(remove) + "," + 
+        PointerHead1string.Trim(remove) + "," + PointerHand1string.Trim(remove) + "," +
         RemoteHeadPos.Trim(remove) + "," + RemoteHeadEAng.Trim(remove) + "," +
         RemoteControllerPos.Trim(remove) + "," + RemoteControllerEAng.Trim(remove) + "," +
-        PointerHead2string.Trim(remove) + "," + PointerHand2string.Trim(remove) + "," + PointerHeadTilt2String.Trim(remove) ;
+        PointerHead2string.Trim(remove) + "," + PointerHand2string.Trim(remove) + "," +
+        PointerHeadTilt1String.Trim(remove) + "," + PointerHeadTilt2String.Trim(remove) ;
 
         writer.WriteLine(line);
 
@@ -122,8 +123,8 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\" + g.name + ".csv";
         writer = new StreamWriter(path, true);
 
-        writer.WriteLine("time in s, LocalHeadX, LocalHeadY, LocalHeadZ,LocalHeadEulerX, LocalHeadEulerY, LocalHeadEulerZ, ControllerX, ControllerY, ControllerZ,ControllerEulerX, ControllerEulerY, ControllerEulerZ,PointerHead1X,PointerHead1Y,PointerHead1Z,PointerHand1X,PointerHand1Y,PointerHand1Z,PointerHeadTilt1X,PointerHeadTilt1Y,PointerHeadTilt1Z," +
-           "RemoteHeadX, RemoteHeadY, RemoteHeadZ,RemoteHeadEulerX, RemoteHeadEulerY, RemoteHeadEulerZ, RemoteControllerX, RemoteontrollerY, RemoteControllerZ,ControllerEulerX, RemoteControllerEulerY, RemoteControllerEulerZ,PointerHead2X,PointerHead2Y,PointerHead2Z,PointerHand2X,PointerHand2Y,PointerHand2Z,PointerHeadTilt2X,PointerHeadTilt2Y,PointerHeadTilt2Z");
+        writer.WriteLine("time in s, LocalHeadX, LocalHeadY, LocalHeadZ,LocalHeadEulerX, LocalHeadEulerY, LocalHeadEulerZ, ControllerX, ControllerY, ControllerZ,ControllerEulerX, ControllerEulerY, ControllerEulerZ,PointerHead1X,PointerHead1Y,PointerHead1Z,PointerHand1X,PointerHand1Y,PointerHand1Z," +
+           "RemoteHeadX, RemoteHeadY, RemoteHeadZ,RemoteHeadEulerX, RemoteHeadEulerY, RemoteHeadEulerZ, RemoteControllerX, RemoteontrollerY, RemoteControllerZ,ControllerEulerX, RemoteControllerEulerY, RemoteControllerEulerZ,PointerHead2X,PointerHead2Y,PointerHead2Z,PointerHand2X,PointerHand2Y,PointerHand2Z,PointerHeadTilt1X,PointerHeadTilt1Y,PointerHeadTilt1Z,PointerHeadTilt2X,PointerHeadTilt2Y,PointerHeadTilt2Z");
 
         startTime = Time.unscaledTime;
 
