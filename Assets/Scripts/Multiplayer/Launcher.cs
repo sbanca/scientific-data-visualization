@@ -234,11 +234,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
         //ovrAvatar.oculusUserID = player.UserId;
 
-#if UNITY_EDITOR
-
         OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
-
-#endif
 
         Debug.Log("[PUN] RemoteAvatar instantiation started");
 
