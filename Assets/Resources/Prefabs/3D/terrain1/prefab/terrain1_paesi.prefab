@@ -1530,7 +1530,7 @@ Transform:
   - {fileID: 3195329889597712293}
   - {fileID: 2230515432491629024}
   - {fileID: 9029170187637337343}
-  - {fileID: 7318943609071835776}
+  - {fileID: 8539747463017224227}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1546,7 +1546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af725e587d2238a4b9d480f777ffedcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionInput: 3
+  optionInput: 0
   sphereAugmentation: 1
   coneAugmentation: 0
   circleAugmentation: 0
@@ -2493,7 +2493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a5b3da0bece5c94bb6c567fe586e86c, type: 3}
---- !u!4 &7318943609071835776 stripped
+--- !u!4 &8539747463017224227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1373979954449531558, guid: 5a5b3da0bece5c94bb6c567fe586e86c,
     type: 3}
