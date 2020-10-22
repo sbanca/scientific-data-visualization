@@ -729,7 +729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.83
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -773,6 +773,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+--- !u!1 &1894949204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100008, guid: ce816f2e6abb0504092c23ed9b970dfd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894949203}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1894949205 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 477154, guid: ce816f2e6abb0504092c23ed9b970dfd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894949203}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1894949206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894949204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b7dd83ac044164e91c334da9a901ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuHandList: []
+  MainMenuPrefab: {fileID: 1137812420168220155, guid: 865d2e68343b2574c8f7acf75412edb8,
+    type: 3}
+  DataMenuPrefab: {fileID: 853363428946560730, guid: a6a4fd3b0525e684f9d37da4dee3693f,
+    type: 3}
+  PerformancesPrefab: {fileID: 6329560216208942576, guid: c5d60aaaad1d55c42a7b5c0fe5307e6b,
+    type: 3}
+  Performances: {fileID: 0}
+  ConsoleLogPrefab: {fileID: 4141706598695185759, guid: 61ed281985cdad240a814376992d173d,
+    type: 3}
+  ConsoleLog: {fileID: 0}
+  transform: {fileID: 1894949205}
+  UiHelprefab: {fileID: 1732808951507650, guid: a9d2de84afb308a4796cc671d3432b4d,
+    type: 3}
+  laserBeamBehavior: 2
+  scale: {x: 0.25, y: 0.25, z: 0.25}
+  position: {x: 0, y: 0.25, z: 0.1}
 --- !u!1 &2066200291
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,7 +864,7 @@ MonoBehaviour:
   rig: {fileID: 570934604}
   loading: {fileID: 3174787647473633987}
   loader: {fileID: 2066200294}
-  observer: 1
+  observer: 0
   voiceDebug: 0
   avatarRecorder: {fileID: 2066200295}
 --- !u!114 &2066200294
